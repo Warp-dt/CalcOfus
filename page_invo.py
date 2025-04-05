@@ -93,7 +93,7 @@ else:
 lvl_invo=6
 
 def calcul_vita(base,multi):
-    vita=base+multi*(stats_perso["Vita"]-1150)
+    vita=base+multi*(stats_perso["Vita"]-1050)
     if vita>0 :
         return vita
     else:
@@ -101,308 +101,214 @@ def calcul_vita(base,multi):
 
 
 ######################
-#Dragonnet
+#invo loop
 ######################
-left_drag, right_drag = st.columns((1,1))
-with left_drag:
+INVO_LIST=["dragonnet",'momie','crapaud','tofu','craqueleur','bouftou']
+INVO_NOMS=["Dragonnet Rouge",'Momie koalak','Crapaud','Tofu','Craqueleur','Bouftou']
 
-    st.write("## Dragonnet Rouge")
+invo_infos={
+    "dragonnet" : {
+        'nom' : "Dragonnet Rouge"
+        ,'element' : "Intel"
+        ,'do' : "Dofeu"
+        ,'stats_base' : 350
+        ,'vita_base' : 300
+        ,'vita_multiplicateur' : 0.2
+        ,'sorts' : [
+            {'nom' : "Dragofeu"
+             ,'vmin' : 41
+             ,'vmax' : 50
+             ,'cc' : 0.15
+             ,'vmin_cc' : 46
+             ,'vmax_cc' : 55}
+            ,{'nom' : "Flamme Persistante"
+             ,'vmin' : 36
+             ,'vmax' : 45
+             ,'cc' : 0
+             ,'vmin_cc' : 99999
+             ,'vmax_cc' : 99999}
+        ]        
+    }
+    ,"momie" : {
+        'nom' : "Momie koalak"
+        ,'element' : "Intel"
+        ,'do' : "Dofeu"
+        ,'stats_base' : 350
+        ,'vita_base' : 180
+        ,'vita_multiplicateur' : 0.15
+        ,'sorts' : [
+            {'nom' : "Malédiction du koalak"
+             ,'vmin' : 26
+             ,'vmax' : 35
+             ,'cc' : 0
+             ,'vmin_cc' : 99999
+             ,'vmax_cc' : 99999}
+            ,{'nom' : "Bandelette Soignante"
+             ,'vmin' : 51
+             ,'vmax' : 60
+             ,"degats" : 40
+             ,'cc' : 0
+             ,'vmin_cc' : 99999
+             ,'vmax_cc' : 99999}
+        ]        
+    }
+    ,"crapaud" : {
+        'nom' : "Crapaud"
+        ,'element' : "Chance"
+        ,'do' : "Doeau"
+        ,'stats_base' : 350
+        ,'vita_base' : 300
+        ,'vita_multiplicateur' : 0.2
+        ,'sorts' : [
+            {'nom' : "Petit Splash"
+             ,'vmin' : 26
+             ,'vmax' : 29
+             ,'cc' : 0.15
+             ,'vmin_cc' : 29
+             ,'vmax_cc' : 32}
+            ,{'nom' : "Grand Splash"
+             ,'vmin' : 29
+             ,'vmax' : 32
+             ,'cc' : 0.15
+             ,'vmin_cc' : 31
+             ,'vmax_cc' : 34}
+        ]        
+    }
+    ,"tofu" : {
+        'nom' : "Tofu"
+        ,'element' : "Chance"
+        ,'do' : "Doeau"
+        ,'stats_base' : 350
+        ,'vita_base' : 180
+        ,'vita_multiplicateur' : 0.15
+        ,'sorts' : [
+            {'nom' : "Beco du Tofu"
+             ,'vmin' : 14
+             ,'vmax' : 17
+             ,'cc' : 0.05
+             ,'vmin_cc' : 16
+             ,'vmax_cc' : 19}
+            ,{'nom' : "Tofurieux"
+             ,'vmin' : 41
+             ,'vmax' : 45
+             ,'cc' : 0
+             ,'vmin_cc' : 44
+             ,'vmax_cc' : 48}
+        ]        
+    }
+    ,"craqueleur" : {
+        'nom' : "Craqueleur"
+        ,'element' : "Agi"
+        ,'do' : "Doair"
+        ,'stats_base' : 150
+        ,'vita_base' : 300
+        ,'vita_multiplicateur' : 0.2
+        ,'sorts' : [
+            {'nom' : "Ecrasement"
+             ,'vmin' : 28
+             ,'vmax' : 33
+             ,'cc' : 0.05
+             ,'vmin_cc' : 35
+             ,'vmax_cc' : 35}
+            ,{'nom' : "Frappe Étourdissante"
+             ,'vmin' : 33
+             ,'vmax' : 37
+             ,'cc' : 0.1
+             ,'vmin_cc' : 36
+             ,'vmax_cc' : 40}
+        ]        
+    }
+    ,"bouftou" : {
+        'nom' : "Bouftou"
+        ,'element' : "Agi"
+        ,'do' : "Doair"
+        ,'stats_base' : 150
+        ,'vita_base' : 180
+        ,'vita_multiplicateur' : 0.2
+        ,'sorts' : [
+            {'nom' : "Morsure du Bouftou"
+             ,'vmin' : 31
+             ,'vmax' : 35
+             ,'cc' : 0.05
+             ,'vmin_cc' : 35
+             ,'vmax_cc' : 35}
+            ,{'nom' : "Beuglement Assomant"
+             ,'vmin' : 28
+             ,'vmax' : 32
+             ,'cc' : 0
+             ,'vmin_cc' : 99999
+             ,'vmax_cc' : 99999}
+        ]        
+    }
+}
 
-    drag_intel_base=350
+for invo in invo_infos.keys():
+    l_col, r_col = st.columns((1,1))
+    with l_col:
 
-    drag_intel=drag_intel_base+stats_perso["Intel"]/2
-    drag_do=stats_perso["Dofeu"]/2
+        st.write(f"## {invo_infos[invo]['nom']}")
 
-    dragofeu_min=(41*(100+drag_intel)/100+drag_do)//1
-    dragofeu_max=(50*(100+drag_intel)/100+drag_do)//1
+        stat_base=350 #A VERIFIER
 
-    insoi_min=(36*(100+drag_intel)/100+drag_do)//1
-    insoi_max=(45*(100+drag_intel)/100+drag_do)//1
+        stats_finales=invo_infos[invo]["stats_base"]+stats_perso[invo_infos[invo]["element"]]/2
+        do_finaux=stats_perso[invo_infos[invo]["do"]]/2
+
+        tab_vita="""
+    | Vitalité | Boucliers bonus par mob (+20% vita) |
+    | ----------- | ----------- |
+    """
+        tab_vita+="| "+str(int(calcul_vita(invo_infos[invo]['vita_base'],invo_infos[invo]['vita_multiplicateur'])))+" | "+str(int(calcul_vita(invo_infos[invo]['vita_base'],invo_infos[invo]['vita_multiplicateur'])*0.2))+"\n"
+
+        st.write(tab_vita)
+        st.text("")
+
+        tab_sorts="| Sort | min | max | min cc | max cc | %cc | Moyenne |\n"
+        tab_sorts+="| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |\n"
+
+        for sort in invo_infos[invo]['sorts']:
+            min_val=int((sort["vmin"]*(100+stats_finales)/100+do_finaux)//1)
+            max_val=int((sort["vmax"]*(100+stats_finales)/100+do_finaux)//1)
+            
+            if sort["cc"]>0:
+                cc=int(sort["cc"]*100)
+                min_val_cc=int((sort["vmin_cc"]*(100+stats_finales)/100+do_finaux)//1)
+                max_val_cc=int((sort["vmax_cc"]*(100+stats_finales)/100+do_finaux)//1)
+                moy_val=int(((max_val+min_val)/2*(1-sort["cc"])+(max_val_cc+min_val_cc)/2*sort["cc"])//1)
+            else:
+                cc='-'
+                min_val_cc='-'
+                max_val_cc='-'
+                moy_val=int((max_val+min_val)/2//1)
+
+            tab_sorts+=f"| {sort['nom']} | {min_val} | {max_val} | {min_val_cc} | {max_val_cc} | {cc} | **{moy_val}** |\n"
+       
+        st.markdown(tab_sorts)
+        st.text("")
+
+    with r_col:
+        st.text("")
+        st.image(image_path+f"{invo}2.png")
 
 
-    tab_vita_drag="""
-| Vitalité | Bonus au T1 : +20% par mob |
-| ----------- | ----------- |
+table_style = """
+<style>
+    table {
+        width: 100%;  /* Le tableau prend toute la largeur disponible */
+        border-collapse: collapse; /* Supprime les espaces entre les bordures */
+    }
+    th, td {
+        border: 1px solid white;  /* Bordures blanches autour des cellules */
+        padding: 8px;  /* Ajoute un espace de 8px à l'intérieur des cellules */
+        text-align: center; /* Centre le texte dans les cellules */
+    }
+    th {
+        background-color: #333B00; /* Couleur d'arrière-plan des en-têtes */
+        color: #FAFAFA; /* Couleur du texte des en-têtes */
+    }
+    td {
+        background-color: #262730; /* Fond sombre des cellules */
+        color: #FAFAFA; /* Texte blanc */
+    }
+</style>
 """
-    tab_vita_drag+="| "+str(int(calcul_vita(170,0.2)))+" | "+str(int(calcul_vita(170,0.2)*0.2))+"\n"
-
-    st.write(tab_vita_drag)
-    st.text("")
-
-    tab_drag="""
-| Sort | Valeur min | Valeur max | Moyenne |
-| ----------- | ----------- | ----------- | ----------- |
-"""
-    tab_drag+="| Dragofeu | "+str(int(dragofeu_min))+" | "+str(int(dragofeu_max))+" | "+str(int((dragofeu_min+dragofeu_max)/2))+" |\n"
-    tab_drag+="| Flamme Persistante (insoignable) | "+str(int(insoi_min))+" | "+str(int(insoi_max))+" | "+str(int((insoi_min+insoi_max)/2))+" |\n"
-    
-    st.write(tab_drag)
-    st.text("")
-
-with right_drag:
-    st.text("")
-    st.image(image_path+"dragonnet.png")
-
-
-######################
-#Momie
-######################
-left_momie, right_momie = st.columns((1,1))
-with left_momie:
-
-    st.write("## Momie Koalak")
-
-    momie_intel_base=350
-
-    momie_intel=momie_intel_base+stats_perso["Intel"]/2
-    momie_do=stats_perso["Dofeu"]/2
-    momie_soin=stats_perso["Soin"]/2
-
-    male_min=(26*(100+momie_intel)/100+momie_do)//1
-    male_max=(35*(100+momie_intel)/100+momie_do)//1
-
-    bande_min=(51*(100+momie_intel)/100+momie_soin)//1
-    bande_max=(60*(100+momie_intel)/100+momie_soin)//1
-    
-    tab_vita_momie="""
-| Vitalité | Bonus au T1 : +20% par mob |
-| ----------- | ----------- |
-"""
-    tab_vita_momie+="| "+str(int(calcul_vita(135,0.15)))+" | "+str(int(calcul_vita(135,0.15)*0.2))+"\n"
-
-    st.write(tab_vita_momie)
-    st.text("")
-
-    tab_momie="""
-| Sort | Valeur min | Valeur max | Moyenne |
-| ----------- | ----------- | ----------- | ----------- |
-"""
-    tab_momie+="| Malédiction Vampirique | "+str(int(male_min))+" | "+str(int(male_max))+" | "+str(int((male_min+male_max)/2))+" |\n"
-    tab_momie+="| Bandelette soignante (soin) | "+str(int(bande_min))+" | "+str(int(bande_max))+" | "+str(int((bande_min+bande_max)/2))+" |\n"
-
-    st.write(tab_momie) 
-    st.text("")
-
-with right_momie:
-    st.text("")
-    st.image(image_path+"momie.png")
-
-
-######################
-#Craqueleur
-######################
-left_craq, right_craq = st.columns((1,1))
-with left_craq:
-
-    st.write("## Craqueleur")
-
-    craq_chance_base=150
-
-    craq_chance=craq_chance_base+stats_perso["Chance"]/2
-    craq_do=stats_perso["Doeau"]/2
-
-    ecrasement_min=(28*(100+craq_chance)/100+craq_do)//1
-    ecrasement_max=(33*(100+craq_chance)/100+craq_do)//1
-
-    frappe_etourdissante_min=(33*(100+craq_chance)/100+craq_do)//1
-    frappe_etourdissante_max=(37*(100+craq_chance)/100+craq_do)//1
-
-
-    tab_vita_craq="""
-| Vitalité | Bonus au T1 : +20% par mob |
-| ----------- | ----------- |
-"""
-    tab_vita_craq+="| "+str(int(calcul_vita(350,0.2)))+" | "+str(int(calcul_vita(350,0.2)*0.2))+"\n"
-
-    st.write(tab_vita_craq)
-    st.text("")
-
-    tab_craq="""
-| Sort | Valeur min | Valeur max | Moyenne |
-| ----------- | ----------- | ----------- | ----------- |
-"""
-    tab_craq+="| Ecrasement | "+str(int(ecrasement_min))+" | "+str(int(ecrasement_max))+" | "+str(int((ecrasement_min+ecrasement_max)/2))+" |\n"
-    tab_craq+="| Frappe étourdissante (rall 2 pa) | "+str(int(frappe_etourdissante_min))+" | "+str(int(frappe_etourdissante_max))+" | "+str(int((frappe_etourdissante_min+frappe_etourdissante_max)/2))+" |\n"
-    
-    st.write(tab_craq)
-    st.text("")
-
-with right_craq:
-    st.text("")
-    st.image(image_path+"craqueleur.png")
-
-
-######################
-#Bouftou
-######################
-left_bouf, right_bouf = st.columns((1,1))
-with left_bouf:
-
-    st.write("## Bouftou")
-
-    bouf_chance_base=150 #  150
-
-    bouf_chance=bouf_chance_base+stats_perso["Chance"]/2
-    bouf_do=stats_perso["Doeau"]/2
-
-    morsure_min=(31*(100+bouf_chance)/100+bouf_do)//1
-    morsure_max=(35*(100+bouf_chance)/100+bouf_do)//1
-
-    tab_vita_bouf="""
-| Vitalité | Bonus au T1 : +20% par mob |
-| ----------- | ----------- |
-"""
-    tab_vita_bouf+="| "+str(int(calcul_vita(260,0.2)))+" | "+str(int(calcul_vita(260,0.2)*0.2))+"\n"
-
-    st.write(tab_vita_bouf)
-    st.text("")
-
-    tab_bouf="""
-| Sort | Valeur min | Valeur max | Moyenne |
-| ----------- | ----------- | ----------- | ----------- |
-"""
-    tab_bouf+="| Morsure | "+str(int(morsure_min))+" | "+str(int(morsure_max))+" | "+str(int((morsure_min+morsure_max)/2))+" |\n"
-
-    st.write(tab_bouf)
-    st.text("")
-
-with right_bouf:
-    st.text("")
-    st.image(image_path+"bouftou.png")
-
-######################
-#Sanglier
-######################
-left_gligli, right_gligli = st.columns((1,1))
-with left_gligli:
-
-    st.write("## Sanglier")
-
-    sangli_agi_base=350
-    sangli_dopou_base=157 #dans les stats du gligli c'est marqué 60 mais en pratique ça tape comme si 157
-
-    sangli_agi=sangli_agi_base+stats_perso["Agi"]/2
-    sangli_do=stats_perso["Doair"]/2
-
-    embro_poussée=5
-    embro_min=(25*(100+sangli_agi)/100+sangli_do)//1
-    embro_max=(29*(100+sangli_agi)/100+sangli_do)//1
-    embro_dopou=(lvl_invo/2+sangli_dopou_base+stats_perso["Dopou"]/2+32)*embro_poussée/4
-
-    poussette_poussée=3
-    poussette_min=(28*(100+sangli_agi)/100+sangli_do)//1
-    poussette_max=(32*(100+sangli_agi)/100+sangli_do)//1
-    poussette_dopou=(lvl_invo/2+sangli_dopou_base+stats_perso["Dopou"]/2+32)*poussette_poussée/4
-
-    tab_vita_gligli="""
-| Vitalité | Bonus au T1 : +20% par mob |
-| ----------- | ----------- |
-"""
-    tab_vita_gligli+="| "+str(int(calcul_vita(310,0.1)))+" | "+str(int(calcul_vita(310,0.1)*0.2))+"\n"
-
-    st.write(tab_vita_gligli)
-    st.text("")
-
-    tab_gligli="""
-| Sort | Valeur min | Valeur max | Dopou | Moyenne |
-| ----------- | ----------- | ----------- | ----------- | ----------- |
-"""
-    tab_gligli+="| Embrochement (dopou compris) | "+str(int(embro_min))+" | "+str(int(embro_max))+" | "+str(int(embro_dopou))+" | "+str(int((embro_min+embro_max)/2+embro_dopou))+" |\n"
-    tab_gligli+="| Poussette (pesanteur, dopou compris) | "+str(int(poussette_min))+" | "+str(int(poussette_max))+" | "+str(int(poussette_dopou))+" | "+str(int((poussette_min+poussette_max)/2+poussette_dopou))+" |\n"
-
-    st.write(tab_gligli)
-    st.text("")
-
-with right_gligli:
-    st.text("")
-    st.image(image_path+"sanglier.png")
-
-######################
-#Tofu
-######################
-left_tofu, right_tofu = st.columns((1,1))
-with left_tofu:
-
-    st.write("## Tofu")
-
-    tofu_agi_base=350
-    
-    tofu_agi=tofu_agi_base+stats_perso["Agi"]/2
-    tofu_do=stats_perso["Doair"]/2
-    
-    beco_min=(15*(100+tofu_agi)/100+tofu_do)//1
-    beco_max=(18*(100+tofu_agi)/100+tofu_do)//1
-
-    tab_vita_tofu="""
-| Vitalité | Bonus au T1 : +20% par mob |
-| ----------- | ----------- |
-"""
-    tab_vita_tofu+="| "+str(int(calcul_vita(95,0.05)))+" | "+str(int(calcul_vita(95,0.05)*0.2))+"\n"
-
-    st.write(tab_vita_tofu)
-    st.text("")
-
-    tab_tofu="""
-| Sort | Valeur min | Valeur max | Moyenne |
-| ----------- | ----------- | ----------- | ----------- |
-"""
-    tab_tofu+="| Béco du Tofu | "+str(int(beco_min))+" | "+str(int(beco_max))+" | "+str(int((beco_min+beco_max)/2))+" |\n"
-
-    st.write(tab_tofu)
-    st.text("")
-
-with right_tofu:
-    st.text("")
-    st.image(image_path+"tofu.png")
-
-######################
-#substitution
-######################
-left_substi, right_substi = st.columns((1,1))
-with left_substi:
-
-    st.write("## Substitution")
-
-    degats_substi_min=(36*(100+stats_perso["Intel"]+0.80*stats_perso["pui"])/100+stats_perso["Dofeu"]+stats_perso["Do"])//1
-    degats_substi_max=(40*(100+stats_perso["Intel"]+0.80*stats_perso["pui"])/100+stats_perso["Dofeu"]+stats_perso["Do"])//1
-
-    soin_substi_min=(41*(100+stats_perso["Intel"])/100+stats_perso["Soin"])//1
-    soin_substi_max=(45*(100+stats_perso["Intel"])/100+stats_perso["Soin"])//1
-
-    tab_substi="""
-| Sort | Valeur min | Valeur max | Moyenne |
-| ----------- | ----------- | ----------- | ----------- |
-"""
-    tab_substi+="| degats | "+str(int(degats_substi_min))+" | "+str(int(degats_substi_max))+" | "+str(int((degats_substi_min+degats_substi_max)/2))+" |\n"
-    tab_substi+="| soin | "+str(int(soin_substi_min))+" | "+str(int(soin_substi_max))+" | "+str(int((soin_substi_min+soin_substi_max)/2))+" |\n"
-
-    st.write(tab_substi)
-    st.text("")
-
-with right_substi:
-    st.text("")
-    st.image(image_path+"substi.png")
-
-
-######################
-#martyr
-######################
-left_martyr, right_martyr = st.columns((1,1))
-with left_martyr:
-
-    st.write("## Martyr")
-
-    degats_martyr=(60*(100+stats_perso["Chance"]+0.80*stats_perso["pui"])/100+stats_perso["Doeau"]+stats_perso["Do"])//1
-
-    tab_martyr="""
-| Degats |
-| ----------- |
-"""
-    tab_martyr+="| "+str(int(degats_martyr))+" |\n"
-
-    st.write(tab_martyr)
-    st.text("")
-
-with right_martyr:
-    st.text("")
-    st.image(image_path+"martyr.png")
+st.markdown(table_style, unsafe_allow_html=True)

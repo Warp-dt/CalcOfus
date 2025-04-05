@@ -99,7 +99,7 @@ def get_db_data(url):
 
 def get_stats(url):
     data= get_db_data(url)
-
+    
     perso_stats=data["stuffStats"] # 1 element = 1 stat
     fmitems=data["fmItems"] # chaque element est un item sous forme dict, chaque element d'un item est un fm qui lui est rajouté
     fmglobal=data["fmGlobal"] #  1 element = 1 stat
@@ -109,6 +109,7 @@ def get_stats(url):
 
     perso={key: 0 for key in FR_KEYS}
 
+    perso["DB_surl"]=data["stuff"]["short_url"]
     perso["Lvl"]=data["stuff"]["character_level"]
     perso["db_name"]=data["stuff"]["name"]
     perso["PA"]=7
