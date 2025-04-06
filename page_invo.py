@@ -11,7 +11,7 @@ st.set_page_config(page_title="CalcInvo",page_icon=image_path+"logo_InvRoxx_tab.
 
 st.write("# Le calculateur de roxx de tes invo préférées")
 
-st.write("### Dans la suite de l'outil on part du principe que l'osa est lvl 200 et ses invo sont lvl 6")
+st.write("### Dans la suite de l'outil on part du principe que l'osa est lvl 200")
 
 
 ######################
@@ -90,10 +90,9 @@ else:
 #Variables générales
 ######################
 
-lvl_invo=6
 
 def calcul_vita(base,multi):
-    vita=base+multi*(stats_perso["Vita"]-1050)
+    vita=base+multi*max(stats_perso["Vita"]-1050,0)
     if vita>0 :
         return vita
     else:
@@ -105,185 +104,233 @@ def calcul_vita(base,multi):
 ######################
 INVO_LIST=["dragonnet",'momie','crapaud','tofu','craqueleur','bouftou']
 INVO_NOMS=["Dragonnet Rouge",'Momie koalak','Crapaud','Tofu','Craqueleur','Bouftou']
+LVL_INVOS=[1,2,3,4,5,6]
+
+stat_heredite={
+    1 : 0.3
+    ,2 : 0.3
+    ,3 : 0.3
+    ,4 : 0.3
+    ,5 : 0.4
+    ,6 : 0.5
+}
 
 invo_infos={
     "dragonnet" : {
         'nom' : "Dragonnet Rouge"
         ,'element' : "Intel"
         ,'do' : "Dofeu"
-        ,'stats_base' : 350
+        ,'stats_base' : [100,150,200,250,300,350]
         ,'vita_base' : 300
-        ,'vita_multiplicateur' : 0.2
+        ,'vita_multiplicateur' : [0.15,0.15,0.15,0.15,0.15,0.2]
         ,'sorts' : [
             {'nom' : "Dragofeu"
-             ,'vmin' : 41
-             ,'vmax' : 50
+             ,'vmin' : [14,19,24,29,34,41]
+             ,'vmax' : [23,28,33,38,43,50]
              ,'cc' : 0.15
-             ,'vmin_cc' : 46
-             ,'vmax_cc' : 55}
+             ,'vmin_cc' : [19,24,29,34,39,46]
+             ,'vmax_cc' : [28,33,38,43,48,55]}
             ,{'nom' : "Flamme Persistante"
-             ,'vmin' : 36
-             ,'vmax' : 45
+             ,'vmin' : [36,36,36,36,36]
+             ,'vmax' : [45,45,45,45,45]
              ,'cc' : 0
-             ,'vmin_cc' : 99999
-             ,'vmax_cc' : 99999}
+             ,'vmin_cc' : [0,0,0,0,0,0]
+             ,'vmax_cc' : [0,0,0,0,0,0]}
         ]        
     }
     ,"momie" : {
         'nom' : "Momie koalak"
         ,'element' : "Intel"
         ,'do' : "Dofeu"
-        ,'stats_base' : 350
+        ,'stats_base' : [70,105,150,180,220,350]
         ,'vita_base' : 180
-        ,'vita_multiplicateur' : 0.15
+        ,'vita_multiplicateur' : [0.1,0.1,0.1,0.1,0.1,0.15]
         ,'sorts' : [
             {'nom' : "Malédiction du koalak"
-             ,'vmin' : 26
-             ,'vmax' : 35
+             ,'vmin' : [17,18,19,20,21,26]
+             ,'vmax' : [26,27,28,29,30,35]
              ,'cc' : 0
-             ,'vmin_cc' : 99999
-             ,'vmax_cc' : 99999}
+             ,'vmin_cc' : [0,0,0,0,0,0]
+             ,'vmax_cc' : [0,0,0,0,0,0]}
             ,{'nom' : "Bandelette Soignante"
              ,'vmin' : 51
              ,'vmax' : 60
              ,"degats" : 40
              ,'cc' : 0
-             ,'vmin_cc' : 99999
-             ,'vmax_cc' : 99999}
+             ,'vmin_cc' : [0,0,0,0,0,0]
+             ,'vmax_cc' : [0,0,0,0,0,0]}
         ]        
     }
     ,"crapaud" : {
         'nom' : "Crapaud"
         ,'element' : "Chance"
         ,'do' : "Doeau"
-        ,'stats_base' : 350
+        ,'stats_base' : [100,150,200,250,300,350]
         ,'vita_base' : 300
-        ,'vita_multiplicateur' : 0.2
+        ,'vita_multiplicateur' : [0.15,0.15,0.15,0.15,0.15,0.2]
         ,'sorts' : [
             {'nom' : "Petit Splash"
-             ,'vmin' : 26
-             ,'vmax' : 29
+             ,'vmin' : [14,16,18,20,23,26]
+             ,'vmax' : [17,19,21,23,26,29]
              ,'cc' : 0.15
-             ,'vmin_cc' : 29
-             ,'vmax_cc' : 32}
+             ,'vmin_cc' : [17,19,21,23,26,29]
+             ,'vmax_cc' : [20,22,24,26,29,32]}
             ,{'nom' : "Grand Splash"
-             ,'vmin' : 29
-             ,'vmax' : 32
+             ,'vmin' : [18,19,20,21,24,29]
+             ,'vmax' : [21,22,23,24,27,32]
              ,'cc' : 0.15
-             ,'vmin_cc' : 31
-             ,'vmax_cc' : 34}
+             ,'vmin_cc' : [20,21,22,23,26,31]
+             ,'vmax_cc' : [23,24,24,26,29,34]}
         ]        
     }
     ,"tofu" : {
         'nom' : "Tofu"
         ,'element' : "Chance"
         ,'do' : "Doeau"
-        ,'stats_base' : 350
+        ,'stats_base' : [100,150,200,250,300,350]
         ,'vita_base' : 180
-        ,'vita_multiplicateur' : 0.15
+        ,'vita_multiplicateur' : [0.1,0.1,0.1,0.1,0.1,0.15]
         ,'sorts' : [
             {'nom' : "Beco du Tofu"
-             ,'vmin' : 14
-             ,'vmax' : 17
+             ,'vmin' : [7,8,9,10,12,14]
+             ,'vmax' : [10,11,12,13,15,17]
              ,'cc' : 0.05
-             ,'vmin_cc' : 16
-             ,'vmax_cc' : 19}
+             ,'vmin_cc' : [9,10,11,12,14,16]
+             ,'vmax_cc' : [12,13,14,15,17,19]}
             ,{'nom' : "Tofurieux"
-             ,'vmin' : 41
-             ,'vmax' : 45
+             ,'vmin' : [21,23,25,27,34,41]
+             ,'vmax' : [25,27,29,31,38,45]
              ,'cc' : 0
-             ,'vmin_cc' : 44
-             ,'vmax_cc' : 48}
+             ,'vmin_cc' : [0,0,0,0,0,0]
+             ,'vmax_cc' : [0,0,0,0,0,0]}
         ]        
     }
     ,"craqueleur" : {
         'nom' : "Craqueleur"
         ,'element' : "Agi"
         ,'do' : "Doair"
-        ,'stats_base' : 150
+        ,'stats_base' : [10,30,50,70,100,150]
         ,'vita_base' : 300
-        ,'vita_multiplicateur' : 0.2
+        ,'vita_multiplicateur' : [0.1,0.1,0.1,0.1,0.15,0.2]
         ,'sorts' : [
             {'nom' : "Ecrasement"
-             ,'vmin' : 28
-             ,'vmax' : 33
+             ,'vmin' : [15,17,19,22,25,28]
+             ,'vmax' : [19,21,23,26,29,33]
              ,'cc' : 0.05
-             ,'vmin_cc' : 35
-             ,'vmax_cc' : 35}
+             ,'vmin_cc' : [21,23,25,29,31,35]
+             ,'vmax_cc' : [21,23,25,29,31,35]}
             ,{'nom' : "Frappe Étourdissante"
-             ,'vmin' : 33
-             ,'vmax' : 37
+             ,'vmin' : [22,24,26,28,30,33]
+             ,'vmax' : [26,28,30,32,34,37]
              ,'cc' : 0.1
-             ,'vmin_cc' : 36
-             ,'vmax_cc' : 40}
+             ,'vmin_cc' : [25,27,29,31,33,36]
+             ,'vmax_cc' : [29,31,33,35,37,40]}
         ]        
     }
     ,"bouftou" : {
         'nom' : "Bouftou"
         ,'element' : "Agi"
         ,'do' : "Doair"
-        ,'stats_base' : 150
+        ,'stats_base' : [10,30,50,70,100,150]
         ,'vita_base' : 180
-        ,'vita_multiplicateur' : 0.2
+        ,'vita_multiplicateur' : [0.1,0.1,0.1,0.1,0.15,0.2]
         ,'sorts' : [
             {'nom' : "Morsure du Bouftou"
-             ,'vmin' : 31
-             ,'vmax' : 35
+             ,'vmin' : [18,20,22,24,26,31]
+             ,'vmax' : [22,24,26,28,30,35]
              ,'cc' : 0.05
-             ,'vmin_cc' : 35
-             ,'vmax_cc' : 35}
+             ,'vmin_cc' : [22,24,26,28,30,35]
+             ,'vmax_cc' : [22,24,26,28,30,35]}
             ,{'nom' : "Beuglement Assomant"
-             ,'vmin' : 28
-             ,'vmax' : 32
+             ,'vmin' : [13,16,19,22,25,28]
+             ,'vmax' : [17,20,23,26,29,32]
              ,'cc' : 0
-             ,'vmin_cc' : 99999
-             ,'vmax_cc' : 99999}
+             ,'vmin_cc' : [0,0,0,0,0,0]
+             ,'vmax_cc' : [0,0,0,0,0,0]}
         ]        
     }
 }
 
+
+pillskey=0
 for invo in invo_infos.keys():
     l_col, r_col = st.columns((1,1))
     with l_col:
 
         st.write(f"## {invo_infos[invo]['nom']}")
+        
+        #TO DO        
+        #################################
+        # moduler le lvl de base de l'invo selon le lvl de l'osa
+        #################################
+        lvl_base=6
+        lvl_invo_unchecked = l_col.pills("Lvl invocation", LVL_INVOS, selection_mode="single",default=lvl_base,key=pillskey)
+        pillskey+=1
+        if lvl_invo_unchecked in LVL_INVOS:
+            lvl_invo=lvl_invo_unchecked
+        else:
+            lvl_invo=lvl_base
 
-        stat_base=350 #A VERIFIER
-
-        stats_finales=invo_infos[invo]["stats_base"]+stats_perso[invo_infos[invo]["element"]]/2
+        stats_finales=invo_infos[invo]["stats_base"][lvl_invo-1]+stats_perso[invo_infos[invo]["element"]]/2
         do_finaux=stats_perso[invo_infos[invo]["do"]]/2
+        soin_finaux=stats_perso["Soin"]/2
 
         tab_vita="""
     | Vitalité | Boucliers bonus par mob (+20% vita) |
     | ----------- | ----------- |
     """
-        tab_vita+="| "+str(int(calcul_vita(invo_infos[invo]['vita_base'],invo_infos[invo]['vita_multiplicateur'])))+" | "+str(int(calcul_vita(invo_infos[invo]['vita_base'],invo_infos[invo]['vita_multiplicateur'])*0.2))+"\n"
+        tab_vita+="| "+str(int(calcul_vita(invo_infos[invo]['vita_base'],invo_infos[invo]['vita_multiplicateur'][lvl_invo-1])))+" | "+str(int(calcul_vita(invo_infos[invo]['vita_base'],invo_infos[invo]['vita_multiplicateur'][lvl_invo-1])*0.2))+"\n"
 
         st.write(tab_vita)
         st.text("")
 
-        tab_sorts="| Sort | min | max | min cc | max cc | %cc | Moyenne |\n"
-        tab_sorts+="| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |\n"
+        
+        if invo!='momie':
+            tab_sorts="| Sort | min | max | min cc | max cc | %cc | Moyenne |\n"
+            tab_sorts+="| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |\n"
 
-        for sort in invo_infos[invo]['sorts']:
-            min_val=int((sort["vmin"]*(100+stats_finales)/100+do_finaux)//1)
-            max_val=int((sort["vmax"]*(100+stats_finales)/100+do_finaux)//1)
-            
-            if sort["cc"]>0:
-                cc=int(sort["cc"]*100)
-                min_val_cc=int((sort["vmin_cc"]*(100+stats_finales)/100+do_finaux)//1)
-                max_val_cc=int((sort["vmax_cc"]*(100+stats_finales)/100+do_finaux)//1)
-                moy_val=int(((max_val+min_val)/2*(1-sort["cc"])+(max_val_cc+min_val_cc)/2*sort["cc"])//1)
-            else:
-                cc='-'
-                min_val_cc='-'
-                max_val_cc='-'
-                moy_val=int((max_val+min_val)/2//1)
+            for sort in invo_infos[invo]['sorts']: 
+                min_val=int((sort["vmin"][lvl_invo-1]*(100+stats_finales)/100+do_finaux)//1)
+                max_val=int((sort["vmax"][lvl_invo-1]*(100+stats_finales)/100+do_finaux)//1)
+                
+                if sort["cc"]>0:
+                    cc=int(sort["cc"]*100)
+                    min_val_cc=int((sort["vmin_cc"][lvl_invo-1]*(100+stats_finales)/100+do_finaux)//1)
+                    max_val_cc=int((sort["vmax_cc"][lvl_invo-1]*(100+stats_finales)/100+do_finaux)//1)
+                    moy_val=int(((max_val+min_val)/2*(1-sort["cc"])+(max_val_cc+min_val_cc)/2*sort["cc"])//1)
+                else:
+                    cc='-'
+                    min_val_cc='-'
+                    max_val_cc='-'
+                    moy_val=int((max_val+min_val)/2//1)
 
-            tab_sorts+=f"| {sort['nom']} | {min_val} | {max_val} | {min_val_cc} | {max_val_cc} | {cc} | **{moy_val}** |\n"
+                tab_sorts+=f"| {sort['nom']} | {min_val} | {max_val} | {min_val_cc} | {max_val_cc} | {cc} | **{moy_val}** |\n"
        
-        st.markdown(tab_sorts)
+            st.markdown(tab_sorts)
+        else: #cas de la momie avec son sort de soin là
+            #sort de dégats
+            tab_malé="| Sort | min | max | Moyenne |\n"
+            tab_malé+="| ----------- | ----------- | ----------- | ----------- |\n"
+            malé = invo_infos[invo]['sorts'][0]
+            min_val=int((malé["vmin"][lvl_invo-1]*(100+stats_finales)/100+do_finaux)//1)
+            max_val=int((malé["vmax"][lvl_invo-1]*(100+stats_finales)/100+do_finaux)//1)
+            moy_val=int((max_val+min_val)/2//1)
+            tab_malé+=f"| {malé['nom']} | {min_val} | {max_val} | **{moy_val}** |\n"
+
+            #sort de soin
+            tab_soin="| Sort | Soin min | Soin max | Soin Moyen | Dégats subis (par la momie) |\n"
+            tab_soin+="| ----------- | ----------- | ----------- | ----------- | ----------- |\n"
+            soin = invo_infos[invo]['sorts'][1]
+            min_soin=int((soin["vmin"]*(100+stats_finales)/100+soin_finaux)//1)
+            max_soin=int((soin["vmax"]*(100+stats_finales)/100+soin_finaux)//1)
+            moy_soin=int((max_soin+min_soin)/2//1)
+            dégats=int((soin["degats"]*(100+stats_finales)/100+do_finaux)//1)
+            tab_soin+=f"| {soin['nom']} | {min_soin} | {max_soin} | **{moy_soin}** | {dégats} |\n"
+
+            st.markdown(tab_malé)
+            st.markdown(tab_soin)
         st.text("")
+
 
     with r_col:
         st.text("")
