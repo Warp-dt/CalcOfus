@@ -118,6 +118,7 @@ stat_heredite={
 invo_infos={
     "dragonnet" : {
         'nom' : "Dragonnet Rouge"
+        ,'lvl' : [117,167]
         ,'element' : "Intel"
         ,'do' : "Dofeu"
         ,'stats_base' : [100,150,200,250,300,350]
@@ -140,6 +141,7 @@ invo_infos={
     }
     ,"momie" : {
         'nom' : "Momie koalak"
+        ,'lvl' : [69,119]
         ,'element' : "Intel"
         ,'do' : "Dofeu"
         ,'stats_base' : [70,105,150,180,220,350]
@@ -163,6 +165,7 @@ invo_infos={
     }
     ,"crapaud" : {
         'nom' : "Crapaud"
+        ,'lvl' : [105,155]
         ,'element' : "Chance"
         ,'do' : "Doeau"
         ,'stats_base' : [100,150,200,250,300,350]
@@ -185,6 +188,7 @@ invo_infos={
     }
     ,"tofu" : {
         'nom' : "Tofu"
+        ,'lvl' : [57,107]
         ,'element' : "Chance"
         ,'do' : "Doeau"
         ,'stats_base' : [100,150,200,250,300,350]
@@ -207,6 +211,7 @@ invo_infos={
     }
     ,"craqueleur" : {
         'nom' : "Craqueleur"
+        ,'lvl' : [111,161]
         ,'element' : "Agi"
         ,'do' : "Doair"
         ,'stats_base' : [10,30,50,70,100,150]
@@ -229,6 +234,7 @@ invo_infos={
     }
     ,"bouftou" : {
         'nom' : "Bouftou"
+        ,'lvl' : [63,113]
         ,'element' : "Agi"
         ,'do' : "Doair"
         ,'stats_base' : [10,30,50,70,100,150]
@@ -263,7 +269,13 @@ for invo in invo_infos.keys():
         #################################
         # moduler le lvl de base de l'invo selon le lvl de l'osa
         #################################
-        lvl_base=6
+        if stats_perso["Lvl"]<invo_infos[invo]['lvl'][0]:
+            lvl_base=4
+        elif stats_perso["Lvl"]<invo_infos[invo]['lvl'][1]:
+            lvl_base=5
+        else:
+            lvl_base=6
+
         lvl_invo_unchecked = l_col.pills("Lvl invocation", LVL_INVOS, selection_mode="single",default=lvl_base,key=pillskey)
         pillskey+=1
         if lvl_invo_unchecked in LVL_INVOS:
