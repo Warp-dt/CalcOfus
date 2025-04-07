@@ -321,13 +321,13 @@ for invo in invo_infos.keys():
             st.markdown(tab_sorts)
         else: #cas de la momie avec son sort de soin là
             #sort de dégats
-            tab_malé="| Sort | min | max | Moyenne |\n"
-            tab_malé+="| ----------- | ----------- | ----------- | ----------- |\n"
+            tab_malé="| Sort | Dégats min | Dégats max | Dégats moyens | Soin min | Soin max | Soin moyen |\n"
+            tab_malé+="| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |\n"
             malé = invo_infos[invo]['sorts'][0]
             min_val=int((malé["vmin"][lvl_invo-1]*(100+stats_finales)/100+do_finaux)//1)
             max_val=int((malé["vmax"][lvl_invo-1]*(100+stats_finales)/100+do_finaux)//1)
             moy_val=int((max_val+min_val)/2//1)
-            tab_malé+=f"| {malé['nom']} | {min_val} | {max_val} | **{moy_val}** |\n"
+            tab_malé+=f"| {malé['nom']} | {min_val} | {max_val} | **{moy_val}** | {int((min_val*0.6)//1)} | {int((max_val*0.6)//1)} | **{int((moy_val*0.6)//1)}** ||\n"
 
             #sort de soin
             tab_soin="| Sort | Soin min | Soin max | Soin Moyen | Dégats subis (par la momie) |\n"
