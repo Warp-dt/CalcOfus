@@ -92,7 +92,7 @@ else:
 
 
 def calcul_vita(base,multi):
-    vita=base+multi*max(stats_perso["Vita"]-1050,0)
+    vita=base+multi*max(stats_perso["Vita"]-(stats_perso["Lvl"]*5+50),0)
     if vita>0 :
         return vita
     else:
@@ -122,7 +122,7 @@ invo_infos={
         ,'element' : "Intel"
         ,'do' : "Dofeu"
         ,'stats_base' : [100,150,200,250,300,350]
-        ,'vita_base' : 300
+        ,'vita_base' : 100+stats_perso["Lvl"]
         ,'vita_multiplicateur' : [0.15,0.15,0.15,0.15,0.15,0.2]
         ,'sorts' : [
             {'nom' : "Dragofeu"
@@ -145,7 +145,7 @@ invo_infos={
         ,'element' : "Intel"
         ,'do' : "Dofeu"
         ,'stats_base' : [70,105,150,180,220,350]
-        ,'vita_base' : 180
+        ,'vita_base' : (60+stats_perso["Lvl"]*0.6)//1
         ,'vita_multiplicateur' : [0.1,0.1,0.1,0.1,0.1,0.15]
         ,'sorts' : [
             {'nom' : "Malédiction du koalak"
@@ -169,7 +169,7 @@ invo_infos={
         ,'element' : "Chance"
         ,'do' : "Doeau"
         ,'stats_base' : [100,150,200,250,300,350]
-        ,'vita_base' : 300
+        ,'vita_base' : 100+stats_perso["Lvl"]
         ,'vita_multiplicateur' : [0.15,0.15,0.15,0.15,0.15,0.2]
         ,'sorts' : [
             {'nom' : "Petit Splash"
@@ -192,7 +192,7 @@ invo_infos={
         ,'element' : "Chance"
         ,'do' : "Doeau"
         ,'stats_base' : [100,150,200,250,300,350]
-        ,'vita_base' : 180
+        ,'vita_base' : (60+stats_perso["Lvl"]*0.6)//1
         ,'vita_multiplicateur' : [0.1,0.1,0.1,0.1,0.1,0.15]
         ,'sorts' : [
             {'nom' : "Beco du Tofu"
@@ -215,7 +215,7 @@ invo_infos={
         ,'element' : "Agi"
         ,'do' : "Doair"
         ,'stats_base' : [10,30,50,70,100,150]
-        ,'vita_base' : 300
+        ,'vita_base' : 100+stats_perso["Lvl"]
         ,'vita_multiplicateur' : [0.1,0.1,0.1,0.1,0.15,0.2]
         ,'sorts' : [
             {'nom' : "Ecrasement"
@@ -238,7 +238,7 @@ invo_infos={
         ,'element' : "Agi"
         ,'do' : "Doair"
         ,'stats_base' : [10,30,50,70,100,150]
-        ,'vita_base' : 180
+        ,'vita_base' : (60+stats_perso["Lvl"]*0.6)//1
         ,'vita_multiplicateur' : [0.1,0.1,0.1,0.1,0.15,0.2]
         ,'sorts' : [
             {'nom' : "Morsure du Bouftou"
