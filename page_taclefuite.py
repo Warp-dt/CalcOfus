@@ -9,11 +9,70 @@ image_path='images/'
 
 st.set_page_config(page_title="CalcoTac",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
 
-st.write("## Page en construction")
+st.write("## Calculateur de Tacle/Fuite")
 
 
 ######################
 #SIDEBAR
 ######################
 
-st.sidebar.image(image_path+"logo_nom_transp.png" )
+st.sidebar.image(image_path+"calcoTac_logo_nom_transp.png" )
+
+
+######################
+#Calculateur
+######################
+with st.container(border=True):    
+    st.write('### Fuyard')
+    fuitecol, pmcol, pacol = st.columns((1,1,1))
+    fuite=fuitecol.number_input(label="Fuite",min_value=0,max_value=None,value=50)
+    pm=pmcol.number_input(label="PM",min_value=0,max_value=None,value=6)
+    pa=pacol.number_input(label="PA",min_value=0,max_value=None,value=12)
+
+
+with st.container(border=True):    
+    st.write('### Tacleur(s)')
+    nb_tac=st.number_input(label="Nombre de Tacleurs",min_value=1,max_value=3,value=1)
+
+    tacs = st.columns((1,1,1))
+    tacles=[0,0,0]
+    for t in range(nb_tac):
+        tacles[t]=tacs[t].number_input(label=f"Tacleur {t+1}",min_value=0,max_value=None,value=50,key=100+t)
+    # st.write(tacles)
+
+p1=min(max((fuite+2)/(2*(tacles[0]+2)),0),1)
+p2=min(max((fuite+2)/(2*(tacles[1]+2)),0),1)
+p3=min(max((fuite+2)/(2*(tacles[2]+2)),0),1)
+ptot=p1*p2*p3
+tab_res="""
+| PM perdus | PA perdus |
+| ----------- | ----------- |
+"""
+tab_res+=f"""| {int(pm-(pm*ptot)//1)} | {int(pa-(pa*ptot)//1)} |"""
+
+st.write(tab_res)
+
+table_style = """
+<style>
+    table {
+        width: 100%;  /* Le tableau prend toute la largeur disponible */
+        border-collapse: collapse; /* Supprime les espaces entre les bordures */
+        text-align: center; /* Centre le texte dans toutes les cellules */
+
+    }
+    th, td {
+        border: 1px solid white;  /* Bordures blanches autour des cellules */
+        padding: 8px;  /* Ajoute un espace de 8px à l'intérieur des cellules */
+    }
+    th {
+        background-color: #333B00; /* Couleur d'arrière-plan des en-têtes */
+        color: #FAFAFA; /* Couleur du texte des en-têtes */
+        
+    }
+    td {
+        background-color: #262730; /* Fond sombre des cellules */
+        color: #FAFAFA; /* Texte blanc */
+    }
+</style>
+"""
+st.markdown(table_style, unsafe_allow_html=True)
