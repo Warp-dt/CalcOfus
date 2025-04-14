@@ -87,6 +87,11 @@ st.html("""
                     font-size:20px'>
 Si vous le voulez vous pouvez aussi suivre mes différents projets :
         </div>""")
+with st.container(border=True):    
+    st.page_link("https://discord.gg/dfDV8Zvwqp",label='**Dofus Touls**',icon="🗨️")
+    st.write("Sur ce serveur discord tu peux retrouver toutes les ressources autour de mes projets ainsi qu'un endroit pour discuter !")
+    st.link_button("Rejoins nous sur discord 🤩", "https://discord.gg/dfDV8Zvwqp", help=None, type="secondary", icon="🤩", disabled=False, use_container_width=True)
+
 ##############
 # Réseaux
 ##############
@@ -100,25 +105,27 @@ with twitch:
 with youtube:
     with st.container(border=True):
         st.page_link("https://www.youtube.com/channel/UCVMa-curO2R2fJNQALwB2tQ",label='**Youtube**',icon="🔴", use_container_width=True)
-        st.write("Ma chaîne youtube est remplie de matchs de tournois commentés, de retransmission de mes participations et plus encore")
+        st.write("Ma chaîne youtube est remplie de matchs de tournois commentés, de retransmission de mes participations, et plus encore")
         st.link_button("Abonne toi pour ne rien manquer", "https://www.youtube.com/channel/UCVMa-curO2R2fJNQALwB2tQ", help=None, type="secondary", icon="🎥", disabled=False, use_container_width=True)
 
 with warpBot:
     with st.container(border=True):
-        st.page_link("https://discord.com/oauth2/authorize?client_id=1288167324586872842",label='**WarpBot**',icon="🤖")
-        st.write("Ce bot discord sert à vous recommander les meilleurs stuff pvp actuellement, donnez lui un élément et ils vous rendra une liste de liens dofusbook de qualité incomparable 🤩")
+        st.page_link("https://discord.com/oauth2/authorize?client_id=1288167324586872842",label='**MetaPano**',icon="🤖")
+        st.write("Ce bot discord vous renseigne sur les meilleurs stuff pvp du moment🤩")
         st.link_button("Ajoute le sur discord 🤖", "https://discord.com/oauth2/authorize?client_id=1288167324586872842", help=None, type="secondary", icon="🤖", disabled=False, use_container_width=True)
 
 
-vide1,dofusbook, vide2 = st.columns((1,1,1))
-with dofusbook:
+warp_bliblio,metapano, vide2 = st.columns((1,1,1))
+with warp_bliblio:
     with st.container(border=True):    
-        st.page_link("https://d-bk.net/fr/tl/11eJ",label='**Biblio DofusBook**',icon="📚", use_container_width=True)
+        st.page_link("https://d-bk.net/fr/tl/11eJ",label='**Biblio de Warp**',icon="📚", use_container_width=True)
         st.write("Tu peux y retrouver plus de 500 stuffs faits mains !")
         st.link_button("C'est par ici les stuffs!", "https://d-bk.net/fr/tl/11eJ", help=None, type="secondary", icon="🥋", disabled=False, use_container_width=True)
-with vide1:
-    with st.container(border=True):
-        pass
+with metapano:
+    with st.container(border=True):    
+        st.page_link("https://d-bk.net/fr/tl/4BAS",label='**Biblio MetaPano 🤖**',icon="📚", use_container_width=True)
+        st.write("Une sélection des meilleurs stuff méta du moment !")
+        st.link_button("C'est par ici les stuffs!", "https://d-bk.net/fr/tl/4BAS", help=None, type="secondary", icon="🥋", disabled=False, use_container_width=True)
 with vide2:
     with st.container(border=True):
         pass
