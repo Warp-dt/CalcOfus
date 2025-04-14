@@ -67,16 +67,16 @@ with col3:
         st.write("Calculateur de dégats de poussée")
 
 col4, col5,co6 = st.columns((1,1,1))
-with col5:
+with col4:
     with st.container(border=True):
         st.page_link("page_sorts.py",label='**CalcSorts**',icon=":material/sword_rose:", use_container_width=True)
         st.write("Calculateur de ligne de dégats de sort")
 
         
-# with col5:
-#     with st.container(border=True):
-#         st.page_link("page_sorts.py",label='**CalcSorts**',icon=":material/sword_rose:", use_container_width=True)
-#         st.write("Calculateur de ligne de dégats de sort")
+with col5:
+    with st.container(border=True):
+        st.page_link("page_taclefuite.py",label='**CalcoTac**',icon=":material/do_not_step:", use_container_width=True)
+        st.write("Calculateur de Tacle/Fuite")
 # with co6:
 #     with st.container(border=True):
 #         st.page_link("page_dopou.py",label='**CalcOpou**',icon=":material/directions_alt:", use_container_width=True)

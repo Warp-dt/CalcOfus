@@ -19,7 +19,7 @@ st.write("### Dans la suite de l'outil on part du principe que l'osa est lvl 200
 ######################
 
 st.sidebar.image(image_path+"calcinvo_logo_nom_transp.png" )
-st.sidebar.page_link("https://d-bk.net/fr/tl/11eJ",label='**Biblio DofusBook**',icon="📚")
+st.sidebar.page_link("https://d-bk.net/fr/tl/4BAS",label='**Biblio DofusBook**',icon="📚")
 
 
 db_stats="no_db"

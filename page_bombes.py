@@ -17,7 +17,7 @@ st.write("## Calculateur de dégats des bombes et murs")
 ######################
 
 st.sidebar.image(image_path+"calcoboom_logo_nom_transp.png" )
-st.sidebar.page_link("https://d-bk.net/fr/tl/11eJ",label='**Biblio DofusBook**',icon="📚")
+st.sidebar.page_link("https://d-bk.net/fr/tl/4BAS",label='**Biblio DofusBook**',icon="📚")
 
 
 db_stats="no_db"
@@ -344,3 +344,27 @@ with right_BA:
     st.image(image_path+"Tornabombe.png")
 
 st.write("Merci au discord roublard pour l'aide apportée lors de la création de l'outil ❤️")
+
+table_style = """
+<style>
+    table {
+        width: 100%;  /* Le tableau prend toute la largeur disponible */
+        border-collapse: collapse; /* Supprime les espaces entre les bordures */
+        text-align: center; /* Centre le texte dans toutes les cellules */
+
+    }
+    th, td {
+        border: 1px solid white;  /* Bordures blanches autour des cellules */
+        padding: 8px;  /* Ajoute un espace de 8px à l'intérieur des cellules */
+    }
+    th {
+        background-color: #333B00; /* Couleur d'arrière-plan des en-têtes */
+        color: #FAFAFA; /* Couleur du texte des en-têtes */
+    }
+    td {
+        background-color: #262730; /* Fond sombre des cellules */
+        color: #FAFAFA; /* Texte blanc */
+    }
+</style>
+"""
+st.markdown(table_style, unsafe_allow_html=True)
