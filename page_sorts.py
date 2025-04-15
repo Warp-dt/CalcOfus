@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 image_path='images/'
 
-from st_material_table import st_material_table
-
 
 
 ######################
