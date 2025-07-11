@@ -77,10 +77,10 @@ with col5:
     with st.container(border=True):
         st.page_link("page_taclefuite.py",label='**CalcoTac**',icon=":material/do_not_step:", use_container_width=True)
         st.write("Calculateur de Tacle/Fuite")
-# with co6:
-#     with st.container(border=True):
-#         st.page_link("page_dopou.py",label='**CalcOpou**',icon=":material/directions_alt:", use_container_width=True)
-#         st.write("Calculateur de dégats de poussée")
+with co6:
+    with st.container(border=True):
+        st.page_link("page_persofus.py",label='**PersOfus**',icon="🕵️‍♂️", use_container_width=True)
+        st.write("Générateur de lien vers les pages perso à partir du nom de compte.")
 
 st.html("""
         <div style='text-align: center; 
