@@ -12,6 +12,7 @@ pg = st.navigation([
     st.Page("page_dopou.py", title="Dopou", icon=":material/directions_alt:"),
     st.Page("page_taclefuite.py", title="Tacle/Fuite", icon=":material/do_not_step:"),
     st.Page("page_persofus.py", title="Pages perso", icon="🕵️‍♂️"),
+    st.Page("page_jda3.py", title="Compo JDA#3", icon=":material/list_alt:"),
     # st.Page("page_ret.py", title="Retrait PA/PM", icon=":material/star:"),
     # st.Page("page_steam.py", title="Tourelles Steamer", icon=":material/star:"),
 
