@@ -1,5 +1,8 @@
 import streamlit as st
 
+image_path='images/'
+st.sidebar.image(image_path+"logo_persofus.png" )
+
 st.title("Pages perso")
 
 player_name = st.text_input("Nom de compte (format nom#1234)")

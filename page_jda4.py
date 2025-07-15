@@ -1,5 +1,10 @@
 import streamlit as st
 import pandas as pd
+
+image_path='images/'
+st.sidebar.image(image_path+"logo_jda4.png" )
+
+
 st.title("Compositions JDA#4")
 
 df=[{'C1': 'cra', 'C3': 'ecaflip', 'C2': 'xelor'},
