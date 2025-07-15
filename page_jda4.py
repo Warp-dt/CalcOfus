@@ -212,22 +212,21 @@ points={'cra': 0,
         'steamer': 0,
         'xelor': 0,
         'zobal': 0}
-points_default={'cra': 9,
-        'ecaflip': 11,
-        'eniripsa': 13,
-        'enutrof': 10,
-        'feca': 11,
-        'iop': 7,
-        'osamodas': 12,
-        'pandawa': 10,
-        'roublard': 7,
-        'sacrieur': 10,
-        'sadida': 10,
-        'sram': 4,
-        'steamer': 10,
-        'xelor': 14,
-        'zobal': 10}
-
+points_default={'cra': 4,
+        'ecaflip': 6,
+        'eniripsa': 9,
+        'enutrof': 6,
+        'feca': 7,
+        'iop': 3,
+        'osamodas': 8,
+        'pandawa': 5,
+        'roublard': 3,
+        'sacrieur': 6,
+        'sadida': 6,
+        'sram': 0,
+        'steamer': 5,
+        'xelor': 10,
+        'zobal': 7}
 
 
 
