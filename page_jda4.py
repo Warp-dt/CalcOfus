@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-st.title("Compositions JDA#3")
+st.title("Compositions JDA#4")
 
 df=[{'C1': 'cra', 'C3': 'ecaflip', 'C2': 'xelor'},
  {'C1': 'ecaflip', 'C3': 'feca', 'C2': 'steamer'},
