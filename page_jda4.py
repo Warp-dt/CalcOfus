@@ -265,3 +265,4 @@ except:
 st.write("### Nombre de compositions trouvées :", str(len(compositions)))
 st.dataframe(compositions,hide_index=True)
 
+st.image(image_path+"restrictions_JDA#4.png" )
