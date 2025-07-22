@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 image_path='images/'
-st.set_page_config(page_title="CalcOfus",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
+st.set_page_config(page_title="CalcOfus",page_icon=image_path+"logo_InvRoxx_tab.png",layout="centered")
 
 st.sidebar.image(image_path+"logo_jda4.png" )
 
