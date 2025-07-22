@@ -2,10 +2,12 @@ import streamlit as st
 import pandas as pd
 
 image_path='images/'
+st.set_page_config(page_title="CalcOfus",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
+
 st.sidebar.image(image_path+"logo_jda4.png" )
 
 
-st.title("Compositions JDA#4")
+st.title("Compositions Finales JDA#4")
 
 df=[{'C1': 'cra', 'C3': 'ecaflip', 'C2': 'xelor'},
  {'C1': 'ecaflip', 'C3': 'feca', 'C2': 'steamer'},
@@ -195,6 +197,7 @@ CLASSES=['cra',
 'xelor',
 'zobal']
 
+
 list_stats_images=[image_path+"JDA4_Compo les plus jouées.png",
                   image_path+"JDA4_Nombre de pick des classes.png",
                   image_path+"JDA4_Duos les plus joués.png",
@@ -205,6 +208,13 @@ list_captions=["JDA#4 - Compositions les plus jouées",
                "JDA#4 - Heatmap des duos les plus joués"]
 st.image(list_stats_images, caption=list_captions, use_container_width=True)
 
+st.write("## Liste des 154 équipes inscrites")
+compos=pd.read_csv("data/compositions_JDA#4.csv",sep=";")
+st.dataframe(compos,hide_index=True,on_select='ignore')
+
+
+
+st.title("Compositions Possibles JDA#4")
 
 # classes_voulues=st.text_input("Classes voulues (séparées par des virgules)", value="",placeholder="ex: osamodas,enutrof",autocomplete="sram,ecaflip")
 classes_voulues=st.multiselect("Classes voulues",options=CLASSES, default=[],placeholder="Sélectionnez les classes voulues",max_selections=3)

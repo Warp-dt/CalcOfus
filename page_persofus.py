@@ -1,6 +1,8 @@
 import streamlit as st
 
+
 image_path='images/'
+st.set_page_config(page_title="CalcOfus",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
 st.sidebar.image(image_path+"logo_persofus.png" )
 
 st.title("Pages perso")
