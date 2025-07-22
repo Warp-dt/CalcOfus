@@ -194,6 +194,18 @@ CLASSES=['cra',
 'steamer',
 'xelor',
 'zobal']
+
+list_stats_images=[image_path+"JDA4_Compo les plus jouées.png",
+                  image_path+"JDA4_Nombre de pick des classes.png",
+                  image_path+"JDA4_Duos les plus joués.png",
+                  image_path+"JDA4_heat_duos les plus joués.png"]
+list_captions=["JDA#4 - Compositions les plus jouées",
+               "JDA#4 - Nombre de pick des classes",
+               "JDA#4 - Duos les plus joués",
+               "JDA#4 - Heatmap des duos les plus joués"]
+st.image(list_stats_images, caption=list_captions, use_container_width=True)
+
+
 # classes_voulues=st.text_input("Classes voulues (séparées par des virgules)", value="",placeholder="ex: osamodas,enutrof",autocomplete="sram,ecaflip")
 classes_voulues=st.multiselect("Classes voulues",options=CLASSES, default=[],placeholder="Sélectionnez les classes voulues",max_selections=3)
 classes_interdites=st.multiselect("Classes interdites",options=CLASSES, default=[],placeholder="Sélectionnez les classes dont vous ne voulez pas")
