@@ -37,12 +37,12 @@ st.html('<div style="text-align: center; font-size: 50px;font-weight: bold"> Cal
 st.html("""
         <div style='text-align: center; 
                     font-size:20px'>
-        Sur cette page vous pouvez retrouver les différents outils que j'ai créé pour vous aider dans votre théorycraft.
+        Sur cette page vous pouvez retrouver les différents outils que j'ai créé pour vous aider dans votre aventure sur Dofus Touch.
         </div>""")
 st.html("""
         <div style='text-align: center; 
                     font-size:20px'>
-Utilisez la barre sur la gauche pour naviguer entre les outils, ou bien cliquer sur les noms ci-dessous.
+Utilisez la barre sur la gauche pour naviguer entre les outils, ou bien cliquer sur les noms des outils ci-dessous.
         </div>""")
 
 ##############
@@ -66,22 +66,32 @@ with col3:
         st.page_link("page_dopou.py",label='**CalcOpou**',icon=":material/directions_alt:", use_container_width=True)
         st.write("Calculateur de dégats de poussée")
 
-col4, col5,co6 = st.columns((1,1,1))
+col4, col5,col6 = st.columns((1,1,1))
 with col4:
     with st.container(border=True):
         st.page_link("page_sorts.py",label='**CalcSorts**',icon=":material/sword_rose:", use_container_width=True)
         st.write("Calculateur de ligne de dégats de sort")
-
-        
 with col5:
     with st.container(border=True):
         st.page_link("page_taclefuite.py",label='**CalcoTac**',icon=":material/do_not_step:", use_container_width=True)
         st.write("Calculateur de Tacle/Fuite")
-with co6:
+with col6:
     with st.container(border=True):
-        st.page_link("page_persofus.py",label='**PersOfus**',icon="🕵️‍♂️", use_container_width=True)
+        st.page_link("page_persofus.py",label='**PersOfus**',icon=":material/data_loss_prevention:", use_container_width=True)
         st.write("Générateur de lien vers les pages perso à partir du nom de compte.")
 
+col7, col8,col9 = st.columns((1,1,1))
+with col7:
+    with st.container(border=True):
+        st.page_link("page_jda4.py",label="**Stats JDA#4**", icon=":material/bar_chart:", use_container_width=True)
+        st.text("Stats sur le tournois interserveur de 2025 :")
+        st.link_button("La JDA #4 ⚔️", "https://ktarena.com/fr/253-la-joute-des-abimes", help=None, type="secondary", icon="⚔️", disabled=False, use_container_width=True)
+with col8:
+    with st.container(border=True):
+        pass
+with col9:
+    with st.container(border=True):
+        pass
 st.html("""
         <div style='text-align: center; 
                     font-size:20px'>
