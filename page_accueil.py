@@ -1,14 +1,29 @@
 import streamlit as st
 image_path='images/'
 
-
-
-
 ######################
 # Page Title
 ######################
 
 st.set_page_config(page_title="CalcOfus",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
+
+
+GA_TRACKING_ID = "G-G5LKNFXD3P"  # remplace avec ton ID
+
+ga_code = f"""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_TRACKING_ID}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', '{GA_TRACKING_ID}');
+</script>
+"""
+
+# Injecter dans la page via components
+import streamlit.components.v1 as components
+components.html(ga_code, height=0, width=0)
 
 # import platform
 # plat=platform.platform()
@@ -42,7 +57,7 @@ st.html("""
 st.html("""
         <div style='text-align: center; 
                     font-size:20px'>
-Utilisez la barre sur la gauche pour naviguer entre les outils, ou bien cliquer sur les noms des outils ci-dessous.
+Utilisez la barre sur la gauche pour naviguer entre les outils, ou bien cliquez sur les noms des outils ci-dessous.
         </div>""")
 
 ##############

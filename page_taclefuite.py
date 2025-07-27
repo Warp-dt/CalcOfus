@@ -39,6 +39,7 @@ with st.container(border=True):
     for t in range(nb_tac):
         tacles[t]=tacs[t].number_input(label=f"Tacleur {t+1}",min_value=0,max_value=None,value=50,key=100+t)
     # st.write(tacles)
+    
 
 p1=min(max((fuite+2)/(2*(tacles[0]+2)),0),1)
 p2=min(max((fuite+2)/(2*(tacles[1]+2)),0),1)

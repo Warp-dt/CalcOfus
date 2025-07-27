@@ -13,8 +13,9 @@ pg = st.navigation([
     st.Page("page_taclefuite.py", title="Tacle/Fuite", icon=":material/do_not_step:"),
     st.Page("page_persofus.py", title="Pages perso", icon=":material/data_loss_prevention:"),
     st.Page("page_jda4.py", title="Stats JDA#4", icon=":material/bar_chart:"),
-    # st.Page("page_ret.py", title="Retrait PA/PM", icon=":material/star:"),
-    # st.Page("page_steam.py", title="Tourelles Steamer", icon=":material/star:"),
+    st.Page("8_formulofus.py", title="Formules Dofus Touch", icon=":material/function:"),
+    # st.Page(pages_path+"page_ret.py", title="Retrait PA/PM", icon=":material/star:"),
+    # st.Page(pages_path+"page_steam.py", title="Tourelles Steamer", icon=":material/star:"),
 
 
 ])
