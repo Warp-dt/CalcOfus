@@ -61,7 +61,7 @@ st.markdown("""
 Sorts comme rempart ou armure de sel qui appliquent une réduction fixe.\n
 Cette réduction s'applique après les résistances fixes et % mais avant les %dommages finaux.
 """)
-st.subheader("Formules :")
+st.subheader("Formule :")
 st.latex(r'''
 \text{Réduction} = \text{Base} \times \frac{100 + 5 \times \text{Lvl lançeur}}{100}
 ''')
@@ -71,6 +71,40 @@ st.latex(r'''
 ''')
 st.header("3. Résistances/Réductions de dégats",divider="gray")
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_9")
+st.markdown("""
+Pour déterminer les dégats finaux, sont pris en compte dans l'ordre:
+- Résistances Fixes (résistances élémentaires & résistances critiques)
+- Résistances %
+- Sorts de réduction de dommages type rempart
+- % dommages subis ou occasionnés
+""")
+st.subheader("Formule :")
+st.latex(r'''
+\text{Dégats finaux} = ((\text{Dégats} - \text{Résistances fixes}) \times (1-\frac{ \text{Résistances\%} }{100}) - \text{sorts de réduction}) \times \text{\%dommages subis}
+''')
+st.subheader("Exemple :")
+st.markdown("""
+Un joueur reçoit une attaque feu faisant 1000 de dégats sur poutch, il a :
+- 50 résistances fixes feu
+- 30% résistances feu
+- un rempart sur lui
+- une vulnérabilité sur lui (x115% dommages subis)
+""")
+st.latex(r'''
+\text{Dégâts après Ré fixes} = 1000 - 50 = 950
+''')
+st.latex(r'''
+\text{Dégâts après Ré \%} = 950 \times (1- \frac{30}{100}) = 950 \times 0.7 = 665
+''')
+st.latex(r'''
+\text{Dégâts après Rempart} = 665-143=522
+''')
+
+st.latex(r'''
+\text{Dégâts après Vulnérabilité} = 522 \times 1.15 = 600.3 \text{ arrondi à 600}
+''')
+
+
 st.header("4. Dégats et résistances de poussée",divider="gray")
 st.header("5. Retrait/Esquive",divider="gray")
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_7")
