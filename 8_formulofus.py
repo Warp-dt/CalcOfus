@@ -74,52 +74,7 @@ st.title("LES FORMULES DE DOFUS TOUCH")
 st.header("Sommaire")
 toc.placeholder()
 
-# toc.title("1")
-
-# for a in range(10):
-#     st.write("Blabla...")
-
-# toc.header("Header 1")
-
-# for a in range(10):
-#     st.write("Blabla...")
-
-# toc.header("Header 2")
-
-# for a in range(10):
-#     st.write("Blabla...")
-
-# toc.subheader("Subheader 1")
-
-# for a in range(10):
-#     st.write("Blabla...")
-
-# toc.subheader("Subheader 2")
-
-# for a in range(10):
-#     st.write("Blabla...")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# st.markdown("""
-# ## __Sommaire :__
-# """)
-# st.page_link("https://calcofus.fr/formulofus#3-resistances-reductions-de-degats",label="degats")
 toc.header("1. Lignes de sorts",divider="gray")
-# st.divider()
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_1")
 
 st.markdown("""
@@ -150,10 +105,9 @@ st.latex(r'''
 \text{Dégâts maximum} = 11 \times \frac{100 + 800 + 200}{100} + \left( 90 + 10 \right) = 221 
 ''')
 st.markdown("Lors des cc on a juste des lignes de dégats de base plus élevées et on ajoute les dommages critiques.")
-toc.header("2. Sorts de réductions de dégats",divider="gray")
-# st.header("2. Sorts de réductions de dégats",divider="gray")
-# st.divider()
 
+
+toc.header("2. Sorts de réductions de dégats",divider="gray")
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_8")
 st.markdown("""
 Sorts comme rempart ou armure de sel qui appliquent une réduction fixe.\n
@@ -167,8 +121,9 @@ st.subheader("Exemple :")
 st.latex(r'''
 \text{Rempart Lvl 6 Joueur Lvl 200} : \text{Réduction} = 13 \times \frac{100 + 5 \times 200}{100} = 143
 ''')
+
+
 toc.header("3. Résistances/Réductions de dégats",divider="gray")
-# st.divider()
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_9")
 st.markdown("""
 Pour déterminer les dégats finaux, sont pris en compte dans l'ordre:
@@ -229,8 +184,30 @@ st.latex(r'''
 \text{Dégâts} = (\frac{200}{2}+500-50+32) \times \frac{4+1}{4} = 583 \times 1.25 = 728.75 \text{ arrondi à } 728
 ''')
 
+
 toc.header("5. Tacle/Fuite",divider="gray")
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_14")
+st.markdown("""
+Pour déterminer les Pa et Pm restants du fuyard après avoir détaclé, sont pris en compte:
+- Le tacle du tacleur
+- La fuite du fuyard
+- Les PA/PM du fuyard au moment où il tente de détacler
+""")
+
+st.subheader("Formule:")
+st.markdown("Il faut d'abord calculer le **Coefficient** (Coef) de fuite:")
+st.latex(r'''
+\text{Coef} = \frac{\text{Fuite} + 2}{2 \times (\text{Tacle} + 2)}
+''')
+st.markdown("On multiplie ensuite ce **Coefficient** aux nombres de PA/PM actuels du fuyard pour obtenir ses PA/PM restants après avoir détaclé:")
+
+st.latex(r'''
+\text{PA/PM restants} = \text{E(PA/PM actuels} \times \text{Coef) (on arrondis à l'entier inférieur)} 
+''')
+st.markdown("On voit donc que pour ne perdre aucun PA ni PM le Coef doit être à 1 ou plus donc:")
+st.latex(r'''
+\text{Fuite} \geq 2 \times \text{Tacle} + 2
+''')
 
 toc.header("6. Retrait/Esquive",divider="gray")
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_7")
@@ -288,8 +265,12 @@ st.latex(r'''
 st.latex(r'''
 \text{P2} = \text{R1} \times (1-\text{R2}) + (1-\text{R1}) \times \text{R1}  = 0.75 \times 0.325 +  0.25 \times 0.75 =  0.43125 \approx 43\%
 ''')
+
+
 toc.header("7. Invocations Osamodas",divider="gray")
 source("Warp")
+
+
 toc.header("8. Bombes",divider="gray")
 source("Emrys")
 
