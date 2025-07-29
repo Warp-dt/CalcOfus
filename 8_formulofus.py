@@ -1,4 +1,5 @@
 import streamlit as st
+import unicodedata
 
 image_path='images/'
 st.set_page_config(page_title="FormulOfus",page_icon=image_path+"logo_InvRoxx_tab.png",layout="centered")
@@ -36,10 +37,17 @@ class Toc:
         # self._markdown(text, "h2", " " * 2)
         level="h2"
         space=" " * 2
-        key = "-".join(filter(str.isalnum, text)).lower()
+
+        # Normalize the string
+        n= unicodedata.normalize('NFKD', text)  
+
+        res = ''.join([c for c in n if not unicodedata.combining(c)])  
+
+        key ="-".join(res.replace(". "," ").replace("/"," ").split(" ")).lower()
+        # key = "-".join(filter(str.isalnum, text)).lower()
 
         # st.markdown(f"<{level} id='{key}'>{text}</{level}>", unsafe_allow_html=True)
-        st.header(text,divider="gray")
+        st.header(text,divider=divider)
         self._items.append(f"{space}* <a href='#{key}'>{text}</a>")
 
 
