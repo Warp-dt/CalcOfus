@@ -38,8 +38,8 @@ class Toc:
         space=" " * 2
         key = "".join(filter(str.isalnum, text)).lower()
 
-        # st.markdown(f"<{level} id='{key}'>{text}</{level}>", unsafe_allow_html=True)
-        st.header(text,divider="gray")
+        st.markdown(f"<{level} id='{key}'>{text}</{level}>", unsafe_allow_html=True)
+        # st.header(text,divider="gray")
         self._items.append(f"{space}* <a href='#{key}'>{text}</a>")
 
 
