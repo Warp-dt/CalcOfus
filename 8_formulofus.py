@@ -111,7 +111,7 @@ toc.header("2. Sorts de réductions de dégats",divider="gray")
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_8")
 st.markdown("""
 Sorts comme rempart ou armure de sel qui appliquent une réduction fixe.\n
-Cette réduction s'applique après les résistances fixes et % mais avant les %dommages finaux.
+Cette réduction s'applique en même temps que les résistances fixes, avant les résistances %.
 """)
 st.subheader("Formule :")
 st.latex(r'''
@@ -134,28 +134,25 @@ Pour déterminer les dégats finaux, sont pris en compte dans l'ordre :
 """)
 st.subheader("Formule :")
 st.latex(r'''
-\text{Dégats finaux} = ((\text{Dégats} - \text{Résistances fixes}) \times (1-\frac{ \text{Résistances\%} }{100}) - \text{sorts de réduction}) \times \text{\%dommages subis}
+\text{Dégats finaux} = (\text{Dégats} - \text{Résistances fixes} - \text{sorts de réduction}) \times (1-\frac{ \text{Résistances\%} }{100}) \times \text{\%dommages subis}
 ''')
 st.subheader("Exemple :")
 st.markdown("""
 Un joueur reçoit une attaque feu faisant 1000 de dégats sur poutch, il a :
 - 50 résistances fixes feu
 - 30% résistances feu
-- un rempart sur lui
-- une vulnérabilité sur lui (x115% dommages subis)
+- un rempart
+- une vulnérabilité (x115% dommages subis)
 """)
 st.latex(r'''
-\text{Dégâts après Ré fixes} = 1000 - 50 = 950
+\text{Dégâts après Ré fixes} = 1000 - 50 - 143 = 807
 ''')
 st.latex(r'''
-\text{Dégâts après Ré \%} = 950 \times (1- \frac{30}{100}) = 950 \times 0.7 = 665
-''')
-st.latex(r'''
-\text{Dégâts après Rempart} = 665-143=522
+\text{Dégâts après Ré \%} = 807 \times (1- \frac{30}{100}) = 807 \times 0.7 = 564.9
 ''')
 
 st.latex(r'''
-\text{Dégâts après Vulnérabilité} = 522 \times 1.15 = 600.3 \text{ arrondi à 600}
+\text{Dégâts après Vulnérabilité} = 564.9 \times 1.15 = 649,635 \text{ arrondi à 649}
 ''')
 
 
