@@ -126,7 +126,7 @@ st.latex(r'''
 toc.header("3. Résistances/Réductions de dégats",divider="gray")
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_9")
 st.markdown("""
-Pour déterminer les dégats finaux, sont pris en compte dans l'ordre:
+Pour déterminer les dégats finaux, sont pris en compte dans l'ordre :
 - Résistances Fixes (résistances élémentaires & résistances critiques)
 - Résistances %
 - Sorts de réduction de dommages type rempart
@@ -160,7 +160,7 @@ st.latex(r'''
 
 
 toc.header("4. Dégats et résistances de poussée",divider="gray")
-st.markdown("""Pour déterminer les dégats lors d'une poussée, sont pris en compte:
+st.markdown("""Pour déterminer les dégats lors d'une poussée, sont pris en compte :
 - Les dommages de poussée (dopou) du pousseur 
 - Les résistances de poussée (répou) de la cible
 - Le nombre de cases de la poussée
@@ -172,13 +172,13 @@ Détails sur le comptage des cases de poussée :
 - Pour les poussées en diagonale les déplacements sont arrondis à l'entier supérieur, avec un tacheté un ressac aura une poussée de 5 donc arrondi à 3 en diagonale
 - Si le déplacement est arrondi les dégats ne le sont pas, les dégats d'un ressac avec tacheté sera quand même compté comme une poussée de 5 même si le déplacement est de 3 en diagonale.
 """)
-st.subheader("Formule:")
+st.subheader("Formule :")
 st.latex(r'''
 \text{Dégâts} = (\frac{\text{lvl}}{2}+\text{dopou}-\text{répou}+32) \times \frac{\text{nb cases de poussée}}{4}
 ''')
 
-st.subheader("Exemple:")
-st.markdown("""Un joueur lvl 200 a 500 de dopou et un tacheté, la cible a 50 de répou est est collée à un mur, les dégats d'une libération lvl 6 (4 cases de poussée de base + 1 tacheté ) seront:
+st.subheader("Exemple :")
+st.markdown("""Un joueur lvl 200 a 500 de dopou et un tacheté, la cible a 50 de répou est est collée à un mur, les dégats d'une libération lvl 6 (4 cases de poussée de base + 1 tacheté ) seront :
 """)
 st.latex(r'''
 \text{Dégâts} = (\frac{200}{2}+500-50+32) \times \frac{4+1}{4} = 583 \times 1.25 = 728.75 \text{ arrondi à } 728
@@ -188,30 +188,30 @@ st.latex(r'''
 toc.header("5. Tacle/Fuite",divider="gray")
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_14")
 st.markdown("""
-Pour déterminer les Pa et Pm restants du fuyard après avoir détaclé, sont pris en compte:
+Pour déterminer les Pa et Pm restants du fuyard après avoir détaclé, sont pris en compte :
 - Le tacle du tacleur
 - La fuite du fuyard
 - Les PA/PM du fuyard au moment où il tente de détacler
 """)
 
-st.subheader("Formule:")
-st.markdown("Il faut d'abord calculer le **Coefficient** (Coef) de fuite:")
+st.subheader("Formule :")
+st.markdown("Il faut d'abord calculer le **Coefficient** (Coef) de fuite :")
 st.latex(r'''
 \text{Coef} = \frac{\text{Fuite} + 2}{2 \times (\text{Tacle} + 2)}
 ''')
-st.markdown("On multiplie ensuite ce **Coefficient** aux nombres de PA/PM actuels du fuyard pour obtenir ses PA/PM restants après avoir détaclé:")
+st.markdown("On multiplie ensuite ce **Coefficient** aux nombres de PA/PM actuels du fuyard pour obtenir ses PA/PM restants après avoir détaclé :")
 
 st.latex(r'''
 \text{PA/PM restants} = \text{E(PA/PM actuels} \times \text{Coef) (on arrondis à l'entier inférieur)} 
 ''')
-st.markdown("On voit donc que pour ne perdre aucun PA ni PM le Coef doit être à 1 ou plus donc:")
+st.markdown("On voit donc que pour ne perdre aucun PA ni PM le Coef doit être à 1 ou plus donc :")
 st.latex(r'''
 \text{Fuite} \geq 2 \times \text{Tacle} + 2
 ''')
 
 toc.header("6. Retrait/Esquive",divider="gray")
 source("JoL","https://forums.jeuxonline.info/sujet/801243/les-formules-de-calcul-dans-dofus#titre_7")
-st.markdown(""" Pour déterminer les chances de retirer des PA ou PM, sont pris en compte:
+st.markdown(""" Pour déterminer les chances de retirer des PA ou PM, sont pris en compte :
 - La stat retrait PA ou PM du lanceur
 - La stat esquive PA ou PM de la cible
 - Le nombre de PA ou PM totaux de la cible.
@@ -224,7 +224,7 @@ Les retraits sont considérés un par un,c'est à dire qu'il est équivalent de 
 
 
 
-st.subheader("Formule:")
+st.subheader("Formule :")
 st.latex(r'''
 \text{Probabilité de retirer un PA/PM} = \frac{\text{PA/PM restants de la cible}}{\text{PA/PM totaux de la cible}} \times \frac{\text{retrait du lanceur}}{2 \times \text{esquive de la cible}}
 ''')
@@ -235,7 +235,7 @@ st.latex(r'''
 \text{Probabilité d'esquive} = 1 -\text{ Probabilité de retrait}
 ''')
 
-st.subheader("Exemple:")
+st.subheader("Exemple :")
 st.markdown("""Un xelor a 90 de retrait PA et utilise ralentissement (-2 PA) sur une cible ayant 50 d'esquive pa et 10 pa sur 12 totaux car elle s'est déjà fait retirer 2 PA par un précédent ralentissement.
 
 La probabilité R1 de retirer le premier PA est de :
@@ -269,7 +269,101 @@ st.latex(r'''
 
 toc.header("7. Invocations Osamodas",divider="gray")
 source("Warp")
+st.subheader("Vitalité :")
+st.markdown("""Pour calculer la vitalité des invocations sont pris en compte :
+- Le niveau de l'invocation
+- Le niveau de l'osamodas
+- La vitalité de l'osamodas
+- Deux caractéristiques propre à chaque invo : Le coefficient d'hérédité de la vitalité et la vitalité de base
+""")
 
+st.subheader("Formule :")
+
+st.latex(r'''
+\text{Vitalité invocation} = \text{Vita Base} + \text{Vita Coef} \times (\text{Vitalité osa} - 5 \times \text{Lvl osa} -50)
+''')
+
+st.subheader("Statistiques :")
+st.markdown("""
+Pour calculer les statistiques des invocations sont pris en compte:
+- Les stats de base de l'invocation (dépend du lvl de l'invocation)
+- Les stats de l'osamodas
+
+Les invocations vont hériter de 50% de certaines stats de l'osamodas:
+-	Intelligence/Chance/Agilité : 50% sont transmises aux invocations de l'élément (⚠️ les stats issues des parchemins & des points de caractéristiques investis **sont transmises** )
+-	Dommages Feu/Eau/Air : 50% sont transmis aux invocations de l'élément
+-	Soin : 50% sont transmis à la momie
+-	Sagesse : 50% sont transmis au craqueleur
+
+Donc notamment ne sont pas transmis :
+-	Puissance
+-	Dommages non élémentaires
+-	Dommages critiques
+-	% critiques
+-	Tacle/Fuite
+
+
+""")
+st.subheader("Données par invocation :")
+tab_dragcrap="""
+| Lvl invo | Vita Base | Vita Coef | Stats Base |
+| ----------- | ----------- | ----------- | ----------- |
+| 1 | 100 + Lvl osa | 15% | 100 |
+| 2 | 100 + Lvl osa | 15% | 150 |
+| 3 | 100 + Lvl osa | 15% | 200 |
+| 4 | 100 + Lvl osa | 15% | 250 |
+| 5 | 100 + Lvl osa | 15% | 300 |
+| 6 | 100 + Lvl osa | 20% | 350 |"""
+
+tab_momie="""
+| Lvl invo | Vita Base | Vita Coef | Stats Base |
+| ----------- | ----------- | ----------- | ----------- |
+| 1 | Lvl osa x 0.6 + 60 | 10% | 70 |
+| 2 | Lvl osa x 0.6 + 60 | 10% | 105 |
+| 3 | Lvl osa x 0.6 + 60 | 10% | 150 |
+| 4 | Lvl osa x 0.6 + 60 | 10% | 180 |
+| 5 | Lvl osa x 0.6 + 60 | 10% | 220 |
+| 6 | Lvl osa x 0.6 + 60 | 15% | 350 |"""
+
+tab_tofu="""
+| Lvl invo | Vita Base | Vita Coef | Stats Base |
+| ----------- | ----------- | ----------- | ----------- |
+| 1 | Lvl osa x 0.6 + 60 | 10% | 100 |
+| 2 | Lvl osa x 0.6 + 60 | 10% | 150 |
+| 3 | Lvl osa x 0.6 + 60 | 10% | 200 |
+| 4 | Lvl osa x 0.6 + 60 | 10% | 250 |
+| 5 | Lvl osa x 0.6 + 60 | 10% | 300 |
+| 6 | Lvl osa x 0.6 + 60 | 15% | 350 |"""
+
+tab_craq="""
+| Lvl invo | Vita Base | Vita Coef | Stats Base |
+| ----------- | ----------- | ----------- | ----------- |
+| 1 | 100 + Lvl osa | 10% | 10 |
+| 2 | 100 + Lvl osa | 10% | 30 |
+| 3 | 100 + Lvl osa | 10% | 50 |
+| 4 | 100 + Lvl osa | 10% | 70 |
+| 5 | 100 + Lvl osa | 15% | 100 |
+| 6 | 100 + Lvl osa | 20% | 150 |"""
+
+tab_bouf="""
+| Lvl invo | Vita Base | Vita Coef | Stats Base |
+| ----------- | ----------- | ----------- | ----------- |
+| 1 | Lvl osa x 0.6 + 60 | 10% | 10 |
+| 2 | Lvl osa x 0.6 + 60 | 10% | 30 |
+| 3 | Lvl osa x 0.6 + 60 | 10% | 50 |
+| 4 | Lvl osa x 0.6 + 60 | 10% | 70 |
+| 5 | Lvl osa x 0.6 + 60 | 15% | 100 |
+| 6 | Lvl osa x 0.6 + 60 | 20% | 150 |"""
+st.markdown("- **Dragonnet rouge & Crapaud :**")
+st.markdown(tab_dragcrap)
+st.markdown("- **Momie koalak :**")
+st.markdown(tab_momie)
+st.markdown("- **Tofu :**")
+st.markdown(tab_tofu)
+st.markdown("- **Craqueleur :**")
+st.markdown(tab_craq)
+st.markdown("- **Bouftou :**")
+st.markdown(tab_bouf)
 
 toc.header("8. Bombes",divider="gray")
 source("Emrys")
@@ -277,3 +371,27 @@ source("Emrys")
 st.divider()
 st.caption("L'objectif de cette page est de rassembler les différentes formules de calcul et données utiles à connaître dans le jeu, tant pour le quotidien que le théorycraft.")
 toc.generate()
+
+
+table_style = """
+<style>
+    table {
+        width: 100%;  /* Le tableau prend toute la largeur disponible */
+        border-collapse: collapse; /* Supprime les espaces entre les bordures */
+    }
+    th, td {
+        border: 1px solid white;  /* Bordures blanches autour des cellules */
+        padding: 8px;  /* Ajoute un espace de 8px à l'intérieur des cellules */
+        text-align: center; /* Centre le texte dans les cellules */
+    }
+    th {
+        background-color: #333B00; /* Couleur d'arrière-plan des en-têtes */
+        color: #FAFAFA; /* Couleur du texte des en-têtes */
+    }
+    td {
+        background-color: #262730; /* Fond sombre des cellules */
+        color: #FAFAFA; /* Texte blanc */
+    }
+</style>
+"""
+st.markdown(table_style, unsafe_allow_html=True)
