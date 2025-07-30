@@ -395,7 +395,7 @@ st.latex(r'''
 \text{Dégats mur avant bonus combo} = \text{Dégats Base} \times (\frac{\text{stats roub}}{100}+\text{dommages roub})\times (1-\frac{\text{distance}}{10}) \text{ (arrondi à l'entier inférieur})
 ''')
 st.latex(r'''
-\text{Dégats mur finaux} = \text{Dégats avant bonus combo arrondi} \times (\frac{\text{bonus combo en \%} + 100}{100})
+\text{Dégats mur finaux} = \text{Dégats avant bonus combo arrondi} \times (\frac{\text{bonus combo en \%} + 100}{100}) \times \text{\% dommages occasionnés roublard} \text{ (arrondi à l'entier inférieur})
 ''')
 st.subheader("Dégats explosions :")
 st.markdown("""Pour calculer les dégats d'un mur de bombes sont pris en compte :
@@ -412,7 +412,7 @@ st.latex(r'''
 \text{Dégats explosion avant bonus combo} = \text{Dégats Base} \times (\frac{\text{stats roub + boosts bombes}}{100}+\text{dommages roub + boosts bombes})\times (1-\frac{\text{distance}}{10})
 ''')
 st.latex(r'''
-\text{Dégats explosion finaux} = \text{Dégats avant bonus combo arrondi} \times (\frac{\text{bonus combo en \%} + 100}{100}) \text{ (arrondi à l'entier inférieur})
+\text{Dégats explosion finaux} = \text{Dégats avant bonus combo arrondi} \times (\frac{\text{bonus combo en \%} + 100}{100}) \times \text{\% dommages occasionnés bombes} \text{ (arrondi à l'entier inférieur})
 ''')
 st.subheader("Données par type de bombe :")
 
