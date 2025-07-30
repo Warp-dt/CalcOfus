@@ -2,7 +2,7 @@ import streamlit as st
 import unicodedata
 
 image_path='images/'
-st.set_page_config(page_title="FormulOfus",page_icon=image_path+"logo_InvRoxx_tab.png",layout="centered")
+st.set_page_config(page_title="FormulOfus",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
 
 st.sidebar.image(image_path+"logo_nom_transp.png" )
 
@@ -202,9 +202,9 @@ st.latex(r'''
 st.markdown("On multiplie ensuite ce **Coefficient** aux nombres de PA/PM actuels du fuyard pour obtenir ses PA/PM restants après avoir détaclé :")
 
 st.latex(r'''
-\text{PA/PM restants} = \text{E(PA/PM actuels} \times \text{Coef) (on arrondis à l'entier inférieur)} 
+\text{PA/PM restants} = \text{PA/PM actuels} \times \text{Coef (arrondis à l'entier le plus proche, et si on est à .5 pile entre deux c'est supérieur)} 
 ''')
-st.markdown("On voit donc que pour ne perdre aucun PA ni PM le Coef doit être à 1 ou plus donc :")
+st.markdown("On voit donc que pour ne perdre à coup sûr aucun PA ni PM le Coef doit être à 1 ou plus donc :")
 st.latex(r'''
 \text{Fuite} \geq 2 \times \text{Tacle} + 2
 ''')
@@ -367,6 +367,87 @@ st.markdown(tab_bouf)
 
 toc.header("8. Bombes",divider="gray")
 source("Emrys")
+st.subheader("Vitalité :")
+st.markdown("""Pour calculer la vitalité des bombes sont pris en compte :
+- La vitalité du roublard
+- Le niveau du roublard
+- La vitalité de base de la bombe (dépend du lvl de la bombe)
+- Le coefficient de transmission de la vitalité du roublard (dépend de l'élément de la bombe)
+""")
+st.markdown("#### Formule vitalité :")
+
+st.latex(r'''
+\text{Vitalité bombe} = (\text{vitalité roub} - 5 \times \text{lvl roub} +50) \times \text{coef vitalité} + \text{vitalité base bombe}
+''')
+st.subheader("Bonus combo :")
+st.markdown("""Le bonus combo sur chaque bombe augmente de 20% pour les 5 premiers niveau puis de 30% sur les 5 suivants avec un maximum de 10 bonus combo à +250%
+
+Lors d'une explosion ou d'un mur le bonus combo en % de toutes les bombes impliquées dans les dégats est sommé pour être appliqué aux dégats.
+""")
+st.subheader("Dégats murs :")
+st.markdown("""Pour calculer les dégats d'un mur de bombes sont pris en compte :
+- Les dégats de base de la bombe (dépend de son élément)
+- Les stats et dommages du roublard (caractéristiques dans l'élément + puissance + dommages)
+- Le bonus combo des bombes constituant le mur
+- les boosts %dommages présents sur le roublard
+
+À noter : les dégats sont arrondis à l'entier inférieur ***avant*** l'application du bonus combo
+""")
+st.markdown("#### Formule mur :")
+st.latex(r'''
+\text{Dégats mur avant bonus combo} = \text{Dégats Base} \times (\frac{\text{stats roub}}{100}+\text{dommages roub})\times (1-\frac{\text{distance}}{10}) \text{ (arrondi à l'entier inférieur})
+''')
+st.latex(r'''
+\text{Dégats mur finaux} = \text{Dégats avant bonus combo arrondi} \times (\frac{\text{bonus combo en \%} + 100}{100})
+''')
+st.subheader("Dégats explosions :")
+st.markdown("""Pour calculer les dégats d'un mur de bombes sont pris en compte :
+- Les dégats de base de la bombe (dépend de son élément)
+- Les stats et dommages du roublard (caractéristiques dans l'élément + puissance + dommages)
+- Le bonus combo des bombes constituant le mur
+- ⚠️Les boosts (puissances/do/%dommages) présents sur les bombes
+- La distance de la cible par rapport aux bombes (on perd 10% de dommages par case d'éloignement et au cac on est déjà à 1PO)
+
+À noter : les dégats sont arrondis à l'entier inférieur ***après*** l'application du bonus combo
+""")
+st.markdown("#### Formule explosion :")
+st.latex(r'''
+\text{Dégats explosion avant bonus combo} = \text{Dégats Base} \times (\frac{\text{stats roub + boosts bombes}}{100}+\text{dommages roub + boosts bombes})\times (1-\frac{\text{distance}}{10})
+''')
+st.latex(r'''
+\text{Dégats explosion finaux} = \text{Dégats avant bonus combo arrondi} \times (\frac{\text{bonus combo en \%} + 100}{100}) \text{ (arrondi à l'entier inférieur})
+''')
+st.subheader("Données par type de bombe :")
+
+tab_explo="""
+| Lvl bombe | Vita Base | Vita Coef | dégats mur min | dégats mur max | dégats explosion min | dégats explosion max |
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+| 4 | 19 | 27% | 15 | 17 | 14 | 15 |
+| 5 | 23 | 27% | 16 | 18 | 15 | 16 |
+| 6 | 28 | 27% | 19 | 21 | 20 | 22 |
+"""
+tab_torna="""
+| Lvl bombe | Vita Base | Vita Coef | dégats mur min | dégats mur max | dégats explosion min | dégats explosion max |
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+| 4 | 19 | 27% | 11 | 13 | 11 | 12 |
+| 5 | 23 | 27% | 12 | 14 | 12 | 13 |
+| 6 | 28 | 27% | 15 | 17 | 17 | 19 |
+"""
+tab_bombeau="""
+| Lvl bombe | Vita Base | Vita Coef | dégats mur min | dégats mur max | dégats explosion min | dégats explosion max |
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+| 4 | 19 | 35% | 11 | 13 | 11 | 12 |
+| 5 | 23 | 35% | 12 | 14 | 12 | 13 |
+| 6 | 28 | 35% | 12 | 14 | 14 | 16 |
+"""
+st.markdown("- **ExploBombe :**")
+st.markdown(tab_explo)
+st.markdown("- **TornaBombe :**")
+st.markdown(tab_torna)
+st.markdown("- **Bombe à eau :**")
+st.markdown(tab_bombeau)
+
+
 
 st.divider()
 st.caption("L'objectif de cette page est de rassembler les différentes formules de calcul et données utiles à connaître dans le jeu, tant pour le quotidien que le théorycraft.")

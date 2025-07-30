@@ -240,7 +240,7 @@ with left_BE:
     bombe_a_eau_do={
         '4':(11,13,11,12)
         ,'5':(12,14,12,13)
-        ,'6':(15,17,17,19)
+        ,'6':(12,14,14,16)
     }
     BE_mur_do_min,BE_mur_do_max,BE_explo_do_min,BE_explo_do_max=bombe_a_eau_do[BE_lvl_bombes]
 

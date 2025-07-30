@@ -47,10 +47,10 @@ p3=min(max((fuite+2)/(2*(tacles[2]+2)),0),1)
 ptot=p1*p2*p3
 couleur_table="#4a3a23"
 alerte_full_tacle=''
-if int(pm-(pm*ptot)//1)==pm:
+if round(pm-(pm*ptot))==pm:
     couleur_table="#630000"
     alerte_full_tacle=' **FULL TACLE !**'
-elif int(pm-(pm*ptot)//1)==0:
+elif round(pm-(pm*ptot))==0:
     couleur_table="#333B00"
     alerte_full_tacle=' **FULL DÉTACLE !**'
 
@@ -58,14 +58,14 @@ tab_res="""
 | PM perdus | PA perdus |
 | ----------- | ----------- |
 """
-tab_res+=f"""| {int(pm-(pm*ptot)//1)}{alerte_full_tacle} | {int(pa-(pa*ptot)//1)} |"""
+tab_res+=f"""| {round(pm-(pm*ptot))}{alerte_full_tacle} | {round(pa-(pa*ptot))} |"""
 
 st.write(tab_res)
 
 st.write(""" Valeurs à retenir :
 - Pour détacler 100% un tacleur il faut (Tacle x 2) + 2 en fuite minimum
-- Le Pandawasta a 52 de tacle : il faut 106 de fuite pour détacler 100%
-- La bloqueuse a 50 de tacle : il faut 102 de fuite pour détacler 100%
+- Le Pandawasta a 52 de tacle : il faut 102 de fuite pour détacler 100%
+- La bloqueuse a 50 de tacle : il faut 98 de fuite pour détacler 100%
 
 """)
 table_style = f"""
