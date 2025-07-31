@@ -6,7 +6,7 @@ st.set_page_config(page_title="CalcOfus",page_icon=image_path+"logo_InvRoxx_tab.
 
 st.sidebar.image(image_path+"logo_jda4.png" )
 
-st.title("Compositions Finales JDA#4")
+st.title("Stats après ronde 1 JDA#4".upper())
 
 df=[{'C1': 'cra', 'C3': 'ecaflip', 'C2': 'xelor'},
  {'C1': 'ecaflip', 'C3': 'feca', 'C2': 'steamer'},
@@ -198,15 +198,21 @@ CLASSES=['cra',
 
 SERVEURS=['Blair','Kelerog','Talok','Tiliwan','Touch tournament',]
 
-list_stats_images=[image_path+"JDA4_large_Compo les plus jouées.png",
-                  image_path+"JDA4_Nombre de pick des classes.png",
-                  image_path+"JDA4_Duos les plus joués.png",
-                  image_path+"JDA4_heat_duos les plus joués.png"]
-list_captions=["JDA#4 - Compositions les plus jouées",
-               "JDA#4 - Nombre de pick des classes",
-               "JDA#4 - Duos les plus joués",
-               "JDA#4 - Heatmap des duos les plus joués"]
-st.image(list_stats_images, caption=list_captions, use_container_width=True)
+# list_stats_images=[image_path+"JDA4_large_Compo les plus jouées.png",
+#                   image_path+"JDA4_Nombre de pick des classes.png",
+#                   image_path+"JDA4_Duos les plus joués.png",
+#                   image_path+"JDA4_heat_duos les plus joués.png"]
+# list_captions=["JDA#4 - Compositions les plus jouées",
+#                "JDA#4 - Nombre de pick des classes",
+#                "JDA#4 - Duos les plus joués",
+#                "JDA#4 - Heatmap des duos les plus joués"]
+st.image(image_path+"recapitulatif_winrates_ronde_1.jpg",use_container_width=True)
+list_stats_images=[image_path+"Kelerog_recaputilatif.png",
+                  image_path+"Blair_recaputilatif.png",
+                  image_path+"Tiliwan_recaputilatif.png",
+                  image_path+"Talok_recaputilatif.png"]
+with st.expander("Stats par serveur :"):
+    st.image(list_stats_images, caption=None, use_container_width=True)
 
 st.write("## Liste des 154 équipes inscrites")
 compos_inscrites=pd.read_csv("data/compositions_JDA#4.csv",sep=";")
