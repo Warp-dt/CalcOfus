@@ -6,7 +6,8 @@ st.set_page_config(page_title="CalcOfus",page_icon=image_path+"logo_InvRoxx_tab.
 
 st.sidebar.image(image_path+"logo_jda4.png" )
 
-st.title("Stats après ronde 1 JDA#4".upper())
+ronde=2
+st.title(f"Stats après ronde {ronde} JDA#4".upper())
 
 df=[{'C1': 'cra', 'C3': 'ecaflip', 'C2': 'xelor'},
  {'C1': 'ecaflip', 'C3': 'feca', 'C2': 'steamer'},
@@ -206,7 +207,7 @@ SERVEURS=['Blair','Kelerog','Talok','Tiliwan','Touch tournament',]
 #                "JDA#4 - Nombre de pick des classes",
 #                "JDA#4 - Duos les plus joués",
 #                "JDA#4 - Heatmap des duos les plus joués"]
-st.image(image_path+"recapitulatif_winrates_ronde_1.jpg",use_container_width=True)
+st.image(image_path+f"recapitulatif_winrates_ronde_{ronde}.jpg",use_container_width=True)
 list_stats_images=[image_path+"Kelerog_recaputilatif.png",
                   image_path+"Blair_recaputilatif.png",
                   image_path+"Tiliwan_recaputilatif.png",
