@@ -363,7 +363,7 @@ st.markdown("- **Bouftou :**")
 st.markdown(tab_bouf)
 
 toc.header("8. Bombes",divider="gray")
-source("Emrys")
+source("Emrys","https://www.youtube.com/@emrys30")
 st.subheader("Vitalité :")
 st.markdown("""Pour calculer la vitalité des bombes sont pris en compte :
 - La vitalité du roublard
@@ -381,38 +381,30 @@ st.markdown("""Le bonus combo sur chaque bombe augmente de 20% pour les 5 premie
 
 Lors d'une explosion ou d'un mur le bonus combo en % de toutes les bombes impliquées dans les dégats est sommé pour être appliqué aux dégats.
 """)
-st.subheader("Dégats murs :")
-st.markdown("""Pour calculer les dégats d'un mur de bombes sont pris en compte :
-- Les dégats de base de la bombe (dépend de son élément)
-- Les stats et dommages du roublard (caractéristiques dans l'élément + puissance + dommages)
-- Le bonus combo des bombes constituant le mur
-- les boosts %dommages présents sur le roublard
 
-À noter : les dégats sont arrondis à l'entier inférieur ***avant*** l'application du bonus combo
-""")
-st.markdown("#### Formule mur :")
-st.latex(r'''
-\text{Dégats mur avant bonus combo} = \text{Dégats Base} \times (\frac{\text{stats roub}}{100}+\text{dommages roub})\times (1-\frac{\text{distance}}{10}) \text{ (arrondi à l'entier inférieur})
-''')
-st.latex(r'''
-\text{Dégats mur finaux} = \text{Dégats avant bonus combo arrondi} \times (\frac{\text{bonus combo en \%} + 100}{100}) \times \text{\% dommages occasionnés roublard} \text{ (arrondi à l'entier inférieur})
-''')
-st.subheader("Dégats explosions :")
-st.markdown("""Pour calculer les dégats d'un mur de bombes sont pris en compte :
+st.subheader("Dégats :")
+st.markdown("""Pour calculer les dégats ds bombes sont pris en compte :
 - Les dégats de base de la bombe (dépend de son élément)
-- Les stats et dommages du roublard (caractéristiques dans l'élément + puissance + dommages)
-- Le bonus combo des bombes constituant le mur
-- ⚠️Les boosts (puissances/do/%dommages) présents sur les bombes
-- La distance de la cible par rapport aux bombes (on perd 10% de dommages par case d'éloignement et au cac on est déjà à 1PO)
+- Les stats et dommages du roublard (caractéristiques dans l'élément, puissance et dommages)
+- Le bonus combo des bombes constituant le mur ou l'explosion
+- La distance de la cible par rapport aux bombes
+    - Dans un mur les dégats sont considérés à 0 PO
+    - Dans une explosion la distance entre les bombes et la cible est prise en compte, au cac c'est 1PO, avec une case d'écart c'est 2 PO
+- ⚠️Les boosts sont considérés différemment lors d'une explosion par rapport à un mur :
+    - Pour les dégats d'un mur ne sont considérés que les boosts (puissances/dommages) présents sur le roublard, et les % dommages finaux occasionnés considérés sont ceux appliqués sur le roublard.
+    - Lors d'une explosion en plus des boosts du roublard pour chaque bombe les boosts (puissances/dommages) présents sur elle sont aussi ajoutés, et les % dommages finaux occasionnés considérés sont ceux appliqués sur la bombe. 
 
-À noter : les dégats sont arrondis à l'entier inférieur ***après*** l'application du bonus combo
-""")
-st.markdown("#### Formule explosion :")
+Pour comprendre cette différence de comportement lors des murs et explosions il faut se dire que lors d'une explosion les bombes deviennent des entités à part entière, alors que le mur est en quelque sorte un sort du roublard. Cette distinction permet au roublard de faire des dégats avec ses bombes en les faisant exploser même si il est sous corruption par exemple.
+"""
+)
+
+st.markdown("#### Formule :")
+st.markdown('Les éléments en italique ne sont appliqués que lors des *explosions*.')
 st.latex(r'''
-\text{Dégats explosion avant bonus combo} = \text{Dégats Base} \times (\frac{\text{stats roub + boosts bombes}}{100}+\text{dommages roub + boosts bombes})\times (1-\frac{\text{distance}}{10})
+\text{Dégats avant bonus combo} = \text{Dégats Base} \times \frac{\text{100 + stats roub + puissance roub \textit{(+ puissance bombe)}}}{100}+\text{dommages roub \textit{(+ dommages bombe)}} \text{ (arrondi à l'entier inférieur})
 ''')
 st.latex(r'''
-\text{Dégats explosion finaux} = \text{Dégats avant bonus combo arrondi} \times (\frac{\text{bonus combo en \%} + 100}{100}) \times \text{\% dommages occasionnés bombes} \text{ (arrondi à l'entier inférieur})
+\text{Dégats finaux} = \text{Dégats avant bonus combo}\times (1-\frac{\text{distance}}{10}) \times (\frac{\text{bonus combo en \%} + 100}{100}) \times \text{\% dommages occasionnés roublard/bombe} \text{ (arrondi à l'entier inférieur})
 ''')
 st.subheader("Données par type de bombe :")
 

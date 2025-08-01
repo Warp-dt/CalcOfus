@@ -9,7 +9,7 @@ image_path='images/'
 
 st.set_page_config(page_title="CalcoBoom",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
 
-st.write("## Calculateur de dégats des bombes et murs")
+st.write("# Calculateur de vitalité & dégats des bombes")
 
 
 ######################
@@ -76,274 +76,342 @@ else:
 
     # st.sidebar.write(db_stats)
 
-st.sidebar.write("# Boosts sur roublard") 
-stats_perso["roub_pui"]=int(st.sidebar.text_input("Puissance", value=0, max_chars=None, key=201, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-stats_perso["roub_do"]=int(st.sidebar.text_input("Dommages", value=0, max_chars=None, key=202, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-stats_perso["roub_per_do"]=int(st.sidebar.text_input("% dommages", value=0, max_chars=None, key=203, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-
-st.sidebar.write("# Boosts sur bombe") 
-stats_perso["bombe_pui"]=int(st.sidebar.text_input("Puissance", value=0, max_chars=None, key=211, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-stats_perso["bombe_do"]=int(st.sidebar.text_input("Dommages", value=0, max_chars=None, key=212, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-stats_perso["bombe_per_do"]=int(st.sidebar.text_input("% dommages", value=0, max_chars=None, key=213, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-
 ######################
 #Variables générales
 ######################
 
 # distance=st.pills("Distance explosion", ["cac","1 po"], selection_mode="single",default="cac")
 
-def calcul_vita_bombes(pvroub,lvlroub,pvbase):
-    return (pvroub-(lvlroub*5+50))*0.27+pvbase 
+def calcul_vita_bombes(pvroub,lvlroub,coef_bombe,pvbase):
+    return (pvroub-(lvlroub*5+50))*coef_bombe+pvbase 
 
 lvls_bombes = ["4", "5", "6"]
 vita_bombes_base={"4": 19
                   ,"5": 23
                   ,"6" : 28}
-st.session_state["bombes_posees"]=[True,False,False]
+elements=["Feu","Air","Eau"]
+type_bombes=["Explobombes","Tornabombes","Bombes à eau"]
+
+bombes_do=dict()
+bombes_do[elements[0]]={ #Feu
+    '4':{
+        'explo':{
+            'min' : 14
+            ,'max': 15 
+        }
+        ,'mur':{
+            'min' : 15
+            ,'max': 17 
+        }
+    }
+    ,'5':{
+        'explo':{
+            'min' : 15
+            ,'max': 16 
+        }
+        ,'mur':{
+            'min' : 16
+            ,'max': 18 
+        }
+    }
+    ,'6':{
+        'explo':{
+            'min' : 20
+            ,'max': 22 
+        }
+        ,'mur':{
+            'min' : 19
+            ,'max': 21 
+        }
+    }
+}
+bombes_do[elements[1]]={ #Air
+    '4':{
+        'explo':{
+            'min' : 11
+            ,'max': 12 
+        }
+        ,'mur':{
+            'min' : 11
+            ,'max': 13 
+        }
+    }
+    ,'5':{
+        'explo':{
+            'min' : 12
+            ,'max': 13 
+        }
+        ,'mur':{
+            'min' : 12
+            ,'max': 14 
+        }
+    }
+    ,'6':{
+        'explo':{
+            'min' : 17
+            ,'max': 19 
+        }
+        ,'mur':{
+            'min' : 15
+            ,'max': 17 
+        }
+    }
+}
+bombes_do[elements[2]]={ #Eau
+    '4':{
+        'explo':{
+            'min' : 11
+            ,'max': 12 
+        }
+        ,'mur':{
+            'min' : 11
+            ,'max': 13 
+        }
+    }
+    ,'5':{
+        'explo':{
+            'min' : 12
+            ,'max': 13 
+        }
+        ,'mur':{
+            'min' : 12
+            ,'max': 14 
+        }
+    }
+    ,'6':{
+        'explo':{
+            'min' : 14
+            ,'max': 16 
+        }
+        ,'mur':{
+            'min' : 12
+            ,'max': 14 
+        }
+    }
+}
 def calcul_bonus_combo(bombes_combo):#bonus combo de 1 à 10, 0 signifie qu'il n'y a pas de bombe
     combo_total=0
 
-    #bombe 1
-    if bombes_combo[0]<6:
-        combo_total+=bombes_combo[0]*20
-    else :
-        combo_total+=100+30*(bombes_combo[0]-5)
-
-    #bombe 2
-    if bombes_combo[1]<6:
-        combo_total+=bombes_combo[1]*20
-    else :
-        combo_total+=100+30*(bombes_combo[1]-5)
-
-    #bombe 3
-    if bombes_combo[2]<6:
-        combo_total+=bombes_combo[2]*20
-    else :
-        combo_total+=100+30*(bombes_combo[2]-5)
+    for combo in bombes_combo:
+        if combo<6:
+            combo_total+=combo*20
+        else :
+            combo_total+=100+30*(combo-5)
 
     return combo_total
 
-#distance=0 pour mur et 1 pour explosion
-def calcul_degats_bombes(dommages_min=20,dommages_max=22,stats=1000,do=0,bonus_combo=750,distance=1):
-    degats_min=int(dommages_min*(stats+100)/100+do)*(1-distance/10)
-    degats_max=int(dommages_max*(stats+100)/100+do)*(1-distance/10)
+# def calcul_degats_bombes(dommages_min=20,dommages_max=22,stats=1000,do=0,per_do=100,bonus_combo=750,distance=[0,0,0]):
+#     degats_min=int(dommages_min*(stats+100)/100+do)
+#     degats_max=int(dommages_max*(stats+100)/100+do)
 
-    degats_min_combo=degats_min*(bonus_combo/100+1)
-    degats_max_combo=degats_max*(bonus_combo/100+1)
+#     degats_min_combo=degats_min*(bonus_combo/100+1)*(1-distance/10)*(1+per_do/100)
+#     degats_max_combo=degats_max*(bonus_combo/100+1)*(1-distance/10)*(1+per_do/100)
 
-    return degats_min_combo,degats_max_combo
+#     return degats_min_combo,degats_max_combo
 
+def calcul_degats_mur(dommages_min=20,dommages_max=22,stats=1000,do=0,per_do=100,bonus_combo=750):
+    degats_min=int(dommages_min*(stats+100)/100+do)
+    degats_max=int(dommages_max*(stats+100)/100+do)
 
-######################
-#BONUS COMBO
-######################
-st.write("### Bonus Combo")
-st.write("""0 = pas de bombe\n
-Pour voir les dégats d'explosion rajoutez tous les bonus combo qui vont booster la bombe qui explose.\n
-Pour les dégats de mur rajoutez tous les bonus combo des bombes du mur.""")
-bombes_combo=[0,0,0]
-col_bombe_1, col_bombe_2, col_bombe_3 = st.columns((1,1,1))
-bombes_combo[0]=col_bombe_1.number_input(label="Bombe 1",min_value=1,max_value=10,value=5)
-bombes_combo[1]=col_bombe_2.number_input(label="Bombe 2",min_value=0,max_value=10,value=0)
-bombes_combo[2]=col_bombe_3.number_input(label="Bombe 3",min_value=0,max_value=10,value=0)
+    degats_min_combo=degats_min*(bonus_combo/100+1)*(1+per_do/100)
+    degats_max_combo=degats_max*(bonus_combo/100+1)*(1+per_do/100)
 
-bonus_combo_total=calcul_bonus_combo(bombes_combo)
+    return int(degats_min_combo),int(degats_max_combo)
 
+def calcul_degats_explo(dommages_min=20,dommages_max=22,stats=1000,do=0,per_do=100,bonus_combo=750,distance=1):
+    degats_min=int(dommages_min*(stats+100)/100+do)
+    degats_max=int(dommages_max*(stats+100)/100+do)
 
-######################
-#Explobombe
-######################
-left_BF, right_BF = st.columns((1,1))
-with left_BF:
+    degats_min_combo=degats_min*(bonus_combo/100+1)*(1-distance/10)*(1+per_do/100)
+    degats_max_combo=degats_max*(bonus_combo/100+1)*(1-distance/10)*(1+per_do/100)
 
-    st.write("### Explobombe")
+    return int(degats_min_combo),int(degats_max_combo)
 
-    col_lvl_BF,col_vita_BF=st.columns((1,1))
-    #Lvl Bombe
-    if stats_perso["Lvl"]>130:
-        BF_lvl_base=lvls_bombes[2]
-    elif stats_perso["Lvl"]>80:
-        BF_lvl_base=lvls_bombes[1]
-    else:
-        BF_lvl_base=lvls_bombes[0]
-    
-    BF_lvl_bombes_unchecked = col_lvl_BF.pills("Lvl Bombe", lvls_bombes, selection_mode="single",default=BF_lvl_base,key=0)
-    if BF_lvl_bombes_unchecked in lvls_bombes:
-        BF_lvl_bombes=BF_lvl_bombes_unchecked
-    else:
-        BF_lvl_bombes=lvls_bombes[2]
-    #dégats de base bombe
-    explobombe_do={
-        '4':(15,17,14,15)
-        ,'5':(16,18,15,16)
-        ,'6':(19,21,20,22)
-    }
-    BF_mur_do_min,BF_mur_do_max,BF_explo_do_min,BF_explo_do_max=explobombe_do[BF_lvl_bombes]
-
-    tab_vita_BF="""
-| Vitalité |
-| ----------- |
-"""
-    tab_vita_BF+="| "+str(int(calcul_vita_bombes(stats_perso["Vita"],stats_perso["Lvl"],vita_bombes_base[BF_lvl_bombes])))+" |\n"
-    col_vita_BF.write(tab_vita_BF)
-    
-    tab_BF="""
-|   | Valeur min | Valeur max | Moyenne |
-| ----------- | ----------- | ----------- | ----------- |
-"""
-    BF_mur_min,BF_mur_max=calcul_degats_bombes(BF_mur_do_min,BF_mur_do_max
-                                                      ,stats=stats_perso['Intel']+stats_perso["pui"]+stats_perso["roub_pui"]
-                                                      ,do=stats_perso['Dofeu']+stats_perso["Do"]+stats_perso["roub_do"]
-                                                      ,bonus_combo=bonus_combo_total
-                                                      ,distance=0)
-    tab_BF+="| Mur | "+str(int(BF_mur_min))+" | "+str(int(BF_mur_max))+" | "+str(int((BF_mur_min+BF_mur_max)/2))+" |\n"
-
-    BF_explo_min,BF_explo_max=calcul_degats_bombes(BF_explo_do_min,BF_explo_do_max
-                                                      ,stats=stats_perso['Intel']+stats_perso["pui"]+stats_perso["bombe_pui"]+stats_perso["roub_pui"]
-                                                      ,do=stats_perso['Dofeu']+stats_perso["Do"]+stats_perso["bombe_do"]+stats_perso["roub_do"]
-                                                      ,bonus_combo=bonus_combo_total
-                                                      ,distance=1)
-    tab_BF+="| Explosion | "+str(int(BF_explo_min))+" | "+str(int(BF_explo_max))+" | "+str(int((BF_explo_min+BF_explo_max)/2))+" |\n"
-    st.write(tab_BF)
-    st.text("")
-    # st.write(BF_mur_do_min,BF_mur_do_max
-    #     ,stats_perso['Intel']+stats_perso["pui"]+stats_perso["roub_pui"]
-    #     ,stats_perso['Dofeu']+stats_perso["Do"]+stats_perso["roub_do"]
-    #     ,bonus_combo_total)
-with right_BF:
-    st.text("")
-    st.image(image_path+"Explobombe.png")
+tab_mur,tab_explo,tab_vita=st.tabs(["Murs","Explosions","Vitalité"])
 
 ######################
-#Bombe à eau
+#TAB VITALITÉ
 ######################
-left_BE, right_BE = st.columns((1,1))
-with left_BE:
 
+with tab_vita:
+    #BOMBE EAU
     st.write("### Bombe à eau")
+    left_BE, right_BE = st.columns((1,1))
+    with left_BE:
 
-    col_lvl_BE,col_vita_BE=st.columns((1,1))
-    #Lvl Bombe
-    if stats_perso["Lvl"]>124:
-        BE_lvl_base=lvls_bombes[2]
-    elif stats_perso["Lvl"]>74:
-        BE_lvl_base=lvls_bombes[1]
-    else:
-        BE_lvl_base=lvls_bombes[0]
+        BE_lvl_bombes_unchecked = st.pills("Lvl Bombe", lvls_bombes, selection_mode="single",default="6",key=2)
+        if BE_lvl_bombes_unchecked in lvls_bombes:
+            BE_lvl_bombes=BE_lvl_bombes_unchecked
+        else:
+            BE_lvl_bombes=lvls_bombes[2]
+        
+        tab_vita_BE="""
+    | Vitalité |
+    | ----------- |
+    """
+        tab_vita_BE+="| "+str(int(calcul_vita_bombes(stats_perso["Vita"],stats_perso["Lvl"],0.35,vita_bombes_base[BE_lvl_bombes])))+" |\n"
+        st.write(tab_vita_BE)
+    with right_BE:
+        st.text("")
+        st.image(image_path+"Bombe_a_eau.png")
 
-    BE_lvl_bombes_unchecked = col_lvl_BE.pills("Lvl Bombe", lvls_bombes, selection_mode="single",default=BE_lvl_base,key=1)
-    if BE_lvl_bombes_unchecked in lvls_bombes:
-        BE_lvl_bombes=BE_lvl_bombes_unchecked
-    else:
-        BE_lvl_bombes=lvls_bombes[2]
-    #dégats de base bombe
-    bombe_a_eau_do={
-        '4':(11,13,11,12)
-        ,'5':(12,14,12,13)
-        ,'6':(12,14,14,16)
-    }
-    BE_mur_do_min,BE_mur_do_max,BE_explo_do_min,BE_explo_do_max=bombe_a_eau_do[BE_lvl_bombes]
+    #BOMBE FEU
+    st.write("### Explobombe")
+    left_BF, right_BF = st.columns((1,1))
+    with left_BF:
+        BF_lvl_bombes_unchecked = st.pills("Lvl Bombe", lvls_bombes, selection_mode="single",default="6",key=0)
+        if BF_lvl_bombes_unchecked in lvls_bombes:
+            BF_lvl_bombes=BF_lvl_bombes_unchecked
+        else:
+            BF_lvl_bombes=lvls_bombes[2]
+        
+        tab_vita_BF="""
+    | Vitalité |
+    | ----------- |
+    """
+        tab_vita_BF+="| "+str(int(calcul_vita_bombes(stats_perso["Vita"],stats_perso["Lvl"],0.27,vita_bombes_base[BF_lvl_bombes])))+" |\n"
+        st.write(tab_vita_BF)
+    with right_BF:
+        st.text("")
+        st.image(image_path+"Explobombe.png")
 
-    tab_vita_BE="""
-| Vitalité |
-| ----------- |
-"""
-    tab_vita_BE+="| "+str(int(calcul_vita_bombes(stats_perso["Vita"],stats_perso["Lvl"],vita_bombes_base[BE_lvl_bombes])))+" |\n"
-    col_vita_BE.write(tab_vita_BE)
-    
-    tab_BE="""
-|   | Valeur min | Valeur max | Moyenne |
-| ----------- | ----------- | ----------- | ----------- |
-"""
-    BE_mur_min,BE_mur_max=calcul_degats_bombes(BE_mur_do_min,BE_mur_do_max
-                                                      ,stats=stats_perso['Chance']+stats_perso["pui"]+stats_perso["roub_pui"]
-                                                      ,do=stats_perso['Doeau']+stats_perso["Do"]+stats_perso["roub_do"]
-                                                      ,bonus_combo=bonus_combo_total
-                                                      ,distance=0)
-    tab_BE+="| Mur | "+str(int(BE_mur_min))+" | "+str(int(BE_mur_max))+" | "+str(int((BE_mur_min+BE_mur_max)/2))+" |\n"
-
-    BE_explo_min,BE_explo_max=calcul_degats_bombes(BE_explo_do_min,BE_explo_do_max
-                                                      ,stats=stats_perso['Chance']+stats_perso["pui"]+stats_perso["bombe_pui"]+stats_perso["roub_pui"]
-                                                      ,do=stats_perso['Doeau']+stats_perso["Do"]+stats_perso["bombe_do"]+stats_perso["roub_do"]
-                                                      ,bonus_combo=bonus_combo_total
-                                                      ,distance=1)
-    tab_BE+="| Explosion | "+str(int(BE_explo_min))+" | "+str(int(BE_explo_max))+" | "+str(int((BE_explo_min+BE_explo_max)/2))+" |\n"
-    st.write(tab_BE)
-    st.text("")
-    # st.write(BE_mur_do_min,BE_mur_do_max
-    #     ,stats_perso['Chance']+stats_perso["pui"]+stats_perso["roub_pui"]
-    #     ,stats_perso['Doeau']+stats_perso["Do"]+stats_perso["roub_do"]
-    #     ,bonus_combo_total)
-with right_BE:
-    st.text("")
-    st.image(image_path+"Bombe_a_eau.png")
-
-######################
-#Tornabombe
-######################
-left_BA, right_BA = st.columns((1,1))
-with left_BA:
-
+    #BOMBE AIR
     st.write("### Tornabombe")
+    left_BA, right_BA = st.columns((1,1))
+    with left_BA:
 
-    col_lvl_BA,col_vita_BA=st.columns((1,1))
-    #Lvl Bombe
-    if stats_perso["Lvl"]>100:
-        BA_lvl_base=lvls_bombes[2]
-    elif stats_perso["Lvl"]>50:
-        BA_lvl_base=lvls_bombes[1]
-    else:
-        BA_lvl_base=lvls_bombes[0]
+        BA_lvl_bombes_unchecked = str(st.pills("Lvl Bombe", lvls_bombes, selection_mode="single",default="6",key=1))
+        if BA_lvl_bombes_unchecked in lvls_bombes:
+            BA_lvl_bombes=BA_lvl_bombes_unchecked
+        else:
+            BA_lvl_bombes=lvls_bombes[2]
+        
+        tab_vita_BA="""
+    | Vitalité |
+    | ----------- |
+    """
+        tab_vita_BA+="| "+str(int(calcul_vita_bombes(stats_perso["Vita"],stats_perso["Lvl"],0.27,vita_bombes_base[BA_lvl_bombes])))+" |\n"
+        st.write(tab_vita_BA)
+    with right_BA:
+        st.text("")
+        st.image(image_path+"Tornabombe.png")
+
+######################
+#TAB MUR
+######################
+
+with tab_mur:
+
+    with st.container(border=True):   
+        st.write("### Boosts sur roublard") 
+        stats_perso["roub_pui"]=int(st.text_input("Puissance", value=0, max_chars=None, key=201, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+        stats_perso["roub_do"]=int(st.text_input("Dommages", value=0, max_chars=None, key=202, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+        stats_perso["roub_per_do"]=int(st.text_input("% dommages", value=0, max_chars=None, key=203, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+ 
+    with st.container(border=True):   
+        st.write("### Bombes constituant le mur") 
+
+        mur_g,mur_m,mur_d = st.columns((1,1,1))
+
+        nb_bombes=mur_g.number_input(label="Nombre de Bombes",min_value=1,max_value=3,value=1)
+        bombes_element=mur_m.selectbox("Élément des bombes",options=elements,index=0)
+        lvl_bombes_mur=str(mur_d.number_input(label="Lvl des Bombes",min_value=4,max_value=6,value=6))
+
+        bombes = st.columns((1,1,1))
+        bombes_combo=[0,0,0]
+        for t in range(nb_bombes):
+            bombes_combo[t]=bombes[t].number_input(label=f"Bonus combo Bombe {t+1}",min_value=0,max_value=10,value=5,key=210+t)
+
+        bonus_combo_total=calcul_bonus_combo(bombes_combo)
+
+    st.markdown("# Dégats du mur :")
+    mur_resultat_tab="""
+| Dégats min | Dégats max | Moyenne |
+| ----------- | ----------- | ----------- |
+"""     
+    # st.write(bombes_do[bombes_element]["4"],lvl_bombes_mur)
+    mur_min,mur_max=calcul_degats_mur(   bombes_do[bombes_element][lvl_bombes_mur]["mur"]["min"]
+                                            ,bombes_do[bombes_element][lvl_bombes_mur]["mur"]["max"]
+                                            ,stats=stats_perso['Intel']+stats_perso["pui"]+stats_perso["roub_pui"]
+                                            ,do=stats_perso['Dofeu']+stats_perso["Do"]+stats_perso["roub_do"]
+                                            ,per_do=stats_perso["roub_per_do"]
+                                            ,bonus_combo=bonus_combo_total)
+    mur_resultat_tab+="| "+str(mur_min)+" | "+str(mur_max)+" | "+str(int((mur_min+mur_max)/2))+" |\n"
+    st.markdown(mur_resultat_tab)
+######################
+#TAB EXPLOSION
+######################
+
+elt_to_carac={
+    "Feu" : "Intel"
+    ,"Air" : "Agi"
+    ,"Eau" : "Chance"
+}
+with tab_explo:
+
+    with st.container(border=True):   
+        st.write("### Boosts sur roublard") 
+        stats_perso["roub_pui"]=int(st.text_input("Puissance", value=0, max_chars=None, key=401, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+        stats_perso["roub_do"]=int(st.text_input("Dommages", value=0, max_chars=None, key=402, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+        stats_perso["roub_per_do"]=int(st.text_input("% dommages", value=0, max_chars=None, key=403, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+ 
     
-    BA_lvl_bombes_unchecked = col_lvl_BA.pills("Lvl Bombe", lvls_bombes, selection_mode="single",default=BA_lvl_base,key=2)
-    if BA_lvl_bombes_unchecked in lvls_bombes:
-        BA_lvl_bombes=BA_lvl_bombes_unchecked
-    else:
-        BA_lvl_bombes=lvls_bombes[2]
+    with st.container(border=True):   
+        st.write("### Bombes dans l'explosion") 
+        nb_bombes_explo=st.number_input(label="Nombre de Bombes",min_value=1,max_value=3,value=1, key=501)
 
-    #dégats de base bombe
-    tornabombe_do={
-        '4':(11,13,11,12)
-        ,'5':(12,14,12,13)
-        ,'6':(15,17,17,19)
-    }
-    BA_mur_do_min,BA_mur_do_max,BA_explo_do_min,BA_explo_do_max=tornabombe_do[BA_lvl_bombes]
+        bombes_explo = st.columns((1,)*nb_bombes_explo)
+        for b_id in range(nb_bombes_explo):
+            with bombes_explo[b_id]:
+                st.markdown(f"#### Bombe {b_id+1}")
+        
+        bombes_explo_elt=[bombes_explo[b_id].selectbox("Élément",options=elements,index=0,key=601+b_id*10) for b_id in range(nb_bombes_explo)]
+        bombes_explo_lvl=[str(bombes_explo[b_id].number_input(label="Lvl",min_value=4,max_value=6,value=6,key=600+b_id*10)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_combo=[(bombes_explo[b_id].number_input(label=f"Bonus combo",min_value=0,max_value=10,value=5,key=605+b_id*10)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_distance=[(bombes_explo[b_id].number_input(label="Distance",min_value=1,max_value=2,value=1,key=606+b_id*10)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_do=[int(bombes_explo[b_id].text_input("Boost dommages", value=0, max_chars=None, key=603+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_pui=[int(bombes_explo[b_id].text_input("Boost puissance", value=0, max_chars=None, key=602+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_per_do=[int(bombes_explo[b_id].text_input("Boost % dommages", value=0, max_chars=None, key=604+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
+        
+        bonus_combo_total_explo=calcul_bonus_combo(bombes_explo_combo)
 
-    tab_vita_BA="""
-| Vitalité |
-| ----------- |
-"""
-    tab_vita_BA+="| "+str(int(calcul_vita_bombes(stats_perso["Vita"],stats_perso["Lvl"],vita_bombes_base[BA_lvl_bombes])))+" |\n"
-    col_vita_BA.write(tab_vita_BA)
-    
-    tab_BA="""
-|   | Valeur min | Valeur max | Moyenne |
-| ----------- | ----------- | ----------- | ----------- |
-"""
-    BA_mur_min,BA_mur_max=calcul_degats_bombes(BA_mur_do_min,BA_mur_do_max
-                                                      ,stats=stats_perso['Agi']+stats_perso["pui"]+stats_perso["roub_pui"]
-                                                      ,do=stats_perso['Doair']+stats_perso["Do"]+stats_perso["roub_do"]
-                                                      ,bonus_combo=bonus_combo_total
-                                                      ,distance=0)
-    tab_BA+="| Mur | "+str(int(BA_mur_min))+" | "+str(int(BA_mur_max))+" | "+str(int((BA_mur_min+BA_mur_max)/2))+" |\n"
+        degats_explo_min=[]
+        degats_explo_max=[]
+        for b_id in range(nb_bombes_explo):
+            
+            temp_explo_min,tem_explo_max=calcul_degats_explo(bombes_do[bombes_explo_elt[b_id]][bombes_explo_lvl[b_id]]["mur"]["min"]
+                                                            ,bombes_do[bombes_explo_elt[b_id]][bombes_explo_lvl[b_id]]["mur"]["max"]
+                                                            ,stats=stats_perso[elt_to_carac[bombes_explo_elt[b_id]]]+stats_perso["pui"]+bombes_explo_pui[b_id]+stats_perso["roub_pui"]
+                                                            ,do=stats_perso["Do"+bombes_explo_elt[b_id].lower()]+stats_perso["Do"]+bombes_explo_do[b_id]+stats_perso["roub_do"]
+                                                            ,per_do=bombes_explo_per_do[b_id]
+                                                            ,bonus_combo=bonus_combo_total_explo                                                            
+                                                            ,distance=bombes_explo_distance[b_id])
+            degats_explo_min.append(temp_explo_min)
+            degats_explo_max.append(tem_explo_max)
 
-    BA_explo_min,BA_explo_max=calcul_degats_bombes(BA_explo_do_min,BA_explo_do_max
-                                                      ,stats=stats_perso['Agi']+stats_perso["pui"]+stats_perso["bombe_pui"]+stats_perso["roub_pui"]
-                                                      ,do=stats_perso['Doair']+stats_perso["Do"]+stats_perso["bombe_do"]+stats_perso["roub_do"]
-                                                      ,bonus_combo=bonus_combo_total
-                                                      ,distance=1)
-    tab_BA+="| Explosion | "+str(int(BA_explo_min))+" | "+str(int(BA_explo_max))+" | "+str(int((BA_explo_min+BA_explo_max)/2))+" |\n"
-    st.write(tab_BA)
-    st.text("")
-    # st.write(BA_mur_do_min,BA_mur_do_max
-    #     ,stats_perso['Agi']+stats_perso["pui"]+stats_perso["roub_pui"]
-    #     ,stats_perso['Doair']+stats_perso["Do"]+stats_perso["roub_do"]
-    #     ,bonus_combo_total)
-with right_BA:
-    st.text("")
-    st.image(image_path+"Tornabombe.png")
 
-st.write("Merci au discord roublard pour l'aide apportée lors de la création de l'outil ❤️")
+    st.markdown("# Dégats de l'explosion :")
+    explo_resultat_tab="""
+| Dégats min | Dégats max | Moyenne |
+| ----------- | ----------- | ----------- |
+"""     
+    explo_resultat_tab+="| "+str(sum(degats_explo_min))+" | "+str(sum(degats_explo_max))+" | "+str(int((sum(degats_explo_min)+sum(degats_explo_max))/2))+" |\n"
+    st.markdown(explo_resultat_tab)
+
+    st.markdown("## Détails :")
+    for b_id in range(nb_bombes_explo):
+        st.markdown(f"### Bombe {b_id+1}")
+        st.markdown(f"""
+| Dégats min | Dégats max | Moyenne |
+| ----------- | ----------- | ----------- |
+| {degats_explo_min[b_id]} | {degats_explo_max[b_id]} | {int((degats_explo_min[b_id]+degats_explo_max[b_id])/2)} |
+
+""")
+
+
+
+st.divider()
+st.write("Merci au [discord roublard](https://discord.gg/QYKu5Qs5Eh) et à [Emrys](https://www.youtube.com/@emrys30) pour l'aide apportée lors de la création de l'outil ❤️")
 
 table_style = """
 <style>
