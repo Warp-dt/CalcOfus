@@ -6,7 +6,7 @@ st.set_page_config(page_title="CalcOfus",page_icon=image_path+"logo_InvRoxx_tab.
 
 st.sidebar.image(image_path+"logo_jda4.png" )
 
-ronde=2
+ronde=4
 st.title(f"Stats après ronde {ronde} JDA#4".upper())
 
 df=[{'C1': 'cra', 'C3': 'ecaflip', 'C2': 'xelor'},
