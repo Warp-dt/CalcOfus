@@ -11,9 +11,6 @@ st.set_page_config(page_title="CalcInvo",page_icon=image_path+"logo_InvRoxx_tab.
 
 st.write("# Le calculateur de roxx de tes invo préférées")
 
-st.write("### Dans la suite de l'outil on part du principe que l'osa est lvl 200")
-
-
 ######################
 #SIDEBAR
 ######################

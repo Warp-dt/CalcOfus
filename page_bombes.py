@@ -313,7 +313,7 @@ with tab_mur:
 
         mur_g,mur_m,mur_d = st.columns((1,1,1))
 
-        nb_bombes=mur_g.number_input(label="Nombre de Bombes",min_value=1,max_value=3,value=1)
+        nb_bombes=mur_g.number_input(label="Nombre de Bombes",min_value=1,max_value=3,value=2)
         bombes_element=mur_m.selectbox("Élément des bombes",options=elements,index=0)
         lvl_bombes_mur=str(mur_d.number_input(label="Lvl des Bombes",min_value=4,max_value=6,value=6))
 
@@ -358,7 +358,7 @@ with tab_explo:
     
     with st.container(border=True):   
         st.write("### Bombes dans l'explosion") 
-        nb_bombes_explo=st.number_input(label="Nombre de Bombes",min_value=1,max_value=3,value=1, key=501)
+        nb_bombes_explo=st.number_input(label="Nombre de Bombes",min_value=1,max_value=3,value=3, key=501)
 
         bombes_explo = st.columns((1,)*nb_bombes_explo)
         for b_id in range(nb_bombes_explo):
@@ -369,9 +369,9 @@ with tab_explo:
         bombes_explo_lvl=[str(bombes_explo[b_id].number_input(label="Lvl",min_value=4,max_value=6,value=6,key=600+b_id*10)) for b_id in range(nb_bombes_explo)]
         bombes_explo_combo=[(bombes_explo[b_id].number_input(label=f"Bonus combo",min_value=0,max_value=10,value=5,key=605+b_id*10)) for b_id in range(nb_bombes_explo)]
         bombes_explo_distance=[(bombes_explo[b_id].number_input(label="Distance",min_value=1,max_value=2,value=1,key=606+b_id*10)) for b_id in range(nb_bombes_explo)]
-        bombes_explo_do=[int(bombes_explo[b_id].text_input("Boost dommages", value=0, max_chars=None, key=603+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
-        bombes_explo_pui=[int(bombes_explo[b_id].text_input("Boost puissance", value=0, max_chars=None, key=602+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
-        bombes_explo_per_do=[int(bombes_explo[b_id].text_input("Boost % dommages", value=0, max_chars=None, key=604+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_do=[int(bombes_explo[b_id].text_input("Boost dommages (sur bombe)", value=0, max_chars=None, key=603+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_pui=[int(bombes_explo[b_id].text_input("Boost puissance (sur bombe)", value=0, max_chars=None, key=602+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_per_do=[int(bombes_explo[b_id].text_input("Boost % dommages (sur bombe)", value=0, max_chars=None, key=604+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
         
         bonus_combo_total_explo=calcul_bonus_combo(bombes_explo_combo)
 
