@@ -264,6 +264,45 @@ with st.expander("Détail des 154 équipes inscrites :"):
 
     st.dataframe(inscrits,hide_index=True,on_select='ignore')
 
+points={'cra': 0,
+        'ecaflip': 0,
+        'eniripsa': 0,
+        'enutrof': 0,
+        'feca': 0,
+        'iop': 0,
+        'osamodas': 0,
+        'pandawa': 0,
+        'roublard': 0,
+        'sacrieur': 0,
+        'sadida': 0,
+        'sram': 0,
+        'steamer': 0,
+        'xelor': 0,
+        'zobal': 0}
+points_default={'cra': 4,
+        'ecaflip': 6,
+        'eniripsa': 9,
+        'enutrof': 6,
+        'feca': 7,
+        'iop': 3,
+        'osamodas': 8,
+        'pandawa': 5,
+        'roublard': 3,
+        'sacrieur': 6,
+        'sadida': 6,
+        'sram': 0,
+        'steamer': 5,
+        'xelor': 10,
+        'zobal': 7}
+
+with st.sidebar:
+    st.write("""# Points par classe\n 
+Ces points servent à trier les 171 compositions possibles.\n
+J'ai mis des valeurs par défaut, mais vous pouvez les modifier si vous le souhaitez.
+""")
+    for classe in points:
+        points[classe] = st.number_input(f"Points {classe.capitalize()}", value=points_default[classe], step=1, key=f"points_{classe}")
+    # sram_pts = st.number_input("Points Sram", value=4, step=1)
 
 with st.expander("Compositions d'équipe possibles :"):
 # st.title("Compositions Possibles JDA#4")
@@ -271,47 +310,9 @@ with st.expander("Compositions d'équipe possibles :"):
     # classes_voulues=st.text_input("Classes voulues (séparées par des virgules)", value="",placeholder="ex: osamodas,enutrof",autocomplete="sram,ecaflip")
     classes_voulues=st.multiselect("Classes voulues",options=CLASSES, default=[],placeholder="Sélectionnez les classes voulues",max_selections=3,key=124)
     classes_interdites=st.multiselect("Classes interdites",options=CLASSES, default=[],placeholder="Sélectionnez les classes dont vous ne voulez pas",key=125)
-    points={'cra': 0,
-            'ecaflip': 0,
-            'eniripsa': 0,
-            'enutrof': 0,
-            'feca': 0,
-            'iop': 0,
-            'osamodas': 0,
-            'pandawa': 0,
-            'roublard': 0,
-            'sacrieur': 0,
-            'sadida': 0,
-            'sram': 0,
-            'steamer': 0,
-            'xelor': 0,
-            'zobal': 0}
-    points_default={'cra': 4,
-            'ecaflip': 6,
-            'eniripsa': 9,
-            'enutrof': 6,
-            'feca': 7,
-            'iop': 3,
-            'osamodas': 8,
-            'pandawa': 5,
-            'roublard': 3,
-            'sacrieur': 6,
-            'sadida': 6,
-            'sram': 0,
-            'steamer': 5,
-            'xelor': 10,
-            'zobal': 7}
 
 
 
-    with st.sidebar:
-        st.write("""# Points par classe\n 
-    Ces points servent à trier les 171 compositions possibles.\n
-    J'ai mis des valeurs par défaut, mais vous pouvez les modifier si vous le souhaitez.
-    """)
-        for classe in points:
-            points[classe] = st.number_input(f"Points {classe.capitalize()}", value=points_default[classe], step=1, key=f"points_{classe}")
-        # sram_pts = st.number_input("Points Sram", value=4, step=1)
 
     def filtrer_compositions(classes_voulues, classes_interdites):
         # st.write("Filtrage des compositions...")
