@@ -1,5 +1,4 @@
 [theme]
 base="dark"
 primaryColor="#97a800"
-[browser]
-gatherUsageStats = false
+[browser]gatherUsageStats = false
