@@ -1,4 +1,11 @@
 import requests as req
+import json
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+import tempfile
 
 FR_KEYS=['Lvl','PA', 'PM', 'PO', 'Initiative', 'Critique', 'Invocation', 'Soin', 'Vitalité', 'Sagesse', 'Force', 'Intelligence', 'Chance', 'Agilité', 'Puissance', 'Fuite', 'Esq. PA', 'Esq. PM', 'Pods', 'Tacle', 'Ret. PA', 'Ret. PM',  'Do Critique', '% Ré Air', '% Ré Feu', 'Do Eau', 'Do Terre', 'Do Neutre', '% Ré Terre', 'Prospection', 'Do Feu', 'Do Air', 'Do Poussée', 'Ré Neutre', '% Ré Neutre', 'Ré Terre', 'Ré Feu', 'Ré Eau', '% Ré Eau', 'Ré Air', 'Ré Critique', 'Ré Poussée', "Do"]
 EN_KEYS=['Lvl','AP', 'MP', 'Range', 'Initiative', 'Critical', 'Summon', 'Heal', 'Vitality', 'Wisdom', 'Strength', 'Intelligence', 'Chance', 'Agility', 'Power', 'Dodge', 'AP Res.', 'MP Res.', 'Pods', 'Lock', 'AP Red', 'MP Red',  'Da Critical', '% Re Air', '% Re Fire', 'Da Water', 'Da Earth', 'Da Neutral', '% Re Earth', 'Prospecting', 'Da Fire', 'Da Air', 'Da Pushback', 'Re Neutral', '% Re Neutral', 'Re Earth', 'Re Fire', 'Re Water', '% Re Water', 'Re Air', 'Re Critical', 'Re Pushback', "Da"]
@@ -82,20 +89,41 @@ TRAD_DB_STATS={
 
 }
 
-def get_db_id(short_url):
+def get_db_id(short_url,driver):
     try:
-        response = req.get(short_url, allow_redirects=True)
-        spl=response.url.split("/")
-        return spl[5][:-3]  
+        driver.get(short_url)
+        # response = req.get(short_url, allow_redirects=True)
+        full_url=driver.current_url
+        db_id=full_url.split("/")[5][:-3] 
+        # driver.quit()
+        return db_id
         # Retourne l'URL finale après toutes les redirections
-    except req.RequestException as e:
+    except Exception as e:
         print(f"Erreur lors de la requête: {e}")
+        # driver.quit()
         return None
-    
+
 def get_db_data(url):
-    db_id=get_db_id(url)
-    resp = req.get("https://touch.dofusbook.net/stuffs/touch/public/"+str(db_id),allow_redirects=True)
-    return resp.json()
+    user_data_dir = tempfile.mkdtemp(prefix="selenium_chrome_")
+    options = Options()
+    options.add_argument(f"--user-data-dir={user_data_dir}")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--disable-gpu")
+    # options.add_argument("--headless=new")
+    # service = Service("/usr/bin/chromedriver")  # ou /usr/local/bin/chromedriver
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    # driver = webdriver.Chrome(service=service, options=options)
+
+    db_id=get_db_id(url,driver)
+    driver.get("https://touch.dofusbook.net/stuffs/touch/public/"+str(db_id))
+    # resp = req.get("https://touch.dofusbook.net/stuffs/touch/public/"+str(db_id),allow_redirects=True)
+
+    pre_text = driver.find_element("tag name", "pre").text
+    resp = json.loads(pre_text)
+    return resp
+    # return resp.json()
 
 def get_stats(url):
     data= get_db_data(url)
