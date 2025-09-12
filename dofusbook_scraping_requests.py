@@ -112,9 +112,9 @@ def get_db_data(url):
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-gpu")
     # options.add_argument("--headless=new")
-    # service = Service("/usr/bin/chromedriver")  # ou /usr/local/bin/chromedriver
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    # driver = webdriver.Chrome(service=service, options=options)
+    # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    service = Service("/usr/bin/chromedriver")  # ou /usr/local/bin/chromedriver
+    driver = webdriver.Chrome(service=service, options=options)
 
     db_id=get_db_id(url,driver)
     driver.get("https://touch.dofusbook.net/stuffs/touch/public/"+str(db_id))
