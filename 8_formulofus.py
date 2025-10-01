@@ -2,7 +2,7 @@ import streamlit as st
 import unicodedata
 
 image_path='images/'
-st.set_page_config(page_title="FormulOfus",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
+st.set_page_config(page_title="FormulOfus",layout="wide")
 
 st.sidebar.image(image_path+"logo_nom_transp.png" )
 
@@ -70,7 +70,7 @@ class Toc:
 
 toc = Toc()
 
-st.title("LES FORMULES DE DOFUS TOUCH")
+st.html('<div style="text-align: center; font-size: 50px;font-weight: bold"> LES FORMULES DE DOFUS TOUCH </div>')
 st.header("Sommaire")
 toc.placeholder()
 

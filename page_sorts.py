@@ -8,7 +8,7 @@ image_path='images/'
 # Page Title
 ######################
 
-st.set_page_config(page_title="CalcSorts",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
+st.set_page_config(page_title="CalcSorts",layout="wide")
 
 ######################
 #SIDEBAR

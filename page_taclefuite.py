@@ -7,7 +7,7 @@ image_path='images/'
 # Page Title
 ######################
 
-st.set_page_config(page_title="CalcoTac",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
+st.set_page_config(page_title="CalcoTac",layout="wide")
 
 st.write("## Calculateur de Tacle/Fuite")
 

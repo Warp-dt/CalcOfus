@@ -8,23 +8,6 @@ image_path='images/'
 st.set_page_config(page_title="CalcOfus",page_icon=image_path+"logo_InvRoxx_tab.png",layout="wide")
 
 
-GA_TRACKING_ID = "G-G5LKNFXD3P"  # remplace avec ton ID
-
-ga_code = f"""
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={GA_TRACKING_ID}"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){{dataLayer.push(arguments);}}
-  gtag('js', new Date());
-  gtag('config', '{GA_TRACKING_ID}');
-</script>
-"""
-
-# Injecter dans la page via components
-import streamlit.components.v1 as components
-components.html(ga_code, height=0, width=0)
-
 # import platform
 # plat=platform.platform()
 # if plat=="Linux-6.1.100+-x86_64-with-glibc2.31": #streamlit
@@ -92,19 +75,22 @@ with col5:
         st.write("Calculateur de Tacle/Fuite")
 with col6:
     with st.container(border=True):
-        st.page_link("page_stattn.py",label="**CompOfus**", icon=":material/bar_chart:", use_container_width=True)
-        st.text("Créateur de restrictions & Stats des Tournois PVP")
-        # st.link_button("La JDA #4 ⚔️", "https://ktarena.com/fr/253-la-joute-des-abimes", help=None, type="secondary", icon="⚔️", disabled=False, use_container_width=True)
+        st.page_link("page_restrictofus.py",label="**RestrictOfus**", icon=":material/rule:", use_container_width=True)
+        st.text("Créateur de restrictions pour Tournois PVP")
 
 col7, col8,col9 = st.columns((1,1,1))
 with col7:
     with st.container(border=True):
-        st.page_link("page_persofus.py",label='**PersOfus**',icon=":material/data_loss_prevention:", use_container_width=True)
-        st.write("Générateur de lien vers les pages perso à partir du nom de compte.")
+        st.page_link("page_stattn.py",label="**CompOfus**", icon=":material/bar_chart:", use_container_width=True)
+        st.text("Stats des Tournois PVP")
+        st.link_button("Site du KTA ⚔️", "https://ktarena.com/fr/", help=None, type="secondary", icon="⚔️", disabled=False, use_container_width=True)
+        st.link_button("Discord Tournois 🗨️", "https://discord.gg/nC7g6vDnmT", help=None, type="secondary", icon="🗨️", disabled=False, use_container_width=True)
 
 with col8:
     with st.container(border=True):
-        pass
+        st.page_link("page_persofus.py",label='**PersOfus**',icon=":material/data_loss_prevention:", use_container_width=True)
+        st.write("Générateur de lien vers les pages perso à partir du nom de compte.")
+
 with col9:
     with st.container(border=True):
         pass
@@ -136,9 +122,9 @@ with youtube:
 
 with warpBot:
     with st.container(border=True):
-        st.page_link("https://discord.com/oauth2/authorize?client_id=1288167324586872842",label='**MetaPano**',icon="🤖")
+        st.page_link("https://discord.com/oauth2/authorize?client_id=1288167324586872842",label='**MetaPano**',icon="🦾")
         st.write("Ce bot discord vous renseigne sur les meilleurs stuff pvp du moment🤩")
-        st.link_button("Ajoute le sur discord 🤖", "https://discord.com/oauth2/authorize?client_id=1288167324586872842", help=None, type="secondary", icon="🤖", disabled=False, use_container_width=True)
+        st.link_button("Ajoute le sur discord 🦿", "https://discord.com/oauth2/authorize?client_id=1288167324586872842", help=None, type="secondary", icon="🦾", disabled=False, use_container_width=True)
 
 
 warp_bliblio,metapano, vide2 = st.columns((1,1,1))

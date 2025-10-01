@@ -14,6 +14,7 @@ pg = st.navigation([
     st.Page("page_sorts.py", title="Sorts", icon=":material/sword_rose:"),
     st.Page("page_dopou.py", title="Dopou", icon=":material/directions_alt:"),
     st.Page("page_taclefuite.py", title="Tacle/Fuite", icon=":material/do_not_step:"),
+    st.Page("page_restrictofus.py", title="Restrictions Builder", icon=":material/rule:"),
     st.Page("page_stattn.py", title="Stats Tournois", icon=":material/bar_chart:"),
     st.Page("page_persofus.py", title="Pages perso", icon=":material/data_loss_prevention:"),
     st.Page("8_formulofus.py", title="Formules Dofus Touch", icon=":material/function:"),
