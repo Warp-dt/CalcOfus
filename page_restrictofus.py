@@ -57,7 +57,7 @@ overlay = Image.open(image_path+"interdit.png").convert("RGBA")  # assure un can
 size=37
 overlay_resized = overlay.resize((size, size))
 
-@st.cache_data()
+@st.cache_data
 def restri_img_from_df(df):
     # Redimensionner l'image
     img=base.copy()
