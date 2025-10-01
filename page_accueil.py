@@ -67,15 +67,15 @@ col1, col2,col3 = st.columns((1,1,1),vertical_alignment='top')
 with col1:
     with st.container(border=True):
         st.page_link("page_invo.py",label='**CalcInvo**',icon=":material/cruelty_free:", use_container_width=True)
-        st.write("""Calculateur de dégats des invocations
-- importation des stats depuis dofusbook possible
-- ou entrée des stats custom dans la sidebar""")
+        st.write("""Calculateur de dégats des invocations""")
+# - importation des stats depuis dofusbook possible
+# - ou entrée des stats custom dans la sidebar""")
 with col2:
     with st.container(border=True):
         st.page_link("page_bombes.py",label='**CalcoBoom**',icon=":material/bomb:", use_container_width=True)
-        st.write("""Calculateur de dégats des bombes
-- importation des stats depuis dofusbook possible
-- ou entrée des stats custom dans la sidebar""")
+        st.write("""Calculateur de dégats des bombes""")
+# - importation des stats depuis dofusbook possible
+# - ou entrée des stats custom dans la sidebar""")
 with col3:
     with st.container(border=True):
         st.page_link("page_dopou.py",label='**CalcOpou**',icon=":material/directions_alt:", use_container_width=True)
@@ -92,15 +92,16 @@ with col5:
         st.write("Calculateur de Tacle/Fuite")
 with col6:
     with st.container(border=True):
-        st.page_link("page_persofus.py",label='**PersOfus**',icon=":material/data_loss_prevention:", use_container_width=True)
-        st.write("Générateur de lien vers les pages perso à partir du nom de compte.")
+        st.page_link("page_stattn.py",label="**CompOfus**", icon=":material/bar_chart:", use_container_width=True)
+        st.text("Créateur de restrictions & Stats des Tournois PVP")
+        # st.link_button("La JDA #4 ⚔️", "https://ktarena.com/fr/253-la-joute-des-abimes", help=None, type="secondary", icon="⚔️", disabled=False, use_container_width=True)
 
 col7, col8,col9 = st.columns((1,1,1))
 with col7:
     with st.container(border=True):
-        st.page_link("page_jda4.py",label="**Stats JDA#4**", icon=":material/bar_chart:", use_container_width=True)
-        st.text("Stats sur le tournois interserveur de 2025 :")
-        st.link_button("La JDA #4 ⚔️", "https://ktarena.com/fr/253-la-joute-des-abimes", help=None, type="secondary", icon="⚔️", disabled=False, use_container_width=True)
+        st.page_link("page_persofus.py",label='**PersOfus**',icon=":material/data_loss_prevention:", use_container_width=True)
+        st.write("Générateur de lien vers les pages perso à partir du nom de compte.")
+
 with col8:
     with st.container(border=True):
         pass
