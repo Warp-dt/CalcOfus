@@ -45,6 +45,257 @@ def update_points(df,points,temp_points):
     st.session_state[points]=st.session_state[temp_points]
     df["Points"]= df.apply(lambda row: st.session_state[points][row['C1']] + st.session_state[points][row['C2']] + st.session_state[points][row['C3']], axis=1)
 
+with tab_KMC1:
+    compo_kmc1=[('sram', 'ecaflip', 'cra'),
+ ('sram', 'ecaflip', 'steamer'),
+ ('sram', 'ecaflip', 'sadida'),
+ ('sram', 'ecaflip', 'xelor'),
+ ('sram', 'ecaflip', 'sacrieur'),
+ ('sram', 'ecaflip', 'roublard'),
+ ('sram', 'ecaflip', 'feca'),
+ ('sram', 'ecaflip', 'zobal'),
+ ('sram', 'ecaflip', 'pandawa'),
+ ('sram', 'cra', 'osamodas'),
+ ('sram', 'cra', 'steamer'),
+ ('sram', 'cra', 'sadida'),
+ ('sram', 'cra', 'xelor'),
+ ('sram', 'cra', 'eniripsa'),
+ ('sram', 'cra', 'enutrof'),
+ ('sram', 'cra', 'sacrieur'),
+ ('sram', 'cra', 'iop'),
+ ('sram', 'cra', 'roublard'),
+ ('sram', 'cra', 'feca'),
+ ('sram', 'cra', 'zobal'),
+ ('sram', 'cra', 'pandawa'),
+ ('sram', 'osamodas', 'steamer'),
+ ('sram', 'osamodas', 'sacrieur'),
+ ('sram', 'osamodas', 'iop'),
+ ('sram', 'osamodas', 'roublard'),
+ ('sram', 'osamodas', 'pandawa'),
+ ('sram', 'steamer', 'sadida'),
+ ('sram', 'steamer', 'xelor'),
+ ('sram', 'steamer', 'enutrof'),
+ ('sram', 'steamer', 'roublard'),
+ ('sram', 'steamer', 'feca'),
+ ('sram', 'steamer', 'pandawa'),
+ ('sram', 'sadida', 'sacrieur'),
+ ('sram', 'sadida', 'roublard'),
+ ('sram', 'sadida', 'feca'),
+ ('sram', 'xelor', 'enutrof'),
+ ('sram', 'xelor', 'roublard'),
+ ('sram', 'eniripsa', 'enutrof'),
+ ('sram', 'eniripsa', 'iop'),
+ ('sram', 'eniripsa', 'roublard'),
+ ('sram', 'eniripsa', 'pandawa'),
+ ('sram', 'enutrof', 'sacrieur'),
+ ('sram', 'enutrof', 'iop'),
+ ('sram', 'enutrof', 'roublard'),
+ ('sram', 'enutrof', 'feca'),
+ ('sram', 'enutrof', 'zobal'),
+ ('sram', 'sacrieur', 'iop'),
+ ('sram', 'sacrieur', 'roublard'),
+ ('sram', 'sacrieur', 'zobal'),
+ ('sram', 'sacrieur', 'pandawa'),
+ ('sram', 'iop', 'roublard'),
+ ('sram', 'iop', 'feca'),
+ ('sram', 'iop', 'zobal'),
+ ('sram', 'iop', 'pandawa'),
+ ('sram', 'roublard', 'feca'),
+ ('sram', 'roublard', 'zobal'),
+ ('sram', 'roublard', 'pandawa'),
+ ('sram', 'feca', 'pandawa'),
+ ('ecaflip', 'cra', 'steamer'),
+ ('ecaflip', 'cra', 'sadida'),
+ ('ecaflip', 'cra', 'xelor'),
+ ('ecaflip', 'cra', 'sacrieur'),
+ ('ecaflip', 'cra', 'roublard'),
+ ('ecaflip', 'cra', 'feca'),
+ ('ecaflip', 'cra', 'zobal'),
+ ('ecaflip', 'cra', 'pandawa'),
+ ('ecaflip', 'steamer', 'sadida'),
+ ('ecaflip', 'steamer', 'xelor'),
+ ('ecaflip', 'steamer', 'roublard'),
+ ('ecaflip', 'steamer', 'feca'),
+ ('ecaflip', 'steamer', 'pandawa'),
+ ('ecaflip', 'sadida', 'sacrieur'),
+ ('ecaflip', 'sadida', 'roublard'),
+ ('ecaflip', 'sadida', 'feca'),
+ ('ecaflip', 'xelor', 'roublard'),
+ ('ecaflip', 'sacrieur', 'roublard'),
+ ('ecaflip', 'sacrieur', 'zobal'),
+ ('ecaflip', 'sacrieur', 'pandawa'),
+ ('ecaflip', 'roublard', 'feca'),
+ ('ecaflip', 'roublard', 'zobal'),
+ ('ecaflip', 'roublard', 'pandawa'),
+ ('ecaflip', 'feca', 'pandawa'),
+ ('cra', 'osamodas', 'steamer'),
+ ('cra', 'osamodas', 'sacrieur'),
+ ('cra', 'osamodas', 'iop'),
+ ('cra', 'osamodas', 'roublard'),
+ ('cra', 'osamodas', 'pandawa'),
+ ('cra', 'steamer', 'sadida'),
+ ('cra', 'steamer', 'xelor'),
+ ('cra', 'steamer', 'enutrof'),
+ ('cra', 'steamer', 'roublard'),
+ ('cra', 'steamer', 'feca'),
+ ('cra', 'steamer', 'pandawa'),
+ ('cra', 'sadida', 'sacrieur'),
+ ('cra', 'sadida', 'roublard'),
+ ('cra', 'sadida', 'feca'),
+ ('cra', 'xelor', 'enutrof'),
+ ('cra', 'xelor', 'roublard'),
+ ('cra', 'eniripsa', 'enutrof'),
+ ('cra', 'eniripsa', 'iop'),
+ ('cra', 'eniripsa', 'roublard'),
+ ('cra', 'eniripsa', 'pandawa'),
+ ('cra', 'enutrof', 'sacrieur'),
+ ('cra', 'enutrof', 'iop'),
+ ('cra', 'enutrof', 'roublard'),
+ ('cra', 'enutrof', 'feca'),
+ ('cra', 'enutrof', 'zobal'),
+ ('cra', 'sacrieur', 'iop'),
+ ('cra', 'sacrieur', 'roublard'),
+ ('cra', 'sacrieur', 'zobal'),
+ ('cra', 'sacrieur', 'pandawa'),
+ ('cra', 'iop', 'roublard'),
+ ('cra', 'iop', 'feca'),
+ ('cra', 'iop', 'zobal'),
+ ('cra', 'iop', 'pandawa'),
+ ('cra', 'roublard', 'feca'),
+ ('cra', 'roublard', 'zobal'),
+ ('cra', 'roublard', 'pandawa'),
+ ('cra', 'feca', 'pandawa'),
+ ('osamodas', 'steamer', 'roublard'),
+ ('osamodas', 'steamer', 'pandawa'),
+ ('osamodas', 'sacrieur', 'iop'),
+ ('osamodas', 'sacrieur', 'roublard'),
+ ('osamodas', 'sacrieur', 'pandawa'),
+ ('osamodas', 'iop', 'roublard'),
+ ('osamodas', 'iop', 'pandawa'),
+ ('osamodas', 'roublard', 'pandawa'),
+ ('steamer', 'sadida', 'roublard'),
+ ('steamer', 'sadida', 'feca'),
+ ('steamer', 'xelor', 'enutrof'),
+ ('steamer', 'xelor', 'roublard'),
+ ('steamer', 'enutrof', 'roublard'),
+ ('steamer', 'enutrof', 'feca'),
+ ('steamer', 'roublard', 'feca'),
+ ('steamer', 'roublard', 'pandawa'),
+ ('steamer', 'feca', 'pandawa'),
+ ('sadida', 'sacrieur', 'roublard'),
+ ('sadida', 'roublard', 'feca'),
+ ('xelor', 'enutrof', 'roublard'),
+ ('eniripsa', 'enutrof', 'iop'),
+ ('eniripsa', 'enutrof', 'roublard'),
+ ('eniripsa', 'iop', 'roublard'),
+ ('eniripsa', 'iop', 'pandawa'),
+ ('eniripsa', 'roublard', 'pandawa'),
+ ('enutrof', 'sacrieur', 'iop'),
+ ('enutrof', 'sacrieur', 'roublard'),
+ ('enutrof', 'sacrieur', 'zobal'),
+ ('enutrof', 'iop', 'roublard'),
+ ('enutrof', 'iop', 'feca'),
+ ('enutrof', 'iop', 'zobal'),
+ ('enutrof', 'roublard', 'feca'),
+ ('enutrof', 'roublard', 'zobal'),
+ ('sacrieur', 'iop', 'roublard'),
+ ('sacrieur', 'iop', 'zobal'),
+ ('sacrieur', 'iop', 'pandawa'),
+ ('sacrieur', 'roublard', 'zobal'),
+ ('sacrieur', 'roublard', 'pandawa'),
+ ('iop', 'roublard', 'feca'),
+ ('iop', 'roublard', 'zobal'),
+ ('iop', 'roublard', 'pandawa'),
+ ('iop', 'feca', 'pandawa'),
+ ('roublard', 'feca', 'pandawa')]
+    
+    #te
+    
+    with st.expander("Compositions d'équipe possibles :",expanded=True):
+    # st.title("Compositions Possibles JDA#4")
+
+        classes_voulues_kmc1=st.multiselect("Classes voulues",options=CLASSES, default=[],placeholder="Sélectionnez les classes voulues",max_selections=3,key="classes_voulues_kmc1")
+        classes_interdites_kmc1=st.multiselect("Classes interdites",options=CLASSES, default=[],placeholder="Sélectionnez les classes dont vous ne voulez pas",key="classes_interdites_kmc1")
+
+        st.button("Filtrer les compositions", key="filter_compositions_kmc1",on_click=filtrer_compositions, args=(classes_voulues_kmc1, classes_interdites_kmc1,"temp_compo_kmc1",compo_kmc1))
+                
+        points_kmc1_default={
+            'cra':      0,
+            'ecaflip':  0,
+            'eniripsa': 0,
+            'enutrof':  0,
+            'feca':     0,
+            'iop':      0,
+            'osamodas': 0,
+            'pandawa':  0,
+            'roublard': 0,
+            'sacrieur': 0,
+            'sadida':   0,
+            'sram':     0,
+            'steamer':  0,
+            'xelor':    0,
+            'zobal':    0}
+        
+        
+        if "points_kmc1" not in st.session_state:
+            st.session_state.points_kmc1={
+                'cra':      0,
+                'ecaflip':  0,
+                'eniripsa': 0,
+                'enutrof':  0,
+                'feca':     0,
+                'iop':      0,
+                'osamodas': 0,
+                'pandawa':  0,
+                'roublard': 0,
+                'sacrieur': 0,
+                'sadida':   0,
+                'sram':     0,
+                'steamer':  0,
+                'xelor':    0,
+                'zobal':    0}
+        if "temp_points_kmc1" not in st.session_state:
+            st.session_state.temp_points_kmc1={
+                'cra':      0,
+                'ecaflip':  0,
+                'eniripsa': 0,
+                'enutrof':  0,
+                'feca':     0,
+                'iop':      0,
+                'osamodas': 0,
+                'pandawa':  0,
+                'roublard': 0,
+                'sacrieur': 0,
+                'sadida':   0,
+                'sram':     0,
+                'steamer':  0,
+                'xelor':    0,
+                'zobal':    0}
+        
+        try:
+            compositions_kmc1 = pd.DataFrame(st.session_state["temp_compo_kmc1"])
+
+        except:
+            compositions_kmc1 = pd.DataFrame(compo_kmc1,columns=["C1","C2","C3"])
+
+        try:
+            compositions_kmc1["Points"]= compositions_kmc1.apply(lambda row: st.session_state.points_kmc1[row['C1']] + st.session_state.points_kmc1[row['C2']] + st.session_state.points_kmc1[row['C3']], axis=1)
+        except:
+            pass
+
+        st.write("### Nombre de compositions trouvées :", str(len(compositions_kmc1)))
+        st.dataframe(compositions_kmc1,hide_index=True)
+        st.image(image_path+"restrictions_kmc1.png" )
+        st.write(f"""#### Points par classe\n 
+Ces points servent à trier les {len(compositions_kmc1)} compositions possibles.
+""")            
+
+        st.button(label="Appliquer les points",on_click=update_points,args=(compositions_kmc1,"points_kmc1","temp_points_kmc1"),width="stretch",key="update_points_kmc1")
+
+        for classe in CLASSES:
+            st.session_state.temp_points_kmc1[classe] = st.number_input(f"Points {classe.capitalize()}", value=points_kmc1_default[classe], step=1, key=f"points_{classe}_kmc1")
+        # sram_pts = st.number_input("Points Sram", value=4, step=1)
+        
 with tab_jda4:
     ronde=10
     
@@ -373,253 +624,3 @@ J'ai mis des valeurs par défaut, mais vous pouvez les modifier si vous le souha
             st.session_state.temp_points_jda4[classe] = st.number_input(f"Points {classe.capitalize()}", value=points_jda4_default[classe], step=1, key=f"points_{classe}")
         # sram_pts = st.number_input("Points Sram", value=4, step=1)
 
-with tab_KMC1:
-    compo_kmc1=[('sram', 'ecaflip', 'cra'),
- ('sram', 'ecaflip', 'steamer'),
- ('sram', 'ecaflip', 'sadida'),
- ('sram', 'ecaflip', 'xelor'),
- ('sram', 'ecaflip', 'sacrieur'),
- ('sram', 'ecaflip', 'roublard'),
- ('sram', 'ecaflip', 'feca'),
- ('sram', 'ecaflip', 'zobal'),
- ('sram', 'ecaflip', 'pandawa'),
- ('sram', 'cra', 'osamodas'),
- ('sram', 'cra', 'steamer'),
- ('sram', 'cra', 'sadida'),
- ('sram', 'cra', 'xelor'),
- ('sram', 'cra', 'eniripsa'),
- ('sram', 'cra', 'enutrof'),
- ('sram', 'cra', 'sacrieur'),
- ('sram', 'cra', 'iop'),
- ('sram', 'cra', 'roublard'),
- ('sram', 'cra', 'feca'),
- ('sram', 'cra', 'zobal'),
- ('sram', 'cra', 'pandawa'),
- ('sram', 'osamodas', 'steamer'),
- ('sram', 'osamodas', 'sacrieur'),
- ('sram', 'osamodas', 'iop'),
- ('sram', 'osamodas', 'roublard'),
- ('sram', 'osamodas', 'pandawa'),
- ('sram', 'steamer', 'sadida'),
- ('sram', 'steamer', 'xelor'),
- ('sram', 'steamer', 'enutrof'),
- ('sram', 'steamer', 'roublard'),
- ('sram', 'steamer', 'feca'),
- ('sram', 'steamer', 'pandawa'),
- ('sram', 'sadida', 'sacrieur'),
- ('sram', 'sadida', 'roublard'),
- ('sram', 'sadida', 'feca'),
- ('sram', 'xelor', 'enutrof'),
- ('sram', 'xelor', 'roublard'),
- ('sram', 'eniripsa', 'enutrof'),
- ('sram', 'eniripsa', 'iop'),
- ('sram', 'eniripsa', 'roublard'),
- ('sram', 'eniripsa', 'pandawa'),
- ('sram', 'enutrof', 'sacrieur'),
- ('sram', 'enutrof', 'iop'),
- ('sram', 'enutrof', 'roublard'),
- ('sram', 'enutrof', 'feca'),
- ('sram', 'enutrof', 'zobal'),
- ('sram', 'sacrieur', 'iop'),
- ('sram', 'sacrieur', 'roublard'),
- ('sram', 'sacrieur', 'zobal'),
- ('sram', 'sacrieur', 'pandawa'),
- ('sram', 'iop', 'roublard'),
- ('sram', 'iop', 'feca'),
- ('sram', 'iop', 'zobal'),
- ('sram', 'iop', 'pandawa'),
- ('sram', 'roublard', 'feca'),
- ('sram', 'roublard', 'zobal'),
- ('sram', 'roublard', 'pandawa'),
- ('sram', 'feca', 'pandawa'),
- ('ecaflip', 'cra', 'steamer'),
- ('ecaflip', 'cra', 'sadida'),
- ('ecaflip', 'cra', 'xelor'),
- ('ecaflip', 'cra', 'sacrieur'),
- ('ecaflip', 'cra', 'roublard'),
- ('ecaflip', 'cra', 'feca'),
- ('ecaflip', 'cra', 'zobal'),
- ('ecaflip', 'cra', 'pandawa'),
- ('ecaflip', 'steamer', 'sadida'),
- ('ecaflip', 'steamer', 'xelor'),
- ('ecaflip', 'steamer', 'roublard'),
- ('ecaflip', 'steamer', 'feca'),
- ('ecaflip', 'steamer', 'pandawa'),
- ('ecaflip', 'sadida', 'sacrieur'),
- ('ecaflip', 'sadida', 'roublard'),
- ('ecaflip', 'sadida', 'feca'),
- ('ecaflip', 'xelor', 'roublard'),
- ('ecaflip', 'sacrieur', 'roublard'),
- ('ecaflip', 'sacrieur', 'zobal'),
- ('ecaflip', 'sacrieur', 'pandawa'),
- ('ecaflip', 'roublard', 'feca'),
- ('ecaflip', 'roublard', 'zobal'),
- ('ecaflip', 'roublard', 'pandawa'),
- ('ecaflip', 'feca', 'pandawa'),
- ('cra', 'osamodas', 'steamer'),
- ('cra', 'osamodas', 'sacrieur'),
- ('cra', 'osamodas', 'iop'),
- ('cra', 'osamodas', 'roublard'),
- ('cra', 'osamodas', 'pandawa'),
- ('cra', 'steamer', 'sadida'),
- ('cra', 'steamer', 'xelor'),
- ('cra', 'steamer', 'enutrof'),
- ('cra', 'steamer', 'roublard'),
- ('cra', 'steamer', 'feca'),
- ('cra', 'steamer', 'pandawa'),
- ('cra', 'sadida', 'sacrieur'),
- ('cra', 'sadida', 'roublard'),
- ('cra', 'sadida', 'feca'),
- ('cra', 'xelor', 'enutrof'),
- ('cra', 'xelor', 'roublard'),
- ('cra', 'eniripsa', 'enutrof'),
- ('cra', 'eniripsa', 'iop'),
- ('cra', 'eniripsa', 'roublard'),
- ('cra', 'eniripsa', 'pandawa'),
- ('cra', 'enutrof', 'sacrieur'),
- ('cra', 'enutrof', 'iop'),
- ('cra', 'enutrof', 'roublard'),
- ('cra', 'enutrof', 'feca'),
- ('cra', 'enutrof', 'zobal'),
- ('cra', 'sacrieur', 'iop'),
- ('cra', 'sacrieur', 'roublard'),
- ('cra', 'sacrieur', 'zobal'),
- ('cra', 'sacrieur', 'pandawa'),
- ('cra', 'iop', 'roublard'),
- ('cra', 'iop', 'feca'),
- ('cra', 'iop', 'zobal'),
- ('cra', 'iop', 'pandawa'),
- ('cra', 'roublard', 'feca'),
- ('cra', 'roublard', 'zobal'),
- ('cra', 'roublard', 'pandawa'),
- ('cra', 'feca', 'pandawa'),
- ('osamodas', 'steamer', 'roublard'),
- ('osamodas', 'steamer', 'pandawa'),
- ('osamodas', 'sacrieur', 'iop'),
- ('osamodas', 'sacrieur', 'roublard'),
- ('osamodas', 'sacrieur', 'pandawa'),
- ('osamodas', 'iop', 'roublard'),
- ('osamodas', 'iop', 'pandawa'),
- ('osamodas', 'roublard', 'pandawa'),
- ('steamer', 'sadida', 'roublard'),
- ('steamer', 'sadida', 'feca'),
- ('steamer', 'xelor', 'enutrof'),
- ('steamer', 'xelor', 'roublard'),
- ('steamer', 'enutrof', 'roublard'),
- ('steamer', 'enutrof', 'feca'),
- ('steamer', 'roublard', 'feca'),
- ('steamer', 'roublard', 'pandawa'),
- ('steamer', 'feca', 'pandawa'),
- ('sadida', 'sacrieur', 'roublard'),
- ('sadida', 'roublard', 'feca'),
- ('xelor', 'enutrof', 'roublard'),
- ('eniripsa', 'enutrof', 'iop'),
- ('eniripsa', 'enutrof', 'roublard'),
- ('eniripsa', 'iop', 'roublard'),
- ('eniripsa', 'iop', 'pandawa'),
- ('eniripsa', 'roublard', 'pandawa'),
- ('enutrof', 'sacrieur', 'iop'),
- ('enutrof', 'sacrieur', 'roublard'),
- ('enutrof', 'sacrieur', 'zobal'),
- ('enutrof', 'iop', 'roublard'),
- ('enutrof', 'iop', 'feca'),
- ('enutrof', 'iop', 'zobal'),
- ('enutrof', 'roublard', 'feca'),
- ('enutrof', 'roublard', 'zobal'),
- ('sacrieur', 'iop', 'roublard'),
- ('sacrieur', 'iop', 'zobal'),
- ('sacrieur', 'iop', 'pandawa'),
- ('sacrieur', 'roublard', 'zobal'),
- ('sacrieur', 'roublard', 'pandawa'),
- ('iop', 'roublard', 'feca'),
- ('iop', 'roublard', 'zobal'),
- ('iop', 'roublard', 'pandawa'),
- ('iop', 'feca', 'pandawa'),
- ('roublard', 'feca', 'pandawa')]
-    
-    #te
-    
-    with st.expander("Compositions d'équipe possibles :",expanded=True):
-    # st.title("Compositions Possibles JDA#4")
-
-        classes_voulues_kmc1=st.multiselect("Classes voulues",options=CLASSES, default=[],placeholder="Sélectionnez les classes voulues",max_selections=3,key="classes_voulues_kmc1")
-        classes_interdites_kmc1=st.multiselect("Classes interdites",options=CLASSES, default=[],placeholder="Sélectionnez les classes dont vous ne voulez pas",key="classes_interdites_kmc1")
-
-        st.button("Filtrer les compositions", key="filter_compositions_kmc1",on_click=filtrer_compositions, args=(classes_voulues_kmc1, classes_interdites_kmc1,"temp_compo_kmc1",compo_kmc1))
-                
-        points_kmc1_default={
-            'cra':      0,
-            'ecaflip':  0,
-            'eniripsa': 0,
-            'enutrof':  0,
-            'feca':     0,
-            'iop':      0,
-            'osamodas': 0,
-            'pandawa':  0,
-            'roublard': 0,
-            'sacrieur': 0,
-            'sadida':   0,
-            'sram':     0,
-            'steamer':  0,
-            'xelor':    0,
-            'zobal':    0}
-        
-        
-        if "points_kmc1" not in st.session_state:
-            st.session_state.points_kmc1={
-                'cra':      0,
-                'ecaflip':  0,
-                'eniripsa': 0,
-                'enutrof':  0,
-                'feca':     0,
-                'iop':      0,
-                'osamodas': 0,
-                'pandawa':  0,
-                'roublard': 0,
-                'sacrieur': 0,
-                'sadida':   0,
-                'sram':     0,
-                'steamer':  0,
-                'xelor':    0,
-                'zobal':    0}
-        if "temp_points_kmc1" not in st.session_state:
-            st.session_state.temp_points_kmc1={
-                'cra':      0,
-                'ecaflip':  0,
-                'eniripsa': 0,
-                'enutrof':  0,
-                'feca':     0,
-                'iop':      0,
-                'osamodas': 0,
-                'pandawa':  0,
-                'roublard': 0,
-                'sacrieur': 0,
-                'sadida':   0,
-                'sram':     0,
-                'steamer':  0,
-                'xelor':    0,
-                'zobal':    0}
-        
-        try:
-            compositions_kmc1 = pd.DataFrame(st.session_state["temp_compo_kmc1"])
-
-        except:
-            compositions_kmc1 = pd.DataFrame(compo_kmc1,columns=["C1","C2","C3"])
-
-        try:
-            compositions_kmc1["Points"]= compositions_kmc1.apply(lambda row: st.session_state.points_kmc1[row['C1']] + st.session_state.points_kmc1[row['C2']] + st.session_state.points_kmc1[row['C3']], axis=1)
-        except:
-            pass
-
-        st.write("### Nombre de compositions trouvées :", str(len(compositions_kmc1)))
-        st.dataframe(compositions_kmc1,hide_index=True)
-        st.image(image_path+"restrictions_kmc1.png" )
-        st.write(f"""#### Points par classe\n 
-Ces points servent à trier les {len(compositions_kmc1)} compositions possibles.
-""")            
-
-        st.button(label="Appliquer les points",on_click=update_points,args=(compositions_kmc1,"points_kmc1","temp_points_kmc1"),width="stretch",key="update_points_kmc1")
-
-        for classe in CLASSES:
-            st.session_state.temp_points_kmc1[classe] = st.number_input(f"Points {classe.capitalize()}", value=points_kmc1_default[classe], step=1, key=f"points_{classe}_kmc1")
-        # sram_pts = st.number_input("Points Sram", value=4, step=1)
