@@ -43,7 +43,7 @@ def filtrer_compositions(classes_voulues, classes_interdites,session_state_df,df
 
 def update_points(df,points,temp_points):
     st.session_state[points]=st.session_state[temp_points]
-    df["Points"]= df.apply(lambda row: st.session_state[points][row['C1']] + st.session_state[points][row['C2']] + st.session_state[points][row['C3']], axis=1)
+    df["Points"]= df.apply(lambda row: st.session_state[points][row[st.session_state[points].columns[0]]] + st.session_state[points][row[st.session_state[points].columns[1]]] + st.session_state[points][row[st.session_state[points].columns[3]]], axis=1)
 
 with tab_KMC1:
     compo_kmc1=[('sram', 'ecaflip', 'cra'),
@@ -209,8 +209,7 @@ with tab_KMC1:
  ('iop', 'feca', 'pandawa'),
  ('roublard', 'feca', 'pandawa')]
     
-    #te
-    
+   
     with st.expander("Compositions d'équipe possibles :",expanded=True):
     # st.title("Compositions Possibles JDA#4")
 
@@ -273,7 +272,7 @@ with tab_KMC1:
                 'zobal':    0}
         
         try:
-            compositions_kmc1 = pd.DataFrame(st.session_state["temp_compo_kmc1"])
+            compositions_kmc1 = pd.DataFrame(st.session_state["temp_compo_kmc1"],columns=["C1","C2","C3"])
 
         except:
             compositions_kmc1 = pd.DataFrame(compo_kmc1,columns=["C1","C2","C3"])
