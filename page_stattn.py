@@ -43,7 +43,7 @@ def filtrer_compositions(classes_voulues, classes_interdites,session_state_df,df
 
 def update_points(df,points,temp_points):
     st.session_state[points]=st.session_state[temp_points]
-    df["Points"]= df.apply(lambda row: st.session_state[points][row[st.session_state[points].columns[0]]] + st.session_state[points][row[st.session_state[points].columns[1]]] + st.session_state[points][row[st.session_state[points].columns[3]]], axis=1)
+    df["Points"]= df.apply(lambda row: st.session_state[points][row[df.columns[0]]] + st.session_state[points][row[df.columns[1]]] + st.session_state[points][row[df.columns[3]]], axis=1)
 
 with tab_KMC1:
     compo_kmc1=[('sram', 'ecaflip', 'cra'),
