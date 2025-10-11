@@ -91,7 +91,17 @@ vita_bombes_base={"4": 19
                   ,"6" : 28}
 elements=["Feu","Air","Eau"]
 type_bombes=["Explobombes","Tornabombes","Bombes à eau"]
+elt_to_do={
+    "Feu" : "Dofeu"
+    ,"Air" : "Doair"
+    ,"Eau" : "Doeau"
+}
 
+elt_to_carac={
+    "Feu" : "Intel"
+    ,"Air" : "Agi"
+    ,"Eau" : "Chance"
+}
 bombes_do=dict()
 bombes_do[elements[0]]={ #Feu
     '4':{
@@ -332,8 +342,8 @@ with tab_mur:
     # st.write(bombes_do[bombes_element]["4"],lvl_bombes_mur)
     mur_min,mur_max=calcul_degats_mur(   bombes_do[bombes_element][lvl_bombes_mur]["mur"]["min"]
                                             ,bombes_do[bombes_element][lvl_bombes_mur]["mur"]["max"]
-                                            ,stats=stats_perso['Intel']+stats_perso["pui"]+stats_perso["roub_pui"]
-                                            ,do=stats_perso['Dofeu']+stats_perso["Do"]+stats_perso["roub_do"]
+                                            ,stats=stats_perso[elt_to_carac[bombes_element]]+stats_perso["pui"]+stats_perso["roub_pui"]
+                                            ,do=stats_perso[elt_to_carac[bombes_element]]+stats_perso["Do"]+stats_perso["roub_do"]
                                             ,per_do=stats_perso["roub_per_do"]
                                             ,bonus_combo=bonus_combo_total)
     mur_resultat_tab+="| "+str(mur_min)+" | "+str(mur_max)+" | "+str(int((mur_min+mur_max)/2))+" |\n"
@@ -342,11 +352,6 @@ with tab_mur:
 #TAB EXPLOSION
 ######################
 
-elt_to_carac={
-    "Feu" : "Intel"
-    ,"Air" : "Agi"
-    ,"Eau" : "Chance"
-}
 with tab_explo:
 
     with st.container(border=True):   
@@ -379,8 +384,8 @@ with tab_explo:
         degats_explo_max=[]
         for b_id in range(nb_bombes_explo):
             
-            temp_explo_min,tem_explo_max=calcul_degats_explo(bombes_do[bombes_explo_elt[b_id]][bombes_explo_lvl[b_id]]["mur"]["min"]
-                                                            ,bombes_do[bombes_explo_elt[b_id]][bombes_explo_lvl[b_id]]["mur"]["max"]
+            temp_explo_min,tem_explo_max=calcul_degats_explo(bombes_do[bombes_explo_elt[b_id]][bombes_explo_lvl[b_id]]["explo"]["min"]
+                                                            ,bombes_do[bombes_explo_elt[b_id]][bombes_explo_lvl[b_id]]["explo"]["max"]
                                                             ,stats=stats_perso[elt_to_carac[bombes_explo_elt[b_id]]]+stats_perso["pui"]+bombes_explo_pui[b_id]+stats_perso["roub_pui"]
                                                             ,do=stats_perso["Do"+bombes_explo_elt[b_id].lower()]+stats_perso["Do"]+bombes_explo_do[b_id]+stats_perso["roub_do"]
                                                             ,per_do=bombes_explo_per_do[b_id]
