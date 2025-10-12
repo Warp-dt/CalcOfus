@@ -123,17 +123,17 @@ def get_db_data(url):
     driver = webdriver.Chrome(service=service, options=options)
 
     db_id=get_db_id(url,driver)
-    driver.get("https://touch.dofusbook.net/stuffs/touch/public/"+str(db_id))
+    driver.get("https://touch.dofusbook.net/api/stuffs/touch/public/"+str(db_id))
     # resp = req.get("https://touch.dofusbook.net/stuffs/touch/public/"+str(db_id),allow_redirects=True)
 
-    try :
-        pre_text = driver.find_element("tag name", "pre").text
+    # try :
+    pre_text = driver.find_element("tag name", "pre").text
 
-        resp = json.loads(pre_text)
-    except:
-        st.write(url)
-        st.write("https://touch.dofusbook.net/stuffs/touch/public/"+str(db_id))
-        st.write(driver.page_source)
+    resp = json.loads(pre_text)
+    # except:
+    #     st.write(url)
+    #     st.write("https://touch.dofusbook.net/api/stuffs/touch/public/"+str(db_id))
+    #     st.write(driver.page_source)
     return resp
     # return resp.json()
 
