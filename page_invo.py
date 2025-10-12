@@ -41,45 +41,43 @@ st.sidebar.write("# Stats du personnage")
 # st.sidebar.write("(les stats du parchotage et des points investis ne comptent pas pour les dégats des invo, seul l'équipement compte)") 
 
 if db_link=='' or type(db_stats)==str:
-    stats_perso["Lvl"]=int(st.sidebar.number_input(label="Lvl",min_value=0,max_value=200,value=200))
+    stats_perso["Lvl"]=int(st.sidebar.number_input(label="Lvl",min_value=0,max_value=200,value=200,step=1))
 
     #stats
-    stats_perso["Vita"]=int(st.sidebar.text_input("Vitalité globale", value=stats_perso["Lvl"]*5+50, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Intel"]=int(st.sidebar.text_input("Intelligence", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Chance"]=int(st.sidebar.text_input("Chance", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Agi"]=int(st.sidebar.text_input("Agilité", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["pui"]=int(st.sidebar.text_input("Puissance", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Vita"]=int(st.sidebar.number_input(label="Vitalité globale", value=stats_perso["Lvl"]*5+50,step=1,min_value=0))
+    stats_perso["Intel"]=int(st.sidebar.number_input(label="Intelligence", value=0,step=1))
+    stats_perso["Chance"]=int(st.sidebar.number_input(label="Chance", value=0,step=1))
+    stats_perso["Agi"]=int(st.sidebar.number_input(label="Agilité", value=0,step=1))
+    stats_perso["pui"]=int(st.sidebar.number_input(label="Puissance", value=0,step=1))
 
     #do fixes
-    stats_perso["Dofeu"]=int(st.sidebar.text_input("Dommages Feu", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Doeau"]=int(st.sidebar.text_input("Dommages Eau", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Doair"]=int(st.sidebar.text_input("Dommages Air", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Dopou"]=int(st.sidebar.text_input("Dommages de Poussée", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-
+    stats_perso["Dofeu"]=int(st.sidebar.number_input(label="Dommages Feu", value=0, step=1))
+    stats_perso["Doeau"]=int(st.sidebar.number_input(label="Dommages Eau", value=0, step=1))
+    stats_perso["Doair"]=int(st.sidebar.number_input(label="Dommages Air", value=0, step=1))
+    
     #soin
-    stats_perso["Soin"]=int(st.sidebar.text_input("Soin", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Soin"]=int(st.sidebar.number_input(label="Soin", value=0, step=1))
 
-    stats_perso["Do"]=int(st.sidebar.text_input("Dommages", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Do"]=int(st.sidebar.number_input(label="Dommages", value=0, step=1))
 else:
-    stats_perso["Lvl"]=int(st.sidebar.number_input(label="Lvl",min_value=0,max_value=200,value=db_stats["Lvl"]))
+    stats_perso["Lvl"]=int(st.sidebar.number_input(label="Lvl",min_value=0,max_value=200,value=db_stats["Lvl"],step=1))
 
     #stats
-    stats_perso["Vita"]=int(st.sidebar.text_input("Vitalité globale", value=db_stats["Vitalité"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Intel"]=int(st.sidebar.text_input("Intelligence", value=db_stats["Intelligence"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Chance"]=int(st.sidebar.text_input("Chance", value=db_stats["Chance"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Agi"]=int(st.sidebar.text_input("Agilité", value=db_stats["Agilité"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["pui"]=int(st.sidebar.text_input("Puissance", value=db_stats["Puissance"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Vita"]=int(st.sidebar.number_input(label="Vitalité globale", value=db_stats["Vitalité"],step=1,min_value=0))
+    stats_perso["Intel"]=int(st.sidebar.number_input(label="Intelligence", value=db_stats["Intelligence"],step=1))
+    stats_perso["Chance"]=int(st.sidebar.number_input(label="Chance", value=db_stats["Chance"],step=1))
+    stats_perso["Agi"]=int(st.sidebar.number_input(label="Agilité", value=db_stats["Agilité"],step=1))
+    stats_perso["pui"]=int(st.sidebar.number_input(label="Puissance", value=db_stats["Puissance"],step=1))
 
     #do fixes
-    stats_perso["Dofeu"]=int(st.sidebar.text_input("Dommages Feu", value=db_stats["Do Feu"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Doeau"]=int(st.sidebar.text_input("Dommages Eau", value=db_stats["Do Eau"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Doair"]=int(st.sidebar.text_input("Dommages Air", value=db_stats["Do Air"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Dopou"]=int(st.sidebar.text_input("Dommages de Poussée", value=db_stats["Do Poussée"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-
+    stats_perso["Dofeu"]=int(st.sidebar.number_input(label="Dommages Feu", value=db_stats["Do Feu"],step=1))
+    stats_perso["Doeau"]=int(st.sidebar.number_input(label="Dommages Eau", value=db_stats["Do Eau"],step=1))
+    stats_perso["Doair"]=int(st.sidebar.number_input(label="Dommages Air", value=db_stats["Do Air"],step=1))
+    
     #soin
-    stats_perso["Soin"]=int(st.sidebar.text_input("Soin", value=db_stats["Soin"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Soin"]=int(st.sidebar.number_input(label="Soin", value=db_stats["Soin"], step=1))
 
-    stats_perso["Do"]=int(st.sidebar.text_input("Dommages", value=db_stats["Do"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Do"]=int(st.sidebar.number_input(label="Dommages", value=db_stats["Do"],step=1))
 
     # st.sidebar.write(db_stats)
 

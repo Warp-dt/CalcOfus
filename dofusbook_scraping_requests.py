@@ -7,6 +7,9 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import tempfile
 
+#pour debug
+import streamlit as st
+
 FR_KEYS=['Lvl','PA', 'PM', 'PO', 'Initiative', 'Critique', 'Invocation', 'Soin', 'Vitalité', 'Sagesse', 'Force', 'Intelligence', 'Chance', 'Agilité', 'Puissance', 'Fuite', 'Esq. PA', 'Esq. PM', 'Pods', 'Tacle', 'Ret. PA', 'Ret. PM',  'Do Critique', '% Ré Air', '% Ré Feu', 'Do Eau', 'Do Terre', 'Do Neutre', '% Ré Terre', 'Prospection', 'Do Feu', 'Do Air', 'Do Poussée', 'Ré Neutre', '% Ré Neutre', 'Ré Terre', 'Ré Feu', 'Ré Eau', '% Ré Eau', 'Ré Air', 'Ré Critique', 'Ré Poussée', "Do"]
 EN_KEYS=['Lvl','AP', 'MP', 'Range', 'Initiative', 'Critical', 'Summon', 'Heal', 'Vitality', 'Wisdom', 'Strength', 'Intelligence', 'Chance', 'Agility', 'Power', 'Dodge', 'AP Res.', 'MP Res.', 'Pods', 'Lock', 'AP Red', 'MP Red',  'Da Critical', '% Re Air', '% Re Fire', 'Da Water', 'Da Earth', 'Da Neutral', '% Re Earth', 'Prospecting', 'Da Fire', 'Da Air', 'Da Pushback', 'Re Neutral', '% Re Neutral', 'Re Earth', 'Re Fire', 'Re Water', '% Re Water', 'Re Air', 'Re Critical', 'Re Pushback', "Da"]
 ES_KEYS=['Lvl','PA', 'PM', 'AL', 'Iniciativa', 'Crítico', 'Invocación', 'Cura', 'Vitalidad', 'Sabiduría', 'Fuerza', 'Inteligencia', 'Suerte', 'Agilidad', 'Potencia', 'Huida', 'Esq. PA', 'Esq. PM', 'Pods', 'Placaje', 'Ret. PA', 'Ret. PM',  'Da Crítico', '% Re Aire', '% Re Fuego', 'Da Agua', 'Da Tierra', 'Da Neutro', '% Re Tierra', 'Prospección', 'Da Fuego', 'Da Aire', 'Da Empuje', 'Re Neutro', '% Re Neutro', 'Re Tierra', 'Re Fuego', 'Re Agua', '% Re Agua', 'Re Aire', 'Re Crítico', 'Re Empuje', "Da"]
@@ -123,9 +126,12 @@ def get_db_data(url):
     driver.get("https://touch.dofusbook.net/stuffs/touch/public/"+str(db_id))
     # resp = req.get("https://touch.dofusbook.net/stuffs/touch/public/"+str(db_id),allow_redirects=True)
 
-    pre_text = driver.find_element("tag name", "pre").text
-    resp = json.loads(pre_text)
-    # resp={}
+    try :
+        pre_text = driver.find_element("tag name", "pre").text
+
+        resp = json.loads(pre_text)
+    except:
+        st.write(driver.page_source)
     return resp
     # return resp.json()
 

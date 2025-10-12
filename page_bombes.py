@@ -42,37 +42,37 @@ st.sidebar.write("# Stats du personnage")
 # st.sidebar.write("(les stats du parchotage et des points investis ne comptent pas pour les dégats des invo, seul l'équipement compte)") 
 
 if db_link=='' or type(db_stats)==str:
-    stats_perso["Lvl"]=int(st.sidebar.number_input(label="Lvl",min_value=0,max_value=200,value=200))
+    stats_perso["Lvl"]=int(st.sidebar.number_input(label="Lvl",min_value=0,max_value=200,value=200,step=1))
 
     #stats
-    stats_perso["Vita"]=int(st.sidebar.text_input("Vitalité globale", value=stats_perso["Lvl"]*5+50, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Intel"]=int(st.sidebar.text_input("Intelligence", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Chance"]=int(st.sidebar.text_input("Chance", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Agi"]=int(st.sidebar.text_input("Agilité", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["pui"]=int(st.sidebar.text_input("Puissance", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Vita"]=int(st.sidebar.number_input(label="Vitalité globale", value=stats_perso["Lvl"]*5+50,step=1,min_value=0))
+    stats_perso["Intel"]=int(st.sidebar.number_input(label="Intelligence", value=0,step=1))
+    stats_perso["Chance"]=int(st.sidebar.number_input(label="Chance", value=0,step=1))
+    stats_perso["Agi"]=int(st.sidebar.number_input(label="Agilité", value=0,step=1))
+    stats_perso["pui"]=int(st.sidebar.number_input(label="Puissance", value=0,step=1))
 
     #do fixes
-    stats_perso["Dofeu"]=int(st.sidebar.text_input("Dommages Feu", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Doeau"]=int(st.sidebar.text_input("Dommages Eau", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Doair"]=int(st.sidebar.text_input("Dommages Air", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Dofeu"]=int(st.sidebar.number_input(label="Dommages Feu", value=0, step=1))
+    stats_perso["Doeau"]=int(st.sidebar.number_input(label="Dommages Eau", value=0, step=1))
+    stats_perso["Doair"]=int(st.sidebar.number_input(label="Dommages Air", value=0, step=1))
 
-    stats_perso["Do"]=int(st.sidebar.text_input("Dommages", value=0, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Do"]=int(st.sidebar.number_input(label="Dommages", value=0, step=1))
 else:
-    stats_perso["Lvl"]=int(st.sidebar.number_input(label="Lvl",min_value=0,max_value=200,value=db_stats["Lvl"]))
+    stats_perso["Lvl"]=int(st.sidebar.number_input(label="Lvl",min_value=0,max_value=200,value=db_stats["Lvl"],step=1))
 
     #stats
-    stats_perso["Vita"]=int(st.sidebar.text_input("Vitalité globale", value=db_stats["Vitalité"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Intel"]=int(st.sidebar.text_input("Intelligence", value=db_stats["Intelligence"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Chance"]=int(st.sidebar.text_input("Chance", value=db_stats["Chance"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Agi"]=int(st.sidebar.text_input("Agilité", value=db_stats["Agilité"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["pui"]=int(st.sidebar.text_input("Puissance", value=db_stats["Puissance"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Vita"]=int(st.sidebar.number_input(label="Vitalité globale", value=db_stats["Vitalité"],step=1,min_value=0))
+    stats_perso["Intel"]=int(st.sidebar.number_input(label="Intelligence", value=db_stats["Intelligence"],step=1))
+    stats_perso["Chance"]=int(st.sidebar.number_input(label="Chance", value=db_stats["Chance"],step=1))
+    stats_perso["Agi"]=int(st.sidebar.number_input(label="Agilité", value=db_stats["Agilité"],step=1))
+    stats_perso["pui"]=int(st.sidebar.number_input(label="Puissance", value=db_stats["Puissance"],step=1))
 
     #do fixes
-    stats_perso["Dofeu"]=int(st.sidebar.text_input("Dommages Feu", value=db_stats["Do Feu"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Doeau"]=int(st.sidebar.text_input("Dommages Eau", value=db_stats["Do Eau"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-    stats_perso["Doair"]=int(st.sidebar.text_input("Dommages Air", value=db_stats["Do Air"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Dofeu"]=int(st.sidebar.number_input(label="Dommages Feu", value=db_stats["Do Feu"],step=1))
+    stats_perso["Doeau"]=int(st.sidebar.number_input(label="Dommages Eau", value=db_stats["Do Eau"],step=1))
+    stats_perso["Doair"]=int(st.sidebar.number_input(label="Dommages Air", value=db_stats["Do Air"],step=1))
 
-    stats_perso["Do"]=int(st.sidebar.text_input("Dommages", value=db_stats["Do"], max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+    stats_perso["Do"]=int(st.sidebar.number_input(label="Dommages", value=db_stats["Do"],step=1))
 
     # st.sidebar.write(db_stats)
 
@@ -80,7 +80,6 @@ else:
 #Variables générales
 ######################
 
-# distance=st.pills("Distance explosion", ["cac","1 po"], selection_mode="single",default="cac")
 
 def calcul_vita_bombes(pvroub,lvlroub,coef_bombe,pvbase):
     return (pvroub-(lvlroub*5+50))*coef_bombe+pvbase 
@@ -314,23 +313,23 @@ with tab_mur:
 
     with st.container(border=True):   
         st.write("### Boosts sur roublard") 
-        stats_perso["roub_pui"]=int(st.text_input("Puissance", value=0, max_chars=None, key=201, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-        stats_perso["roub_do"]=int(st.text_input("Dommages", value=0, max_chars=None, key=202, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-        stats_perso["roub_per_do"]=int(st.text_input("% dommages", value=0, max_chars=None, key=203, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+        stats_perso["roub_pui"]=int(st.number_input(label="Puissance", value=0, key=201, step=1))
+        stats_perso["roub_do"]=int(st.number_input(label="Dommages", value=0, key=202, step=1))
+        stats_perso["roub_per_do"]=int(st.number_input(label="% dommages", value=0, key=203, step=1))
  
     with st.container(border=True):   
         st.write("### Bombes constituant le mur") 
 
         mur_g,mur_m,mur_d = st.columns((1,1,1))
 
-        nb_bombes=mur_g.number_input(label="Nombre de Bombes",min_value=1,max_value=3,value=2)
+        nb_bombes=mur_g.number_input(label="Nombre de Bombes",min_value=1,max_value=3,value=2, step=1)
         bombes_element=mur_m.selectbox("Élément des bombes",options=elements,index=0)
-        lvl_bombes_mur=str(mur_d.number_input(label="Lvl des Bombes",min_value=4,max_value=6,value=6))
+        lvl_bombes_mur=str(mur_d.number_input(label="Lvl des Bombes",min_value=4,max_value=6,value=6, step=1))
 
         bombes = st.columns((1,1,1))
         bombes_combo=[0,0,0]
         for t in range(nb_bombes):
-            bombes_combo[t]=bombes[t].number_input(label=f"Bonus combo Bombe {t+1}",min_value=0,max_value=10,value=5,key=210+t)
+            bombes_combo[t]=bombes[t].number_input(label=f"Bonus combo Bombe {t+1}",min_value=0,max_value=10,value=5,key=210+t, step=1)
 
         bonus_combo_total=calcul_bonus_combo(bombes_combo)
 
@@ -340,10 +339,15 @@ with tab_mur:
 | ----------- | ----------- | ----------- |
 """     
     # st.write(bombes_do[bombes_element]["4"],lvl_bombes_mur)
+    st.write(f"stats roub : {stats_perso[elt_to_carac[bombes_element]]}")
+    st.write(f"doroub : {stats_perso[elt_to_do[bombes_element]]}")
+    st.write(f"pui roub : {stats_perso['pui']}")
+    st.write(f"do roub : {stats_perso['Do']}")
+    # st.write(f"stats roub : {stats_perso[elt_to_carac[bombes_element]]}")
     mur_min,mur_max=calcul_degats_mur(   bombes_do[bombes_element][lvl_bombes_mur]["mur"]["min"]
                                             ,bombes_do[bombes_element][lvl_bombes_mur]["mur"]["max"]
                                             ,stats=stats_perso[elt_to_carac[bombes_element]]+stats_perso["pui"]+stats_perso["roub_pui"]
-                                            ,do=stats_perso[elt_to_carac[bombes_element]]+stats_perso["Do"]+stats_perso["roub_do"]
+                                            ,do=stats_perso[elt_to_do[bombes_element]]+stats_perso["Do"]+stats_perso["roub_do"]
                                             ,per_do=stats_perso["roub_per_do"]
                                             ,bonus_combo=bonus_combo_total)
     mur_resultat_tab+="| "+str(mur_min)+" | "+str(mur_max)+" | "+str(int((mur_min+mur_max)/2))+" |\n"
@@ -356,14 +360,14 @@ with tab_explo:
 
     with st.container(border=True):   
         st.write("### Boosts sur roublard") 
-        stats_perso["roub_pui"]=int(st.text_input("Puissance", value=0, max_chars=None, key=401, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-        stats_perso["roub_do"]=int(st.text_input("Dommages", value=0, max_chars=None, key=402, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
-        stats_perso["roub_per_do"]=int(st.text_input("% dommages", value=0, max_chars=None, key=403, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False))
+        stats_perso["roub_pui"]=int(st.number_input(label="Puissance", value=0, key=401,step=1))
+        stats_perso["roub_do"]=int(st.number_input(label="Dommages", value=0, key=402,step=1))
+        stats_perso["roub_per_do"]=int(st.number_input(label="% dommages", value=0, key=403,step=1))
  
     
     with st.container(border=True):   
         st.write("### Bombes dans l'explosion") 
-        nb_bombes_explo=st.number_input(label="Nombre de Bombes",min_value=1,max_value=3,value=3, key=501)
+        nb_bombes_explo=st.number_input(label="Nombre de Bombes",min_value=1,max_value=3,value=3, key=501, step=1)
 
         bombes_explo = st.columns((1,)*nb_bombes_explo)
         for b_id in range(nb_bombes_explo):
@@ -374,9 +378,9 @@ with tab_explo:
         bombes_explo_lvl=[str(bombes_explo[b_id].number_input(label="Lvl",min_value=4,max_value=6,value=6,key=600+b_id*10)) for b_id in range(nb_bombes_explo)]
         bombes_explo_combo=[(bombes_explo[b_id].number_input(label=f"Bonus combo",min_value=0,max_value=10,value=5,key=605+b_id*10)) for b_id in range(nb_bombes_explo)]
         bombes_explo_distance=[(bombes_explo[b_id].number_input(label="Distance",min_value=1,max_value=2,value=1,key=606+b_id*10)) for b_id in range(nb_bombes_explo)]
-        bombes_explo_do=[int(bombes_explo[b_id].text_input("Boost dommages (sur bombe)", value=0, max_chars=None, key=603+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
-        bombes_explo_pui=[int(bombes_explo[b_id].text_input("Boost puissance (sur bombe)", value=0, max_chars=None, key=602+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
-        bombes_explo_per_do=[int(bombes_explo[b_id].text_input("Boost % dommages (sur bombe)", value=0, max_chars=None, key=604+b_id*10, type="default", help=None, autocomplete=None, on_change=None, placeholder=None, disabled=False)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_do=[int(bombes_explo[b_id].number_input(label="Boost dommages (sur bombe)", value=0, key=603+b_id*10, step=1)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_pui=[int(bombes_explo[b_id].number_input(label="Boost puissance (sur bombe)", value=0, key=602+b_id*10, step=1)) for b_id in range(nb_bombes_explo)]
+        bombes_explo_per_do=[int(bombes_explo[b_id].number_input(label="Boost % dommages (sur bombe)", value=0, key=604+b_id*10, step=1)) for b_id in range(nb_bombes_explo)]
         
         bonus_combo_total_explo=calcul_bonus_combo(bombes_explo_combo)
 
