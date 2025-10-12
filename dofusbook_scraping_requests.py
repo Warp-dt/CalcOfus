@@ -131,6 +131,8 @@ def get_db_data(url):
 
         resp = json.loads(pre_text)
     except:
+        st.write(url)
+        st.write("https://touch.dofusbook.net/stuffs/touch/public/"+str(db_id))
         st.write(driver.page_source)
     return resp
     # return resp.json()
