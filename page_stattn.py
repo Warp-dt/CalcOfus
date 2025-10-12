@@ -3,6 +3,7 @@ import pandas as pd
 
 image_path='images/'
 graphs_path=image_path+'graphs_jda4/'
+graphs_path_kmc1=image_path+'graphs_kmc1/'
 st.set_page_config(page_title="StatsTournois",layout="wide")
 
 st.sidebar.image(image_path+"logo_stattn.png" )
@@ -209,7 +210,14 @@ with tab_KMC1:
  ('iop', 'feca', 'pandawa'),
  ('roublard', 'feca', 'pandawa')]
     
-   
+    st.html('<div style="text-align: center; font-size: 50px;font-weight: bold"> STATS KELEROG MASTER CUP #1 </div>')
+
+    list_statsKMC1_images=[graphs_path_kmc1+"Compo les plus jouées.png",
+                graphs_path_kmc1+"Nombre de pick des classes.png",
+                graphs_path_kmc1+"Duos les plus joués.png",
+                graphs_path_kmc1+"heat_duos les plus joués.png"]
+
+    st.image(list_statsKMC1_images, caption=None, use_container_width=True)
     with st.expander("Compositions d'équipe possibles :",expanded=True):
     # st.title("Compositions Possibles JDA#4")
 
