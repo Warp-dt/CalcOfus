@@ -81,6 +81,10 @@ else:
 
     # st.sidebar.write(db_stats)
 
+st.sidebar.write("# Boosts sur les invocations") 
+stats_perso["invo_pui"]= int(st.sidebar.number_input(label="Puissance invo", value=0, step=1))
+stats_perso["invo_do"]= int(st.sidebar.number_input(label="Dommages invo", value=0, step=1))
+
 ######################
 #Variables générales
 ######################
@@ -278,8 +282,8 @@ for invo in invo_infos.keys():
         else:
             lvl_invo=lvl_base
 
-        stats_finales=invo_infos[invo]["stats_base"][lvl_invo-1]+stats_perso[invo_infos[invo]["element"]]/2
-        do_finaux=stats_perso[invo_infos[invo]["do"]]/2
+        stats_finales=invo_infos[invo]["stats_base"][lvl_invo-1]+stats_perso[invo_infos[invo]["element"]]/2+stats_perso["invo_pui"]
+        do_finaux=stats_perso[invo_infos[invo]["do"]]/2+stats_perso["invo_do"]
         soin_finaux=stats_perso["Soin"]/2
 
         tab_vita="""
