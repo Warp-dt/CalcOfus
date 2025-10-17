@@ -63,7 +63,7 @@ tab_res+=f"""| {round(pm-(pm*ptot))}{alerte_full_tacle} | {round(pa-(pa*ptot))} 
 st.write(tab_res)
 
 st.write(""" Valeurs à retenir :
-- Pour détacler 100% un tacleur il faut (Tacle x 2) + 2 en fuite minimum
+- Pour détacler 100% un tacleur il faut (Tacle x 2) + 2 en fuite environ, avec les arrondis qui sont faits à l'entier le plus proche ça peut passer avec un peu moins
 - Le Pandawasta a 52 de tacle : il faut 102 de fuite pour détacler 100%
 - La bloqueuse a 50 de tacle : il faut 98 de fuite pour détacler 100%
 
