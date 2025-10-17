@@ -339,10 +339,10 @@ with tab_mur:
 | ----------- | ----------- | ----------- |
 """     
     # st.write(bombes_do[bombes_element]["4"],lvl_bombes_mur)
-    st.write(f"stats roub : {stats_perso[elt_to_carac[bombes_element]]}")
-    st.write(f"doroub : {stats_perso[elt_to_do[bombes_element]]}")
-    st.write(f"pui roub : {stats_perso['pui']}")
-    st.write(f"do roub : {stats_perso['Do']}")
+    # st.write(f"stats roub : {stats_perso[elt_to_carac[bombes_element]]}")
+    # st.write(f"doroub : {stats_perso[elt_to_do[bombes_element]]}")
+    # st.write(f"pui roub : {stats_perso['pui']}")
+    # st.write(f"do roub : {stats_perso['Do']}")
     # st.write(f"stats roub : {stats_perso[elt_to_carac[bombes_element]]}")
     mur_min,mur_max=calcul_degats_mur(   bombes_do[bombes_element][lvl_bombes_mur]["mur"]["min"]
                                             ,bombes_do[bombes_element][lvl_bombes_mur]["mur"]["max"]
