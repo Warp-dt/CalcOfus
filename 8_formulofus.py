@@ -84,7 +84,7 @@ Pour déterminer les dégâts d'un Sort, sont pris en compte :
 - La puissance
 - Les dommages fixes (les dommages élémentaires + dommages non élémentaires)
 - Les dommages critiques lors des coups critiques
-- Pour le soin c'est la même formule mais avec la stat **soin** à la place des dommages
+- Pour le soin c'est la même formule mais avec la stat **soin** à la place des dommages et sans compter la puissance
 """)
 
 st.subheader("Formules :")
