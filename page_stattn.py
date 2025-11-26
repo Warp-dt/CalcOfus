@@ -482,6 +482,8 @@ with tab_jda4:
     st.title(f"Stats des 32 team qualifiées JDA#4".upper())
 
     st.image(graphs_path+"recaputilatif_qualifies_r10.png",use_container_width=True)
+    st.image(graphs_path+"DRAFT winrate A-B.png",use_container_width=True)
+    st.image(graphs_path+"DRAFT winrate classes.png",use_container_width=True)
     st.title(f"Stats à la fin des rondes JDA#4".upper())
     st.image(graphs_path+f"recapitulatif_winrates_ronde_{ronde}.jpg",use_container_width=True)
     list_stats_images=[graphs_path+"Kelerog_recaputilatif.png",
