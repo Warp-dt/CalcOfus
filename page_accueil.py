@@ -81,7 +81,7 @@ with col6:
 col7, col8,col9 = st.columns((1,1,1))
 with col7:
     with st.container(border=True):
-        st.page_link("page_stattn.py",label="**CompOfus**", icon=":material/bar_chart:", use_container_width=True)
+        st.page_link("page_stattn.py",label="**Stats Tournois**", icon=":material/bar_chart:", use_container_width=True)
         st.text("Stats des Tournois PVP")
         st.link_button("Site du KTA ⚔️", "https://ktarena.com/fr/", help=None, type="secondary", icon="⚔️", disabled=False, use_container_width=True)
         st.link_button("Discord Tournois 🗨️", "https://discord.gg/nC7g6vDnmT", help=None, type="secondary", icon="🗨️", disabled=False, use_container_width=True)

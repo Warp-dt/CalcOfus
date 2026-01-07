@@ -4,6 +4,7 @@ import pandas as pd
 image_path='images/'
 graphs_path=image_path+'graphs_jda4/'
 graphs_path_kmc1=image_path+'graphs_kmc1/'
+graphs_path_kmc2=image_path+'graphs_kmc2/'
 st.set_page_config(page_title="StatsTournois",layout="wide")
 
 st.sidebar.image(image_path+"logo_stattn.png" )
@@ -26,7 +27,7 @@ CLASSES=['cra',
 
 SERVEURS=['Blair','Kelerog','Talok','Tiliwan','Touch tournament',]
 
-tab_KMC1,tab_jda4=st.tabs(["KMC #1","JDA #4"])
+tab_KMC2,tab_KMC1,tab_jda4=st.tabs(["KMC #2","KMC #1","JDA #4"])
 
 @st.cache_data
 def filtrer_compositions_jda4(classes_voulues, classes_interdites,session_state_df,df):
@@ -45,6 +46,103 @@ def filtrer_compositions(classes_voulues, classes_interdites,session_state_df,df
 def update_points(df,points,temp_points):
     st.session_state[points]=st.session_state[temp_points]
     df["Points"]= df.apply(lambda row: st.session_state[points][row["C1"]] + st.session_state[points][row["C2"]] + st.session_state[points][row["C3"]], axis=1)
+
+
+with tab_KMC2:
+    compo_kmc2=pd.read_excel("data/compositions_KMC#2.xlsx",usecols=["C1","C2","C3"]).values.tolist()
+    
+    st.html('<div style="text-align: center; font-size: 50px;font-weight: bold"> STATS KELEROG MASTER CUP #2 </div>')
+
+    # list_statsKMC2_images=[graphs_path_kmc2+"Compo les plus jouées.png",
+    #             graphs_path_kmc2+"Nombre de pick des classes.png",
+    #             graphs_path_kmc2+"Duos les plus joués.png",
+    #             graphs_path_kmc2+"heat_duos les plus joués.png"]
+    # st.image(list_statsKMC1_images, caption=None, use_container_width=True)
+
+    with st.expander("Compositions d'équipe possibles :",expanded=True):
+    # st.title("Compositions Possibles JDA#4")
+
+        classes_voulues_kmc2=st.multiselect("Classes voulues",options=CLASSES, default=[],placeholder="Sélectionnez les classes voulues",max_selections=3,key="classes_voulues_kmc2")
+        classes_interdites_kmc2=st.multiselect("Classes interdites",options=CLASSES, default=[],placeholder="Sélectionnez les classes dont vous ne voulez pas",key="classes_interdites_kmc2")
+
+        st.button("Filtrer les compositions", key="filter_compositions_kmc2",on_click=filtrer_compositions, args=(classes_voulues_kmc2, classes_interdites_kmc2,"temp_compo_kmc2",compo_kmc2))
+                
+        points_kmc2_default={
+            'cra':      6,
+            'ecaflip':  6,
+            'eniripsa': 11,
+            'enutrof':  9,
+            'feca':     10,
+            'iop':      8,
+            'osamodas': 9,
+            'pandawa':  7,
+            'roublard': 7,
+            'sacrieur': 9,
+            'sadida':   10,
+            'sram':     5,
+            'steamer':  8,
+            'xelor':    11,
+            'zobal':    10}
+        
+        
+        if "points_kmc2" not in st.session_state:
+            st.session_state.points_kmc2={
+                'cra':      0,
+                'ecaflip':  0,
+                'eniripsa': 0,
+                'enutrof':  0,
+                'feca':     0,
+                'iop':      0,
+                'osamodas': 0,
+                'pandawa':  0,
+                'roublard': 0,
+                'sacrieur': 0,
+                'sadida':   0,
+                'sram':     0,
+                'steamer':  0,
+                'xelor':    0,
+                'zobal':    0}
+        if "temp_points_kmc2" not in st.session_state:
+            st.session_state.temp_points_kmc2={
+                'cra':      0,
+                'ecaflip':  0,
+                'eniripsa': 0,
+                'enutrof':  0,
+                'feca':     0,
+                'iop':      0,
+                'osamodas': 0,
+                'pandawa':  0,
+                'roublard': 0,
+                'sacrieur': 0,
+                'sadida':   0,
+                'sram':     0,
+                'steamer':  0,
+                'xelor':    0,
+                'zobal':    0}
+        
+        try:
+            compositions_kmc2 = pd.DataFrame(st.session_state["temp_compo_kmc2"],columns=["C1","C2","C3"])
+
+        except:
+            compositions_kmc2 = pd.DataFrame(compo_kmc2,columns=["C1","C2","C3"])
+
+        try:
+            compositions_kmc2["Points"]= compositions_kmc2.apply(lambda row: st.session_state.points_kmc2[row['C1']] + st.session_state.points_kmc2[row['C2']] + st.session_state.points_kmc2[row['C3']], axis=1)
+        except:
+            pass
+
+        st.write("### Nombre de compositions trouvées :", str(len(compositions_kmc2)))
+        st.dataframe(compositions_kmc2,hide_index=True)
+        st.image(image_path+"restrictions_kmc2.png" )
+        st.write(f"""#### Points par classe\n 
+Ces points servent à trier les {len(compositions_kmc2)} compositions possibles.
+""")            
+
+        st.button(label="Appliquer les points",on_click=update_points,args=(compositions_kmc2,"points_kmc2","temp_points_kmc2"),width="stretch",key="update_points_kmc2")
+
+        for classe in CLASSES:
+            st.session_state.temp_points_kmc2[classe] = st.number_input(f"Points {classe.capitalize()}", value=points_kmc2_default[classe], step=1, key=f"points_{classe}_kmc2")
+        # sram_pts = st.number_input("Points Sram", value=4, step=1)
 
 with tab_KMC1:
     compo_kmc1=[('sram', 'ecaflip', 'cra'),
