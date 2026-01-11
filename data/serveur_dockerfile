@@ -18,7 +18,7 @@ COPY CalcOfus/ .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Remplacer le fichier index.html de Streamlit
-COPY CalcOfus/data/index.html /usr/local/lib/python3.12/site-packages/streamlit/static/index.html
+#COPY CalcOfus/data/index.html /usr/local/lib/python3.12/site-packages/streamlit/static/index.html
 
 # Exposer le port utilisé par Streamlit
 EXPOSE 8501
