@@ -4,3 +4,8 @@ primaryColor="#97a800"
 
 [browser]
 gatherUsageStats = false
+
+[server]
+enableCORS = false
+enableXsrfProtection = false
+baseUrlPath = ""
