@@ -53,13 +53,13 @@ with tab_KMC2:
     
     st.html('<div style="text-align: center; font-size: 50px;font-weight: bold"> STATS KELEROG MASTER CUP #2 </div>')
 
-    # list_statsKMC2_images=[graphs_path_kmc2+"Compo les plus jouées.png",
-    #             graphs_path_kmc2+"Nombre de pick des classes.png",
-    #             graphs_path_kmc2+"Duos les plus joués.png",
-    #             graphs_path_kmc2+"heat_duos les plus joués.png"]
-    # st.image(list_statsKMC1_images, caption=None, use_container_width=True)
+    list_statsKMC2_images=[graphs_path_kmc2+"Compo les plus jouées.png",
+                graphs_path_kmc2+"Nombre de pick des classes.png",
+                graphs_path_kmc2+"Duos les plus joués.png",
+                graphs_path_kmc2+"heat_duos les plus joués.png"]
+    st.image(list_statsKMC2_images, caption=None, use_container_width=True)
 
-    with st.expander("Compositions d'équipe possibles :",expanded=True):
+    with st.expander("Compositions d'équipe possibles :",expanded=False):
     # st.title("Compositions Possibles JDA#4")
 
         classes_voulues_kmc2=st.multiselect("Classes voulues",options=CLASSES, default=[],placeholder="Sélectionnez les classes voulues",max_selections=3,key="classes_voulues_kmc2")
@@ -316,7 +316,7 @@ with tab_KMC1:
                 graphs_path_kmc1+"heat_duos les plus joués.png"]
 
     st.image(list_statsKMC1_images, caption=None, use_container_width=True)
-    with st.expander("Compositions d'équipe possibles :",expanded=True):
+    with st.expander("Compositions d'équipe possibles :",expanded=False):
     # st.title("Compositions Possibles JDA#4")
 
         classes_voulues_kmc1=st.multiselect("Classes voulues",options=CLASSES, default=[],placeholder="Sélectionnez les classes voulues",max_selections=3,key="classes_voulues_kmc1")
