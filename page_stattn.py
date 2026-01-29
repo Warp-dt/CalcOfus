@@ -56,7 +56,7 @@ with tab_KMC2:
     list_statsKMC2_images=[graphs_path_kmc2+"Compo les plus jouées.png",
                 graphs_path_kmc2+"Nombre de pick des classes.png",
                 graphs_path_kmc2+"Duos les plus joués.png",
-                graphs_path_kmc2+"heat_duos les plus joués.png"]
+                graphs_path_kmc2+"heat_Duos les plus joués.png"]
     st.image(list_statsKMC2_images, caption=None, use_container_width=True)
 
     with st.expander("Compositions d'équipe possibles :",expanded=False):
