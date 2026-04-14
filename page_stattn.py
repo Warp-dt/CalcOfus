@@ -114,7 +114,8 @@ with orfevr3:
         st.progress(score/692, text=None, width="stretch")  
 
         
-    st.button("si tu es content de ton score, clique ici",on_click=st.balloons,use_container_width=True)
+    if st.button("si ton score te plaît, clique ici",on_click=st.balloons,use_container_width=True):
+        st.badge(label="Félicitations 🎉",color='green')
 
     st.write("___")
     st.write("L'objectif pour se qualifier lors de cette étape est de réaliser le jet le plus parfait possible sur un Sac Mortuaire avec un budget limité et, par conséquent, un nombre restreint de runes. Chaque participant dispose d'un seul Sac Mortuaire, avec les mêmes jets de départ pour tout le monde.")
