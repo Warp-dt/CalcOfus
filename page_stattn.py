@@ -27,7 +27,7 @@ CLASSES=['cra',
 
 SERVEURS=['Blair','Kelerog','Talok','Tiliwan','Touch tournament',]
 
-tab_KMC2,tab_KMC1,tab_jda4=st.tabs(["KMC #2","KMC #1","JDA #4"])
+orfevr3,tab_KMC2,tab_KMC1,tab_jda4=st.tabs(["Orfèvre Impérial #3","KMC #2","KMC #1","JDA #4"])
 
 @st.cache_data
 def filtrer_compositions_jda4(classes_voulues, classes_interdites,session_state_df,df):
@@ -46,6 +46,78 @@ def filtrer_compositions(classes_voulues, classes_interdites,session_state_df,df
 def update_points(df,points,temp_points):
     st.session_state[points]=st.session_state[temp_points]
     df["Points"]= df.apply(lambda row: st.session_state[points][row["C1"]] + st.session_state[points][row["C2"]] + st.session_state[points][row["C3"]], axis=1)
+
+
+with orfevr3:
+    if not "score_calculé" in st.session_state.keys():
+        st.session_state.score_calculé=False
+    
+    st.write('### ÉPREUVE 1 : SAC MORTUAIRE')
+    sac_stats=dict()
+    poids_runes=dict()
+    poids_runes["vitalité"]=0.2
+    poids_runes["force"]=1
+    poids_runes["intelligence"]=1
+    poids_runes["chance"]=1
+    poids_runes["sagesse"]=1
+    poids_runes["invocation"]=30
+    poids_runes["dommages neutre"]=5
+    poids_runes["dommages terre"]=5
+    poids_runes["dommages feu"]=5
+    poids_runes["dommages eau"]=5
+    poids_runes["prospection"]=3
+    poids_runes["tacle"]=4
+    poids_runes["retrait pm"]=7
+    poids_runes["resistance terre %"]=6
+    poids_runes["resistance neutre"]=2
+
+    sac_stats["vitalité"]=st.number_input(label="vitalité",max_value=350,value=350)
+    st.progress(sac_stats["vitalité"]/350, text=None, width="stretch")  
+    sac_stats["force"]=st.number_input(label="force",max_value=70,value=70)
+    st.progress(sac_stats["force"]/70, text=None, width="stretch")  
+    sac_stats["intelligence"]=st.number_input(label="intelligence",max_value=50,value=50)
+    st.progress(sac_stats["intelligence"]/50, text=None, width="stretch")  
+    sac_stats["chance"]=st.number_input(label="chance",max_value=50,value=50)
+    st.progress(sac_stats["chance"]/50, text=None, width="stretch")  
+    sac_stats["sagesse"]=st.number_input(label="sagesse",max_value=50,value=50)
+    st.progress(sac_stats["sagesse"]/50, text=None, width="stretch")  
+    sac_stats["invocation"]=st.number_input(label="invocation",max_value=1,value=1)
+    st.progress(sac_stats["invocation"]/1, text=None, width="stretch")  
+    sac_stats["dommages neutre"]=st.number_input(label="dommages neutre",max_value=10,value=10)
+    st.progress(sac_stats["dommages neutre"]/10, text=None, width="stretch")  
+    sac_stats["dommages terre"]=st.number_input(label="dommages terre",max_value=10,value=10)
+    st.progress(sac_stats["dommages terre"]/10, text=None, width="stretch")  
+    sac_stats["dommages feu"]=st.number_input(label="dommages feu",max_value=12,value=12)
+    st.progress(sac_stats["dommages feu"]/12, text=None, width="stretch")  
+    sac_stats["dommages eau"]=st.number_input(label="dommages eau",max_value=10,value=10)
+    st.progress(sac_stats["dommages eau"]/10, text=None, width="stretch")  
+    sac_stats["prospection"]=st.number_input(label="prospection",max_value=15,value=15)
+    st.progress(sac_stats["prospection"]/15, text=None, width="stretch")  
+    sac_stats["tacle"]=st.number_input(label="tacle",max_value=4,value=4)
+    st.progress(sac_stats["tacle"]/4, text=None, width="stretch")  
+    sac_stats["retrait pm"]=st.number_input(label="retrait pm",max_value=3,value=3)
+    st.progress(sac_stats["retrait pm"]/3, text=None, width="stretch")  
+    sac_stats["resistance terre %"]=st.number_input(label="resistances terre %",max_value=10,value=10)
+    st.progress(sac_stats["resistance terre %"]/10, text=None, width="stretch")  
+    sac_stats["resistance neutre"]=st.number_input(label="resistance neutre",max_value=10,value=10)
+    st.progress(sac_stats["resistance neutre"]/10, text=None, width="stretch")  
+
+    # Every form must have a submit button.
+    temp_calcul = st.button("Calculer mon score",use_container_width=True)
+    if st.session_state.score_calculé or temp_calcul:
+        st.session_state.score_calculé=True
+        score=0
+        for ligne in sac_stats.keys():
+            score+=sac_stats[ligne]*poids_runes[ligne]
+        st.markdown(f"## SCORE : {score}/692")
+        st.markdown(f"### Différence : {score-692}")
+        
+    st.button("si tu es content de ton score, clique ici",on_click=st.balloons,use_container_width=True)
+
+    st.write("___")
+    st.write("L'objectif pour se qualifier lors de cette étape est de réaliser le jet le plus parfait possible sur un Sac Mortuaire avec un budget limité et, par conséquent, un nombre restreint de runes. Chaque participant dispose d'un seul Sac Mortuaire, avec les mêmes jets de départ pour tout le monde.")
+    st.write("Votre score est calculé en additionnant le poids total de toutes les lignes caractéristiques qui composent l'objet. Par exemple, 3/4 Tacle vous rapportera 12 points sur 16 possibles. Les exo ou over ne sont pas comptés dans ce score.")
+    st.image(image=image_path+"sac_mortuaire_orfevr3.png",caption="Sac mortuaire",use_container_width=True)
 
 
 with tab_KMC2:
