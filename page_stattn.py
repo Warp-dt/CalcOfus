@@ -110,7 +110,9 @@ with orfevr3:
         for ligne in sac_stats.keys():
             score+=sac_stats[ligne]*poids_runes[ligne]
         st.markdown(f"## SCORE : {score}/692")
-        st.markdown(f"### Différence : {score-692}")
+        st.markdown(f"### Différence : {round(score-692,1)}")
+        st.progress(score/692, text=None, width="stretch")  
+
         
     st.button("si tu es content de ton score, clique ici",on_click=st.balloons,use_container_width=True)
 
