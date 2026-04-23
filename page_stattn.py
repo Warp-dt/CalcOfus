@@ -49,16 +49,13 @@ def update_points(df,points,temp_points):
 
 
 with orfevr3:
-    if not "score_calculé" in st.session_state.keys():
-        st.session_state.score_calculé=False
     
-    st.write('### ÉPREUVE 1 : SAC MORTUAIRE')
-    sac_stats=dict()
     poids_runes=dict()
     poids_runes["vitalité"]=0.2
     poids_runes["force"]=1
     poids_runes["intelligence"]=1
     poids_runes["chance"]=1
+    poids_runes["puissance"]=2
     poids_runes["sagesse"]=1
     poids_runes["invocation"]=30
     poids_runes["dommages neutre"]=5
@@ -66,10 +63,80 @@ with orfevr3:
     poids_runes["dommages feu"]=5
     poids_runes["dommages eau"]=5
     poids_runes["prospection"]=3
+    poids_runes["soin"]=10
     poids_runes["tacle"]=4
+    poids_runes["fuite"]=4
     poids_runes["retrait pm"]=7
+    poids_runes["esquive pa"]=7
     poids_runes["resistance terre %"]=6
+    poids_runes["resistance neutre %"]=6
+    poids_runes["resistance air %"]=6
     poids_runes["resistance neutre"]=2
+    poids_runes["PM"]=90
+    poids_runes["crit"]=10
+
+    
+    st.write('### ÉPREUVE 2 : ALLIANCE DU BANDIT SPECTRAL')
+
+    if not "score_allibs_calculé" in st.session_state.keys():
+        st.session_state.score_allibs_calculé=False
+
+    allibs_stats=dict()
+
+    allibs_stats["crit"]=st.number_input(label="crit",min_value=1,value=1,key="allibs12")
+    allibs_stats["vitalité"]=st.number_input(label="vitalité",max_value=300,value=300,key="allibs")
+    st.progress(allibs_stats["vitalité"]/300, text=None, width="stretch")  
+    allibs_stats["intelligence"]=st.number_input(label="intelligence",max_value=40,value=40,key="allibs1")
+    st.progress(allibs_stats["intelligence"]/40, text=None, width="stretch")  
+    allibs_stats["puissance"]=st.number_input(label="puissance",max_value=15,value=15,key="allibs2")
+    st.progress(allibs_stats["puissance"]/15, text=None, width="stretch")  
+    allibs_stats["sagesse"]=st.number_input(label="sagesse",max_value=30,value=30,key="allibs3")
+    st.progress(allibs_stats["sagesse"]/30, text=None, width="stretch")  
+    allibs_stats["fuite"]=st.number_input(label="fuite",max_value=7,value=7,key="allibs4")
+    st.progress(allibs_stats["fuite"]/7, text=None, width="stretch")  
+    allibs_stats["dommages feu"]=st.number_input(label="dommages feu",max_value=15,value=15,key="allibs5")
+    st.progress(allibs_stats["dommages feu"]/15, text=None, width="stretch")  
+    allibs_stats["resistance neutre %"]=st.number_input(label="resistance neutre %",max_value=7,value=7,key="allibs6")
+    st.progress(allibs_stats["resistance neutre %"]/7, text=None, width="stretch")  
+    allibs_stats["resistance air %"]=st.number_input(label="resistance air %",max_value=7,value=7,key="allibs7")
+    st.progress(allibs_stats["resistance air %"]/7, text=None, width="stretch")  
+    allibs_stats["prospection"]=st.number_input(label="prospection",max_value=10,value=10,key="allibs8")
+    st.progress(allibs_stats["prospection"]/10, text=None, width="stretch")  
+    allibs_stats["soin"]=st.number_input(label="soin",max_value=8,value=8,key="allibs9")
+    st.progress(allibs_stats["soin"]/8, text=None, width="stretch")  
+    allibs_stats["PM"]=st.number_input(label="PM",max_value=1,value=1,key="allibs10")
+    st.progress(allibs_stats["PM"]/1, text=None, width="stretch")  
+    allibs_stats["esquive pa"]=st.number_input(label="esquive pa",max_value=-4,min_value=-5,value=-4,key="allibs11")
+    st.progress((allibs_stats["esquive pa"]+5/1), text=None, width="stretch")  
+    
+    temp_calcul_allibs = st.button("Calculer mon score",use_container_width=True,key="allibsbut")
+    if st.session_state.score_allibs_calculé or temp_calcul_allibs:
+        st.session_state.score_allibs_calculé=True
+        score_allibs=0
+        for ligne in allibs_stats.keys():
+            score_allibs+=allibs_stats[ligne]*poids_runes[ligne]
+        st.markdown(f"## SCORE : {score_allibs}/519")
+        if score_allibs>519:
+            st.markdown(f"### Différence : + {round(score_allibs-519,1)}")
+        else:
+            st.markdown(f"### Différence : {round(score_allibs-519,1)}")
+        # st.progress(score_allibs/519, text=None, width="stretch")  
+
+        
+    if st.button("si ton score te plaît, clique ici",on_click=st.balloons,use_container_width=True,key="allibsbutcontent"):
+        st.badge(label="Félicitations 🎉",color='green')
+
+    st.write("___")
+    st.write("L'objectif pour se qualifier lors de cette étape est de réaliser le jet le plus parfait possible sur l'anneau “Alliance du Bandit Spectral” avec un exo obligatoire de minimum 1% Coups Critiques. Chaque pourcent Coups Critiques ajouté à l'anneau apporte 10 points supplémentaires au score final.")
+    st.write("Votre score est calculé en additionnant le poids total de toutes les lignes caractéristiques qui composent l'objet. Par exemple, 3/4 Tacle vous rapportera 12 points sur 16 possibles.")
+    st.write("Les 30 anneaux avec le meilleur score se qualifient pour l'étape 3.")
+    st.image(image=image_path+"alliance_bs_orfevr3.png",caption="Alliance du Bandit Spectral",use_container_width=True)
+
+    st.write('### ÉPREUVE 1 : SAC MORTUAIRE')
+    if not "score_sac_calculé" in st.session_state.keys():
+        st.session_state.score_sac_calculé=False
+
+    sac_stats=dict()
 
     sac_stats["vitalité"]=st.number_input(label="vitalité",max_value=350,value=350)
     st.progress(sac_stats["vitalité"]/350, text=None, width="stretch")  
@@ -102,10 +169,9 @@ with orfevr3:
     sac_stats["resistance neutre"]=st.number_input(label="resistance neutre",max_value=10,value=10)
     st.progress(sac_stats["resistance neutre"]/10, text=None, width="stretch")  
 
-    # Every form must have a submit button.
     temp_calcul = st.button("Calculer mon score",use_container_width=True)
-    if st.session_state.score_calculé or temp_calcul:
-        st.session_state.score_calculé=True
+    if st.session_state.score_sac_calculé or temp_calcul:
+        st.session_state.score_sac_calculé=True
         score=0
         for ligne in sac_stats.keys():
             score+=sac_stats[ligne]*poids_runes[ligne]
@@ -700,7 +766,7 @@ with tab_jda4:
             else:
                 cond4 = True  # Ne pas filtrer si aucun joueur spécifié
             
-            # Condition 5 : nom d’équipe contient le texte entré (partiel, insensible à la casse)
+            # Condition 5 : nom d'équipe contient le texte entré (partiel, insensible à la casse)
             if select_equipe:
                 equipe = select_equipe.lower().strip()
                 cond5 = compos_inscrites["equipe"].str.lower().str.contains(equipe, na=False)
