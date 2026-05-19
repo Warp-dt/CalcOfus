@@ -85,6 +85,8 @@ Pour déterminer les dégâts d'un Sort, sont pris en compte :
 - Les dommages fixes (les dommages élémentaires + dommages non élémentaires)
 - Les dommages critiques lors des coups critiques
 - Pour le soin c'est la même formule mais avec la stat **soin** à la place des dommages et sans compter la puissance
+- Les %dommages occasionnés ou %dommages subis s'appliquent tout à la fin après l'application des résistances, plus de détails au [point 3.](https://calcofus.fr/formulofus#3-resistances-reductions-de-degats) 
+- Exception : l'augmentation de dégats de la maîtrise d'armes s'applique comme les autres %dommages occasionnés, au détail près qu'elle s'applique à la toute fin après avoir arrondi une première fois les dégats à l'entier inférieur.
 """)
 
 st.subheader("Formules :")
@@ -130,7 +132,7 @@ Pour déterminer les dégats finaux, sont pris en compte dans l'ordre :
 - Résistances Fixes (résistances élémentaires & résistances critiques)
 - Résistances %
 - Sorts de réduction de dommages type rempart
-- % dommages subis ou occasionnés
+- % dommages subis ou occasionnés (si on a plusieurs effets, exemple vulné(×1.15) + bouclier feca(×0.7), on les multiplie tous ensemble, dans cet exemple ça ferait 1.15 × 0.7 = 0.805)
 """)
 st.subheader("Formule :")
 st.latex(r'''
