@@ -10,6 +10,7 @@ image_path='images/'
 st.set_page_config(page_title="CalcoBoom",layout="wide")
 
 st.write("# Calculateur de vitalité & dégats des bombes")
+st.caption("Logique et formules détaillées [ici](http://localhost:8501/formulofus#8-bombes)")
 
 
 ######################

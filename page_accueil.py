@@ -75,29 +75,31 @@ with col5:
         st.write("Calculateur de Tacle/Fuite")
 with col6:
     with st.container(border=True):
-        st.page_link("page_restrictofus.py",label="**RestrictOfus**", icon=":material/rule:", use_container_width=True)
-        st.text("Créateur de restrictions pour Tournois PVP")
+        st.page_link("page_ret.py",label="**CalcoRet**", icon=":material/star:", use_container_width=True)
+        st.text("Calculateur de Retrait/Esquive")
 
 col7, col8,col9 = st.columns((1,1,1))
 with col7:
+    with st.container(border=True):
+        st.page_link("page_persofus.py",label='**PersOfus**',icon=":material/data_loss_prevention:", use_container_width=True)
+        st.write("Générateur de lien vers les pages perso à partir du nom de compte.")
+
+with col8:
     with st.container(border=True):
         st.page_link("page_stattn.py",label="**Stats Tournois**", icon=":material/bar_chart:", use_container_width=True)
         st.text("Stats des Tournois PVP")
         st.link_button("Site du KTA ⚔️", "https://ktarena.com/fr/", help=None, type="secondary", icon="⚔️", disabled=False, use_container_width=True)
         st.link_button("Discord Tournois 🗨️", "https://discord.gg/nC7g6vDnmT", help=None, type="secondary", icon="🗨️", disabled=False, use_container_width=True)
 
-with col8:
-    with st.container(border=True):
-        st.page_link("page_persofus.py",label='**PersOfus**',icon=":material/data_loss_prevention:", use_container_width=True)
-        st.write("Générateur de lien vers les pages perso à partir du nom de compte.")
-
 with col9:
     with st.container(border=True):
-        pass
+        st.page_link("page_restrictofus.py",label="**RestrictOfus**", icon=":material/rule:", use_container_width=True)
+        st.text("Créateur de restrictions pour Tournois PVP")
+
 st.html("""
         <div style='text-align: center; 
                     font-size:20px'>
-Si vous le voulez vous pouvez aussi suivre mes différents projets :
+Vous pouvez aussi suivre mes différents projets :
         </div>""")
 with st.container(border=True):    
     st.page_link("https://discord.gg/dfDV8Zvwqp",label='**Dofus Touls**',icon="🗨️")

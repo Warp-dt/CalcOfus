@@ -25,6 +25,7 @@ with st.sidebar:
 
 st.write("## Calculateur de ligne de dégats de sort")
 
+st.caption("Logique et formules détaillées [ici](http://localhost:8501/formulofus#1-lignes-de-sorts)")
 
 
 attaque,defense = st.columns((2,1))

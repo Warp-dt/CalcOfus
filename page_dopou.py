@@ -22,6 +22,7 @@ with st.sidebar:
 ##############
 
 st.write("## Calculateur de dégats de poussée")
+st.caption("Logique et formules détaillées [ici](http://localhost:8501/formulofus#4-degats-et-resistances-de-poussee)")
 
 lvl = st.number_input("Lvl",value=200,key=101)
 dopou = st.number_input("DoPou",value=0,key=102)

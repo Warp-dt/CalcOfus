@@ -11,6 +11,7 @@ st.set_page_config(page_title="CalcoTac",layout="wide")
 
 st.write("## Calculateur de Tacle/Fuite")
 
+st.caption("Logique et formules détaillées [ici](http://localhost:8501/formulofus#5-tacle-fuite)")
 
 ######################
 #SIDEBAR

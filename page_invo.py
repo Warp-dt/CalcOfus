@@ -10,6 +10,7 @@ image_path='images/'
 st.set_page_config(page_title="CalcInvo",layout="wide")
 
 st.write("# Le calculateur de roxx de tes invo préférées")
+st.caption("Logique et formules détaillées [ici](http://localhost:8501/formulofus#7-invocations-osamodas)")
 
 ######################
 #SIDEBAR

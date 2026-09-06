@@ -4,7 +4,7 @@ import unicodedata
 image_path='images/'
 st.set_page_config(page_title="FormulOfus",layout="wide")
 
-st.sidebar.image(image_path+"logo_nom_transp.png" )
+st.sidebar.image(image_path+"formulofus_logo_nom_transp.png" )
 
 def source(texte,lien=False):
     if lien:
